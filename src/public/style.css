@@ -1,0 +1,21 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-sizing: border-box;
+    background-color: #f3e2d4;
+}
+
+a {
+    text-decoration: none;
+    background-color: inherit;
+    color: inherit;
+}
+
+.hide {
+    display: none;
+}
+
+.conceal {
+    visibility: hidden;
+}
