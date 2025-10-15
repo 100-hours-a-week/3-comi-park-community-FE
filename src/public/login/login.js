@@ -46,7 +46,10 @@ const formSubmitHandler = async () => {
 
     if (!res.success) {
         password.nextElementSibling.textContent = '아이디 또는 비밀번호를 확인해주세요';
+        return;
     }
+
+    location.href = '/posts';
 };
 
 document.addEventListener('DOMContentLoaded', () => {
