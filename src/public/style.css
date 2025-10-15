@@ -17,6 +17,13 @@ main {
     justify-content: center;
 }
 
+main .title {
+    font-size: 2em;
+    padding: 1.5em 0;
+    display: flex;
+    justify-content: center;
+}
+
 section {
     width: 70%;
     padding: 1.5em 0;
