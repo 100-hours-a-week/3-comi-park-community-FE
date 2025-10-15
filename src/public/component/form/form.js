@@ -6,10 +6,20 @@ export const validateRequiredInput = (form) => {
 
     form.querySelectorAll('.form-input').forEach((e) => {
         if (e.classList.contains('required') && !e.value) {
-            e.nextElementSibling.textContent = '* 값을 입력해 주세요';
+            e.nextElementSibling.textContent = `${e.name} 값을 입력해 주세요`;
             isAllinput = false;
         }
     });
 
     return isAllinput;
+};
+
+export const validateEmailPattern = (email) => {
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return regex.test(email);
+};
+
+export const validatePasswordPattern = (password) => {
+    const regex = /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[~.!@#$%^&*()_\-+=\[\]{}|\\;:'",?/]).{8,20}$/;
+    return regex.test(password);
 };
