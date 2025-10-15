@@ -18,5 +18,9 @@
   "homepage": "https://github.com/kmi0817/kbt3-comi-community-fe#readme",
   "dependencies": {
     "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "i": "^0.3.7",
+    "prettier": "^3.6.2"
   }
 }
