@@ -6,6 +6,10 @@ const port = process.env.PORT;
 
 app.use(express.static(path.join(import.meta.dirname, 'public')));
 
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(import.meta.dirname, 'public', 'login', 'login.html'));
+});
+
 app.listen(port, () => {
     console.log(`Express runs on port ${port}`);
 });
