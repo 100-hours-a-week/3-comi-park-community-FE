@@ -1,5 +1,5 @@
 const fetchHeaderHtml = async () => {
-    const res = await fetch('/component/header/header.html');
+    const res = await fetch('/component/common/header/header.html');
     const headerHtml = await res.text();
     return headerHtml;
 };
