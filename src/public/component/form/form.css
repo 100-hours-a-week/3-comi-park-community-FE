@@ -1,0 +1,27 @@
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 100%;
+}
+
+form div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.form-input {
+    border: 1px solid #415e72;
+    border-radius: 4px;
+    padding: 0.5em;
+}
+
+.form-helper-text {
+    color: #dc143c;
+    font-size: 0.8em;
+}
+
+.form-submit-btn {
+    background-color: #c5b0cd;
+}

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>로그인</title>
+
+        <link rel="stylesheet" href="../style.css" />
+        <link rel="stylesheet" href="../component/header/header.css" />
+        <link rel="stylesheet" href="../component/form/form.css" />
+        <link rel="stylesheet" href="./login.css" />
+    </head>
+    <body>
+        <header></header>
+
+        <main>
+            <section>
+                <div class="title"><span>로그인</span></div>
+                <form class="form">
+                    <div>
+                        <label for="form-email-input" class="form-label">이메일</label>
+                        <input
+                            name="이메일"
+                            type="email"
+                            class="form-input required"
+                            id="form-email-input"
+                            placeholder="이메일을 입력하세요"
+                            data-validated="false"
+                        />
+                        <div class="form-helper-text form-helper-email"></div>
+                    </div>
+                    <div>
+                        <label for="form-password-input" class="form-label">비밀번호</label>
+                        <input
+                            name="비밀번호"
+                            type="password"
+                            class="form-input required"
+                            id="form-password-input"
+                            placeholder="비밀번호를 입력하세요"
+                            data-validated="false"
+                        />
+                        <div class="form-helper-text form-helper-password"></div>
+                    </div>
+                    <div>
+                        <button class="btn form-submit-btn" type="button">로그인</button>
+                    </div>
+                </form>
+                <div class="register"><button class="btn" type="button">회원가입</button></div>
+            </section>
+        </main>
+
+        <script type="module" src="../component/header/header.js"></script>
+        <script type="module" src="./login.js"></script>
+    </body>
+</html>

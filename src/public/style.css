@@ -1,0 +1,45 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-sizing: border-box;
+    background-color: #f3e2d4;
+}
+
+a {
+    text-decoration: none;
+    background-color: inherit;
+    color: inherit;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+}
+
+main .title {
+    font-size: 2em;
+    padding: 1.5em 0;
+    display: flex;
+    justify-content: center;
+}
+
+section {
+    width: 70%;
+    padding: 1.5em 0;
+}
+
+.btn {
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 0.5em;
+    font-size: 1em;
+}
+
+.hide {
+    display: none;
+}
+
+.conceal {
+    visibility: hidden;
+}
