@@ -1,0 +1,51 @@
+.post-write-btn {
+    display: flex;
+    justify-content: right;
+}
+
+.posts-container {
+    padding: 1em 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.post-container {
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    border-radius: 16px;
+    box-shadow: 1px 1px 5px 2px #415e72;
+    background-color: #fcf9ea;
+    cursor: pointer;
+}
+
+.post-container:hover {
+    background-color: #badfdb;
+}
+
+.post {
+    background-color: inherit;
+}
+
+.post-title {
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+.post-info {
+    display: flex;
+    justify-content: space-between;
+    color: #415e72;
+}
+
+.post-stat {
+    display: flex;
+    gap: 0.5em;
+}
+
+.post-member {
+    display: flex;
+    gap: 0.5em;
+}
