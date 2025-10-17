@@ -1,7 +1,7 @@
-const generateHeaderHtml = (isLogin = false) => {
+const generateHeaderHtml = (isLogin = false, existsBackward = false) => {
     return `
         <div class="header-container">
-        <div class="backward ${isLogin ? '' : 'conceal'}">
+        <div class="backward ${isLogin && existsBackward ? '' : 'conceal'}">
             <span class="backward-image">◀️</span>
         </div>
         <div class="title">
@@ -19,20 +19,24 @@ const generateHeaderHtml = (isLogin = false) => {
     `;
 };
 
-const profileListHandler = () => {
+const paintHeader = (isLogin, existsBackward) => {
+    const headerHtml = generateHeaderHtml(isLogin, existsBackward);
+    document.querySelector('header').innerHTML = headerHtml;
+};
+
+const profileImageClickListHandler = () => {
     document.querySelector('.profile-list').classList.toggle('hide');
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. header HTML 패치 및  그리기
-    // const headerHtml = await fetchHeaderHtml();
-    const headerHtml = generateHeaderHtml();
-    document.querySelector('header').innerHTML = headerHtml;
+    const backwardList = ['/read', '/write', '/update'];
+    const isLogin = document.cookie.includes('isLogin=true');
+    const existsBackward = backwardList.some((url) => window.location.pathname.startsWith(url));
 
-    // 2. 게시글 조회, 수정, 삭제 시 backward 태그 노출
-    // TODO: document.querySelector('.backward').classList.remove('conceal');
+    paintHeader(isLogin, existsBackward);
 
-    // 3. 로그인한 상태라면 profile 태그 노출 및 클릭 이벤트 등록
-    // TODO: document.querySelector('.profile').classList.remove('conceal');
-    // TODO: document.querySelector('.profile-image').addEventListener('click', profileListHandler);
+    // 로그인한 상태라면 노출된 profile 이미지 클릭 이벤트 등록
+    if (isLogin) {
+        document.querySelector('.profile-image').addEventListener('click', profileImageClickListHandler);
+    }
 });
