@@ -1,16 +1,32 @@
-const fetchHeaderHtml = async () => {
-    const res = await fetch('/component/common/header/header.html');
-    const headerHtml = await res.text();
-    return headerHtml;
+const generateHeaderHtml = (isLogin = false) => {
+    return `
+        <div class="header-container">
+        <div class="backward ${isLogin ? '' : 'conceal'}">
+            <span class="backward-image">◀️</span>
+        </div>
+        <div class="title">
+            <span class="title-name">아무 말 대잔치</span>
+        </div>
+        <div class="profile ${isLogin ? '' : 'conceal'}">
+            <span class="profile-image">👤</span>
+            <ul class="profile-list hide">
+                <li class="profile-list-item"><a href="#">회원정보수정</a></li>
+                <li class="profile-list-item"><a href="#">비밀번호수정</a></li>
+                <li class="profile-list-item"><a href="#">로그아웃</a></li>
+            </ul>
+        </div>
+    </div>
+    `;
 };
 
 const profileListHandler = () => {
     document.querySelector('.profile-list').classList.toggle('hide');
 };
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
     // 1. header HTML 패치 및  그리기
-    const headerHtml = await fetchHeaderHtml();
+    // const headerHtml = await fetchHeaderHtml();
+    const headerHtml = generateHeaderHtml();
     document.querySelector('header').innerHTML = headerHtml;
 
     // 2. 게시글 조회, 수정, 삭제 시 backward 태그 노출
