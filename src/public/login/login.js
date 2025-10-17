@@ -1,9 +1,5 @@
-import {
-    validateRequiredInput,
-    validateEmailPattern,
-    validatePasswordPattern,
-} from '../../component/common/form/form.js';
-import { requestLogin } from '../../api/auth.js';
+import { validateRequiredInput, validateEmailPattern, validatePasswordPattern } from '../component/common/form/form.js';
+import { requestLogin } from '../api/auth.js';
 
 const emailKeyUpHandler = (target) => {
     const email = target.value;
