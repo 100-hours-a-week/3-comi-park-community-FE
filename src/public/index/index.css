@@ -16,17 +16,13 @@
     flex-direction: column;
     gap: 0.5em;
     border-radius: 16px;
-    box-shadow: 1px 1px 5px 2px #415e72;
-    background-color: #fcf9ea;
+    box-shadow: 5px 5px 14px 0.5px #9c9c9c;
+    background-color: #ffffff;
     cursor: pointer;
 }
 
 .post-container:hover {
-    background-color: #badfdb;
-}
-
-.post {
-    background-color: inherit;
+    background-color: #dbd7dd;
 }
 
 .post-title {
