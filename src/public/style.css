@@ -64,3 +64,7 @@ section {
 .conceal {
     visibility: hidden;
 }
+
+.click {
+    cursor: pointer;
+}

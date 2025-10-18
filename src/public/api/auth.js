@@ -15,3 +15,17 @@ export const requestLogin = async (email, password) => {
         return { success: false, data: '문제가 발생했습니다' };
     }
 };
+
+export const requestLogout = async () => {
+    try {
+        await fetch(`${API_SERVER_URI}/auth`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+        });
+        return { success: true };
+    } catch (error) {
+        console.error(error);
+        return { success: false, data: '문제가 발생했습니다' };
+    }
+};
