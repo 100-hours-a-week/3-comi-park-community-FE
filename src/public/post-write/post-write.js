@@ -15,6 +15,18 @@ const validationRules = {
     },
 };
 
+const ChangeFormSubmitBtnStatus = () => {
+    const formTitleInput = document.querySelector('#form-title-input');
+    const formContentInput = document.querySelector('#form-content-input');
+    const formSubmitBtn = document.querySelector('.form-submit-btn');
+
+    if (formTitleInput.dataset.validated === 'true' && formContentInput.dataset.validated === 'true') {
+        formSubmitBtn.classList.remove('inactivated');
+    } else {
+        formSubmitBtn.classList.add('inactivated');
+    }
+};
+
 const formInputKeyUpHandler = (name, target) => {
     const title = target.value;
     const helper = target.nextElementSibling;
@@ -28,6 +40,8 @@ const formInputKeyUpHandler = (name, target) => {
 
     target.dataset.validated = result.isValidated;
     helper.textContent = result.message;
+
+    ChangeFormSubmitBtnStatus();
 };
 
 const formSubmitBtnClickHandler = async () => {
@@ -69,18 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
     formContentInput.addEventListener('keyup', ({ target }) => {
         formInputKeyUpHandler('content', target);
     });
-
-    const observer = new MutationObserver((mutationList, observer) => {
-        if (formTitleInput.dataset.validated === 'true' && formContentInput.dataset.validated === 'true') {
-            formSubmitBtn.classList.remove('inactivated');
-        } else {
-            formSubmitBtn.classList.add('inactivated');
-        }
-    });
-
-    document
-        .querySelectorAll('[data-validated]')
-        .forEach((e) => observer.observe(e, { attributes: true, attributeFilter: ['data-validated'] }));
 
     formSubmitBtn.addEventListener('click', formSubmitBtnClickHandler);
 });
