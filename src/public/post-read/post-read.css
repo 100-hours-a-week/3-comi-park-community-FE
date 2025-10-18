@@ -1,0 +1,44 @@
+.post-read-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    margin-bottom: 1em;
+}
+
+.post-title {
+    font-size: 2em;
+}
+
+.post-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.post-info-left {
+    display: inherit;
+    align-items: center;
+    gap: 1em;
+}
+
+.post-stat-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+.post-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 4px;
+    background-color: #bab5bc;
+    width: 6em;
+    height: 4em;
+    padding: 0.5em;
+    font-weight: bold;
+    cursor: pointer;
+}
