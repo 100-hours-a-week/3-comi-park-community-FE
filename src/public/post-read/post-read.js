@@ -1,16 +1,17 @@
 import { requestCancelLike, requestCreateLike } from '../api/post-like.js';
 import { requestReadPost, requestDeletePost } from '../api/posts.js';
-import { requestComments } from '../api/comments.js';
+import { requestComments, requestDeleteComment } from '../api/comments.js';
 import { paintCommentsContainer } from '../component/comments/comments.js';
 import { paintPostReadContainer } from '../component/post/post.js';
+import { openDeleteModal } from '../component/common/modal/modal.js';
 
-const deleteBtnClickHandler = async (target) => {
-    // TODO: 모달창 띄우기
-    if (!confirm(`${target.dataset.domain} 삭제하시겠습니까? 삭제한 내용은 복구할 수 없습니다`)) {
-        return;
-    }
+const deleteHandlerMap = {
+    post: (id) => deletePostHandler(id),
+    comment: (id) => deleteCommentHandler(id),
+};
 
-    const res = await requestDeletePost(target.dataset.id);
+const deletePostHandler = async (id) => {
+    const res = await requestDeletePost(id);
 
     if (!res.success) {
         alert(res.data);
@@ -18,6 +19,27 @@ const deleteBtnClickHandler = async (target) => {
     }
 
     location.href = '/index';
+};
+
+const deleteCommentHandler = async (id) => {
+    const res = await requestDeleteComment(id);
+
+    if (!res.success) {
+        alert(res.data);
+        return;
+    }
+
+    const deletedElement = document.querySelector(`[data-commentid="${id}"]`);
+    document.querySelector('.comments-container').removeChild(deletedElement);
+    // document.querySelector('.post-comment-count').textContent = res.data.commentCount;
+
+    document.querySelector('dialog').close();
+};
+
+const modalConfirmBtnClickHandler = async (target) => {
+    const dialog = target.closest('dialog');
+    const { domain, id } = dialog.dataset;
+    deleteHandlerMap[domain](id);
 };
 
 const postLikeCountContainerClickHandler = async (target, postId) => {
@@ -36,6 +58,7 @@ const postLikeCountContainerClickHandler = async (target, postId) => {
 };
 
 document.addEventListener('DOMContentLoaded', async () => {
+    /* 게시글 */
     const postId = Number(window.location.pathname.split('/').at(2));
     const postRes = await requestReadPost(postId);
 
@@ -45,10 +68,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     paintPostReadContainer(postRes.data.post);
-
-    document.querySelector('.post-delete-btn').addEventListener('click', ({ target }) => {
-        deleteBtnClickHandler(target);
-    });
 
     document.querySelector('.post-like-count-container').addEventListener('click', ({ currentTarget }) => {
         postLikeCountContainerClickHandler(currentTarget, postId);
@@ -63,4 +82,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     paintCommentsContainer(commentRes.data.comments);
+
+    /* 삭제 모달 이벤트 등록 */
+    document.querySelectorAll('.delete-btn').forEach((btn) =>
+        btn.addEventListener('click', () => {
+            openDeleteModal(btn.dataset.domain, btn.dataset.id);
+        })
+    );
+
+    document.querySelector('.modal-cancel-btn').addEventListener('click', () => {
+        document.querySelector('dialog').close();
+    });
+
+    document.querySelector('.modal-confirm-btn').addEventListener('click', ({ target }) => {
+        modalConfirmBtnClickHandler(target);
+    });
 });
