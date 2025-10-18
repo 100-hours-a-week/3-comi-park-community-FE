@@ -1,7 +1,7 @@
 import { formatDate } from '../../utils/formatHelper.js';
 import { generateWriterInfoHtml } from '../common/member/member.js';
 
-const generateCommentContainerHTML = (comment) => {
+const generateCommentContainerHtml = (comment) => {
     // TODO: 회원 이미지 가져오기
     return `
         <div class="comment-container">
@@ -18,8 +18,8 @@ const generateCommentContainerHTML = (comment) => {
             <div class="comment-content">${comment.content}</div>
         </div>`;
 };
-const generateCommentsContainerHTML = (comments) => {
-    const commentContainer = comments.map((comment) => generateCommentContainerHTML(comment)).join('');
+const generateCommentsContainerHtml = (comments) => {
+    const commentContainer = comments.map((comment) => generateCommentContainerHtml(comment)).join('');
     return `
         <div class="comments-container">
             ${commentContainer}
@@ -29,5 +29,5 @@ const generateCommentsContainerHTML = (comments) => {
 export const paintCommentsContainer = (comments) => {
     document
         .querySelector('.comments-container')
-        .insertAdjacentHTML('beforeend', generateCommentsContainerHTML(comments));
+        .insertAdjacentHTML('beforeend', generateCommentsContainerHtml(comments));
 };
