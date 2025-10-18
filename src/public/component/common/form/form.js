@@ -23,3 +23,22 @@ export const validatePasswordPattern = (password) => {
     const regex = /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[~.!@#$%^&*()_\-+=\[\]{}|\\;:'",?/]).{8,20}$/;
     return regex.test(password);
 };
+
+export const validatePostTitlePattern = (title) => {
+    return {
+        isValidated: title.length > 0 && title.length < 27,
+        message:
+            title.length == 0
+                ? '제목을 입력해주세요'
+                : title.length > 26
+                  ? '제목은 최대 26글자까지 입력할 수 있습니다'
+                  : '',
+    };
+};
+
+export const validatePostContentPattern = (content) => {
+    return {
+        isValidated: content.length > 0,
+        message: content.length == 0 ? '내용을 입력해주세요' : '',
+    };
+};
