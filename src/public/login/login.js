@@ -1,7 +1,7 @@
-import { validateRequiredInput, validateEmailPattern, validatePasswordPattern } from '../component/form/form.js';
+import { validateRequiredInput, validateEmailPattern, validatePasswordPattern } from '../component/common/form/form.js';
 import { requestLogin } from '../api/auth.js';
 
-const emailKeyUpHandler = (target) => {
+const formEmailInputKeyUpHandler = (target) => {
     const email = target.value;
     const helper = target.nextElementSibling;
 
@@ -14,7 +14,7 @@ const emailKeyUpHandler = (target) => {
     }
 };
 
-const passwordKeyUpHandler = (target) => {
+const formPasswordInputKeyUpHandler = (target) => {
     const password = target.value;
     const helper = target.nextElementSibling;
 
@@ -28,7 +28,7 @@ const passwordKeyUpHandler = (target) => {
     }
 };
 
-const formSubmitHandler = async () => {
+const formSubmitBtnClickHandler = async () => {
     const form = document.querySelector('.form');
 
     if (!validateRequiredInput(form)) {
@@ -49,17 +49,17 @@ const formSubmitHandler = async () => {
         return;
     }
 
-    location.href = '/posts';
+    location.href = '/index';
 };
 
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#form-email-input').addEventListener('keyup', ({ target }) => {
-        emailKeyUpHandler(target);
+        formEmailInputKeyUpHandler(target);
     });
 
     document.querySelector('#form-password-input').addEventListener('keyup', ({ target }) => {
-        passwordKeyUpHandler(target);
+        formPasswordInputKeyUpHandler(target);
     });
 
-    document.querySelector('.form-submit-btn').addEventListener('click', formSubmitHandler);
+    document.querySelector('.form-submit-btn').addEventListener('click', formSubmitBtnClickHandler);
 });
