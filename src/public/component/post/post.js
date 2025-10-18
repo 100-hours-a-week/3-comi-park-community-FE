@@ -1,4 +1,16 @@
+import { formatCount, formatDate } from '../../utils/formatHelper.js';
+import { generateWriterInfoHtml } from '../common/member/member.js';
+
+export const paintPostForm = (post = {}) => {
+    document.querySelector('section').insertAdjacentHTML('beforeend', generatePostFormHtml(post));
+};
+
+export const paintPostReadContainer = (post) => {
+    document.querySelector('section').insertAdjacentHTML('beforeend', generatePostReadContainerHtml(post));
+};
+
 /* HTML */
+// 게시글 작성/수정 HTML
 const generatePostFormHtml = (post) => {
     return `
         <div class="title">게시글 ${post?.id ? '수정' : '작성'}</div>
@@ -38,6 +50,39 @@ const generatePostFormHtml = (post) => {
         </form>`;
 };
 
-export const paintPostForm = (post = {}) => {
-    document.querySelector('section').insertAdjacentHTML('beforeend', generatePostFormHtml(post));
+// 게시글 상세조회 HTML
+const generatePostReadContainerHtml = (post) => {
+    // TODO: 게시글 이미지 가져오기
+
+    return `
+        <div class="post-read-container">
+            <div class="post-title">${post.title}</div>
+            <div class="post-info">
+                <div class="post-info-left">
+                    ${generateWriterInfoHtml(post.member)}
+                    <div class="post-created-at">${formatDate(post.createdAt)}</div>
+                </div>
+                <div>
+                    <button class="btn small-btn"><a href="/update/${post.id}">수정</a></button>
+                    <button class="btn small-btn post-delete-btn" data-domain='게시글' data-id="${post.id}">삭제</button>
+                </div>
+            </div>
+            <div class="custom-hr"></div>
+            <div class="post-image"></div>
+            <div class="post-content">${post.content}</div>
+            <div class="post-stat-container">
+                <div class="post-stat">
+                    <div class="post-like-count">${formatCount(post.likeCount)}</div>
+                    <div>좋아요수</div>
+                </div>
+                <div class="post-stat">
+                    <div class="post-view-count">${formatCount(post.viewCount)}</div>
+                    <div>조회수</div>
+                </div>
+                <div class="post-stat">
+                    <div class="post-comment-count">${formatCount(post.commentCount)}</div>
+                    <div>댓글</div>
+                </div>
+            </div>
+        </div>`;
 };
