@@ -25,3 +25,9 @@ form div {
 .form-submit-btn {
     background-color: #c5b0cd;
 }
+
+.inactivated {
+    background-color: #c5b0cd70;
+    color: #c5b0cd;
+    cursor: not-allowed;
+}
