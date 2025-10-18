@@ -7,7 +7,7 @@ const postsContainerClickHandler = (target) => {
     if (!postContainer) return;
 
     const postId = postContainer.dataset.postid;
-    location.href = `/posts/${postId}`;
+    location.href = `/read/${postId}`;
 };
 
 document.addEventListener('DOMContentLoaded', async () => {

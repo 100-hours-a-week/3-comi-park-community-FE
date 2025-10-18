@@ -1,4 +1,5 @@
 import { formatDate, formatCount } from '../../utils/formatHelper.js';
+import { generateWriterInfoHtml } from '../common/member/member.js';
 
 const generatePostContainerHtml = (post) => {
     return `
@@ -15,10 +16,7 @@ const generatePostContainerHtml = (post) => {
                 </div>
             </div>
             <div class="custom-hr"></div>
-            <div class="post-member">
-                <div class="post-member-image">${post.member.image?.id ?? '👤'}</div>
-                <div class="post-member-name">${post.member.nickname}</div>
-            </div>
+            ${generateWriterInfoHtml(post.member)}
         </div>`;
     // TODO: post.member.image.id 있으면 프로필 이미지 가져오기
 };
