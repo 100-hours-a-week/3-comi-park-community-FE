@@ -6,7 +6,7 @@ export const paintPostForm = (post = {}) => {
 };
 
 export const paintPostReadContainer = (post) => {
-    document.querySelector('section').insertAdjacentHTML('beforeend', generatePostReadContainerHtml(post));
+    document.querySelector('.post-container').insertAdjacentHTML('beforeend', generatePostReadContainerHtml(post));
 };
 
 /* HTML */
@@ -55,34 +55,32 @@ const generatePostReadContainerHtml = (post) => {
     // TODO: 게시글 이미지 가져오기
 
     return `
-        <div class="post-read-container">
-            <div class="post-title">${post.title}</div>
-            <div class="post-info">
-                <div class="post-info-left">
-                    ${generateWriterInfoHtml(post.member)}
-                    <div class="post-created-at">${formatDate(post.createdAt)}</div>
-                </div>
-                <div>
-                    <button class="btn small-btn"><a href="/update/${post.id}">수정</a></button>
-                    <button class="btn small-btn post-delete-btn" data-domain='게시글' data-id="${post.id}">삭제</button>
-                </div>
+        <div class="post-title">${post.title}</div>
+        <div class="post-info">
+            <div class="post-info-left">
+                ${generateWriterInfoHtml(post.member)}
+                <div class="post-created-at">${formatDate(post.createdAt)}</div>
             </div>
-            <div class="custom-hr"></div>
-            <div class="post-image"></div>
-            <div class="post-content">${post.content}</div>
-            <div class="post-stat-container">
-                <div class="post-stat post-like-count-container" data-isLiked="${post.liked}">
-                    <div class="post-like-count">${formatCount(post.likeCount)}</div>
-                    <div>좋아요수</div>
-                </div>
-                <div class="post-stat">
-                    <div class="post-view-count">${formatCount(post.viewCount)}</div>
-                    <div>조회수</div>
-                </div>
-                <div class="post-stat">
-                    <div class="post-comment-count">${formatCount(post.commentCount)}</div>
-                    <div>댓글</div>
-                </div>
+            <div>
+                <button class="btn small-btn"><a href="/update/${post.id}">수정</a></button>
+                <button class="btn small-btn post-delete-btn" data-domain='게시글' data-id="${post.id}">삭제</button>
+            </div>
+        </div>
+        <div class="custom-hr"></div>
+        <div class="post-image"></div>
+        <div class="post-content">${post.content}</div>
+        <div class="post-stat-container">
+            <div class="post-stat post-like-count-container" data-isLiked="${post.liked}">
+                <div class="post-like-count">${formatCount(post.likeCount)}</div>
+                <div>좋아요수</div>
+            </div>
+            <div class="post-stat">
+                <div class="post-view-count">${formatCount(post.viewCount)}</div>
+                <div>조회수</div>
+            </div>
+            <div class="post-stat">
+                <div class="post-comment-count">${formatCount(post.commentCount)}</div>
+                <div>댓글</div>
             </div>
         </div>`;
 };
