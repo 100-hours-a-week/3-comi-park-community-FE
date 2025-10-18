@@ -1,0 +1,19 @@
+.comments-container {
+    margin-top: 0.5em;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+}
+
+.comment-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5em;
+}
+
+.comment-info-left {
+    display: inherit;
+    align-items: center;
+    gap: 1em;
+}

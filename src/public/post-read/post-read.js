@@ -1,5 +1,7 @@
 import { requestCancelLike, requestCreateLike } from '../api/post-like.js';
 import { requestReadPost, requestDeletePost } from '../api/posts.js';
+import { requestComments } from '../api/comments.js';
+import { paintCommentsContainer } from '../component/comments/comments.js';
 import { paintPostReadContainer } from '../component/post/post.js';
 
 const deleteBtnClickHandler = async (target) => {
@@ -35,14 +37,14 @@ const postLikeCountContainerClickHandler = async (target, postId) => {
 
 document.addEventListener('DOMContentLoaded', async () => {
     const postId = Number(window.location.pathname.split('/').at(2));
-    const res = await requestReadPost(postId);
+    const postRes = await requestReadPost(postId);
 
-    if (!res.success) {
-        document.querySelector('section').textContent = res.data;
+    if (!postRes.success) {
+        document.querySelector('section').textContent = postRes.data;
         return;
     }
 
-    paintPostReadContainer(res.data.post);
+    paintPostReadContainer(postRes.data.post);
 
     document.querySelector('.post-delete-btn').addEventListener('click', ({ target }) => {
         deleteBtnClickHandler(target);
@@ -51,4 +53,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.querySelector('.post-like-count-container').addEventListener('click', ({ currentTarget }) => {
         postLikeCountContainerClickHandler(currentTarget, postId);
     });
+
+    /* 댓글 */
+    const commentRes = await requestComments(postId);
+
+    if (!commentRes.success) {
+        document.querySelector('.comments-container').textContent = commentRes.data;
+        return;
+    }
+
+    paintCommentsContainer(commentRes.data.comments);
 });
