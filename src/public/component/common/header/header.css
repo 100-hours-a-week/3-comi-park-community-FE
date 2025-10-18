@@ -10,6 +10,14 @@
     font-size: 1.5em;
 }
 
+.backward-image {
+    cursor: pointer;
+}
+
+.profile-image {
+    cursor: pointer;
+}
+
 .profile-list {
     list-style: none;
     position: absolute;
