@@ -1,3 +1,4 @@
+import { requestCancelLike, requestCreateLike } from '../api/post-like.js';
 import { requestReadPost, requestDeletePost } from '../api/posts.js';
 import { paintPostReadContainer } from '../component/post/post.js';
 
@@ -16,6 +17,22 @@ const deleteBtnClickHandler = async (target) => {
 
     location.href = '/index';
 };
+
+const postLikeCountContainerClickHandler = async (target, postId) => {
+    const previoustIsLiked = target.dataset.isliked === 'true';
+    const request = previoustIsLiked === true ? requestCancelLike : requestCreateLike;
+
+    const res = await request(postId);
+
+    if (!res.success) {
+        alert(res.data);
+        return;
+    }
+
+    target.dataset.isliked = !previoustIsLiked;
+    target.firstElementChild.textContent = res.data.likeCount;
+};
+
 document.addEventListener('DOMContentLoaded', async () => {
     const postId = Number(window.location.pathname.split('/').at(2));
     const res = await requestReadPost(postId);
@@ -29,5 +46,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     document.querySelector('.post-delete-btn').addEventListener('click', ({ target }) => {
         deleteBtnClickHandler(target);
+    });
+
+    document.querySelector('.post-like-count-container').addEventListener('click', ({ currentTarget }) => {
+        postLikeCountContainerClickHandler(currentTarget, postId);
     });
 });

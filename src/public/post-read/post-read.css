@@ -40,5 +40,8 @@
     height: 4em;
     padding: 0.5em;
     font-weight: bold;
+}
+
+.post-like-count-container {
     cursor: pointer;
 }

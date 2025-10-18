@@ -71,7 +71,7 @@ const generatePostReadContainerHtml = (post) => {
             <div class="post-image"></div>
             <div class="post-content">${post.content}</div>
             <div class="post-stat-container">
-                <div class="post-stat">
+                <div class="post-stat post-like-count-container" data-isLiked="${post.liked}">
                     <div class="post-like-count">${formatCount(post.likeCount)}</div>
                     <div>좋아요수</div>
                 </div>
