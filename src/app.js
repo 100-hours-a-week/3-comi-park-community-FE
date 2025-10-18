@@ -11,6 +11,7 @@ app.use(cookieParser());
 app.use(authGuard);
 app.use(express.static(path.join(import.meta.dirname, 'public')));
 app.use('/write', express.static(path.join(import.meta.dirname, 'public', 'post-write')));
+app.use('/read', express.static(path.join(import.meta.dirname, 'public', 'post-read')));
 
 app.get('/index', (req, res) => {
     res.sendFile(path.join(import.meta.dirname, 'public', 'index', 'index.html'));
@@ -22,6 +23,10 @@ app.get('/login', (req, res) => {
 
 app.get('/write', (req, res) => {
     res.sendFile(path.join(import.meta.dirname, 'public', 'post-write', 'post-write.html'));
+});
+
+app.get('/read/:postId', (req, res) => {
+    res.sendFile(path.join(import.meta.dirname, 'public', 'post-read', 'post-read.html'));
 });
 
 app.listen(port, () => {
