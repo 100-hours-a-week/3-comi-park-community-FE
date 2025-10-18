@@ -50,6 +50,22 @@ export const requestReadPost = async (postId) => {
     }
 };
 
+export const requestDeletePost = async (postId) => {
+    try {
+        const res = await fetch(`${API_SERVER_URI}/posts/${postId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ postDeleted: true, imageDeleted: false }),
+        });
+        const json = await res.json();
+        return json;
+    } catch (error) {
+        console.error(error);
+        return { success: false, data: '문제가 발생했습니다' };
+    }
+};
+
 /**
  * lastPostId와 limit 필드로만 쿼리 스트링을 구성합니다
  * 단, lastPostId 혹은 limit이 숫자나 문자열 숫자일 때만 유효한 값으로 인정합니다
