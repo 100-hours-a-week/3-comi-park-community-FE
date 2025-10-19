@@ -1,69 +1,23 @@
-import { API_SERVER_URI } from '../utils/constants.js';
+import { request, METHOD } from './request.js';
 
 /**
  * 매개변수 params = { lastPostId: number, limit: number }
  * 그 외 다른 필드가 존재해도 검증을 통해 필요한 필드만 서버에 전송됩니다
  */
-export const requestPosts = async (params = {}) => {
-    try {
-        const res = await fetch(`${API_SERVER_URI}/posts?${createQueryString(params)}`, {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
-        });
-        const json = await res.json();
-        return json;
-    } catch (error) {
-        console.error(error);
-        return { success: false, data: '문제가 발생했습니다' };
-    }
+export const requestPosts = (params = {}) => {
+    return request({ url: '/posts', params: createQueryString(params) });
 };
 
-export const requestWritePost = async (requestBody = {}) => {
-    try {
-        const res = await fetch(`${API_SERVER_URI}/posts`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
-            body: JSON.stringify(requestBody),
-        });
-        const json = await res.json();
-        return json;
-    } catch (error) {
-        console.error(error);
-        return { success: false, data: '문제가 발생했습니다' };
-    }
+export const requestWritePost = (requestBody = {}) => {
+    return request({ method: METHOD.POST, url: '/posts', body: requestBody });
 };
 
-export const requestReadPost = async (postId) => {
-    try {
-        const res = await fetch(`${API_SERVER_URI}/posts/${postId}`, {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
-        });
-        const json = await res.json();
-        return json;
-    } catch (error) {
-        console.error(error);
-        return { success: false, data: '문제가 발생했습니다' };
-    }
+export const requestReadPost = (postId) => {
+    return request({ url: `/posts/${postId}` });
 };
 
-export const requestDeletePost = async (postId) => {
-    try {
-        const res = await fetch(`${API_SERVER_URI}/posts/${postId}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
-            body: JSON.stringify({ postDeleted: true, imageDeleted: false }),
-        });
-        const json = await res.json();
-        return json;
-    } catch (error) {
-        console.error(error);
-        return { success: false, data: '문제가 발생했습니다' };
-    }
+export const requestDeletePost = (postId) => {
+    return request({ method: METHOD.PATCH, url: `/posts/${postId}`, body: { postDeleted: true, imageDeleted: false } });
 };
 
 /**

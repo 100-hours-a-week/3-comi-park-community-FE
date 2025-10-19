@@ -1,36 +1,16 @@
-import { API_SERVER_URI } from '../utils/constants.js';
+import { request, METHOD } from './request.js';
 
 /**
  * 매개변수 params = { lastCommentId: number, limit: number }
  * 그 외 다른 필드가 존재해도 검증을 통해 필요한 필드만 서버에 전송됩니다
  */
-export const requestComments = async (postId, params = {}) => {
-    try {
-        const res = await fetch(`${API_SERVER_URI}/posts/${postId}/comments?${createQueryString(params)}`, {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
-        });
-        const json = await res.json();
-        return json;
-    } catch (error) {
-        console.error(error);
-        return { success: false, data: '문제가 발생했습니다' };
-    }
+export const requestComments = (postId, params = {}) => {
+    return request({ url: `/posts/${postId}/comments`, params: createQueryString(params) });
 };
 
-export const requestDeleteComment = async (postId) => {
-    try {
-        await fetch(`${API_SERVER_URI}/posts/${postId}/comments`, {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
-        });
-        return { success: true };
-    } catch (error) {
-        console.error(error);
-        return { success: false, data: '문제가 발생했습니다' };
-    }
+export const requestDeleteComment = (commentId) => {
+    const postId = Number(window.location.pathname.split('/').at(2));
+    return request({ method: METHOD.DELETE, url: `/posts/${postId}/comments/${commentId}` });
 };
 
 /**

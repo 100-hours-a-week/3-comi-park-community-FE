@@ -10,6 +10,7 @@ export const authGuard = (req, res, next) => {
     }
 
     const isLogin = !!req?.cookies?.sid;
+    const loginMember = isLogin ? req.cookies.sid.split('_').at(-1) : '';
 
     // /login과 /login/ 동일시하기 위해 startsWith 사용
     const isWhiteList = whiteList.some((url) => req.path.startsWith(url));
@@ -25,7 +26,8 @@ export const authGuard = (req, res, next) => {
     }
 
     // (3) 상황
-    res.cookie('isLogin', isLogin, {});
+    res.cookie('isLogin', isLogin, { secure: true, sameSite: 'strict' });
+    res.cookie('loginMember', loginMember, { secure: true, sameSite: 'strict' });
     next();
 };
 

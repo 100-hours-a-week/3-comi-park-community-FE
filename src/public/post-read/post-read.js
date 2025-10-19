@@ -3,7 +3,7 @@ import { requestReadPost, requestDeletePost } from '../api/posts.js';
 import { requestComments, requestDeleteComment } from '../api/comments.js';
 import { paintCommentsContainer } from '../component/comments/comments.js';
 import { paintPostReadContainer } from '../component/post/post.js';
-import { openDeleteModal } from '../component/common/modal/modal.js';
+import { openModal } from '../component/common/modal/modal.js';
 
 const deleteHandlerMap = {
     post: (id) => deletePostHandler(id),
@@ -31,15 +31,7 @@ const deleteCommentHandler = async (id) => {
 
     const deletedElement = document.querySelector(`[data-commentid="${id}"]`);
     document.querySelector('.comments-container').removeChild(deletedElement);
-    // document.querySelector('.post-comment-count').textContent = res.data.commentCount;
-
-    document.querySelector('dialog').close();
-};
-
-const modalConfirmBtnClickHandler = async (target) => {
-    const dialog = target.closest('dialog');
-    const { domain, id } = dialog.dataset;
-    deleteHandlerMap[domain](id);
+    document.querySelector('.post-comment-count').textContent = res.data.commentCount;
 };
 
 const postLikeCountContainerClickHandler = async (target, postId) => {
@@ -83,18 +75,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     paintCommentsContainer(commentRes.data.comments);
 
-    /* 삭제 모달 이벤트 등록 */
+    /* 삭제 모달 */
     document.querySelectorAll('.delete-btn').forEach((btn) =>
         btn.addEventListener('click', () => {
-            openDeleteModal(btn.dataset.domain, btn.dataset.id);
+            const { domain, id } = btn.dataset;
+
+            openModal({
+                mainText: `${domain === 'post' ? '게시글을' : '댓글을'} 삭제하시겠습니까?`,
+                subText: '삭제한 내용은 복구할 수 없습니다',
+                dataset: btn.dataset,
+                onConfirm: () => deleteHandlerMap[domain](id),
+            });
         })
     );
-
-    document.querySelector('.modal-cancel-btn').addEventListener('click', () => {
-        document.querySelector('dialog').close();
-    });
-
-    document.querySelector('.modal-confirm-btn').addEventListener('click', ({ target }) => {
-        modalConfirmBtnClickHandler(target);
-    });
 });

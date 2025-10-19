@@ -1,5 +1,6 @@
-import { formatCount, formatDate } from '../../utils/formatHelper.js';
+import { formatCount, formatDate } from '../../utils/format-helper.js';
 import { generateWriterInfoHtml } from '../common/member/member.js';
+import { getCookie } from '../../utils/cookie-helper.js';
 
 export const paintPostForm = (post = {}) => {
     document.querySelector('section').insertAdjacentHTML('beforeend', generatePostFormHtml(post));
@@ -52,6 +53,16 @@ const generatePostFormHtml = (post) => {
 
 // 게시글 상세조회 HTML
 const generatePostReadContainerHtml = (post) => {
+    const updateDeleteBtnHtml = () => {
+        return `
+            <div>
+                <button class="btn small-btn"><a href="/update/${post.id}">수정</a></button>
+                <button class="btn small-btn delete-btn" data-domain='post' data-id="${post.id}">삭제</button>
+            </div>`;
+    };
+
+    const loginMember = getCookie('loginMember');
+
     // TODO: 게시글 이미지 가져오기
 
     return `
@@ -61,10 +72,7 @@ const generatePostReadContainerHtml = (post) => {
                 ${generateWriterInfoHtml(post.member)}
                 <div class="post-created-at">${formatDate(post.createdAt)}</div>
             </div>
-            <div>
-                <button class="btn small-btn"><a href="/update/${post.id}">수정</a></button>
-                <button class="btn small-btn delete-btn" data-domain='post' data-id="${post.id}">삭제</button>
-            </div>
+            ${loginMember == post.member.id ? updateDeleteBtnHtml() : ''}
         </div>
         <div class="custom-hr"></div>
         <div class="post-image"></div>

@@ -66,7 +66,7 @@ const formSubmitBtnClickHandler = async () => {
         return;
     }
 
-    location.href = `/posts/${res.data.post.id}`;
+    location.href = `/read/${res.data.post.id}`;
 };
 
 document.addEventListener('DOMContentLoaded', () => {
