@@ -4,13 +4,13 @@ const generateHeaderHtml = (isLogin = false, existsBackward = false) => {
     return `
         <div class="header-container">
         <div class="backward ${isLogin && existsBackward ? '' : 'conceal'}">
-            <span class="backward-image">◀️</span>
+            <div class="backward-image">◀️</div>
         </div>
         <div class="title">
-            <span class="title-name">아무 말 대잔치</span>
+            <div class="title-name"><a href="/index">아무 말 대잔치</a></div>
         </div>
         <div class="profile ${isLogin ? '' : 'conceal'}">
-            <span class="profile-image">👤</span>
+            <div class="profile-image">👤</div>
             <ul class="profile-list hide">
                 <li class="profile-list-item"><a href="#">회원정보수정</a></li>
                 <li class="profile-list-item"><a href="#">비밀번호수정</a></li>
