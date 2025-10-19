@@ -19,14 +19,17 @@ export const requestComments = async (postId, params = {}) => {
     }
 };
 
-export const requestDeleteComment = async (postId) => {
+export const requestDeleteComment = async (commentId) => {
+    const postId = Number(window.location.pathname.split('/').at(2));
+
     try {
-        await fetch(`${API_SERVER_URI}/posts/${postId}/comments`, {
+        const res = await fetch(`${API_SERVER_URI}/posts/${postId}/comments/${commentId}`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
         });
-        return { success: true };
+        const json = await res.json();
+        return json;
     } catch (error) {
         console.error(error);
         return { success: false, data: '문제가 발생했습니다' };
