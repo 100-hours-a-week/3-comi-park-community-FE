@@ -32,7 +32,6 @@ const profileImageClickListHandler = () => {
 
 const logoutBtnClickHandler = async () => {
     const res = await requestLogout();
-    console.log(res);
 
     if (!res.success) {
         alert(res.data);

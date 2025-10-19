@@ -18,12 +18,13 @@ export const requestLogin = async (email, password) => {
 
 export const requestLogout = async () => {
     try {
-        await fetch(`${API_SERVER_URI}/auth`, {
+        const res = await fetch(`${API_SERVER_URI}/auth`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
         });
-        return { success: true };
+        const json = await res.json();
+        return json;
     } catch (error) {
         console.error(error);
         return { success: false, data: '문제가 발생했습니다' };
