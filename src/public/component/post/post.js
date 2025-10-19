@@ -63,7 +63,7 @@ const generatePostReadContainerHtml = (post) => {
             </div>
             <div>
                 <button class="btn small-btn"><a href="/update/${post.id}">수정</a></button>
-                <button class="btn small-btn post-delete-btn" data-domain='게시글' data-id="${post.id}">삭제</button>
+                <button class="btn small-btn delete-btn" data-domain='post' data-id="${post.id}">삭제</button>
             </div>
         </div>
         <div class="custom-hr"></div>
