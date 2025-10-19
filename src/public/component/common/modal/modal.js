@@ -13,8 +13,26 @@ const generateModalHtml = (mainText, subText) => {
         </dialog>`;
 };
 
-export const paintModal = ({ mainText = '', subText = '' }) => {
+export const paintModal = ({ mainText = '', subText = '', onCancel, onConfirm }) => {
     document.querySelector('section').insertAdjacentHTML('beforeend', generateModalHtml(mainText, subText));
+
+    const modal = document.querySelector('dialog');
+
+    document.querySelector('.modal-cancel-btn').addEventListener('click', async () => {
+        modal.close();
+
+        if (onCancel instanceof Function) {
+            await onCancel();
+        }
+    });
+
+    document.querySelector('.modal-confirm-btn').addEventListener('click', async () => {
+        modal.close();
+
+        if (onConfirm instanceof Function) {
+            await onConfirm();
+        }
+    });
 };
 
 /* Event */
