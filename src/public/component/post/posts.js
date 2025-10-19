@@ -1,4 +1,4 @@
-import { formatDate, formatCount } from '../../utils/formatHelper.js';
+import { formatDate, formatCount } from '../../utils/format-helper.js';
 import { generateWriterInfoHtml } from '../common/member/member.js';
 
 const generatePostContainerHtml = (post) => {

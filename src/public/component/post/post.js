@@ -1,4 +1,4 @@
-import { formatCount, formatDate } from '../../utils/formatHelper.js';
+import { formatCount, formatDate } from '../../utils/format-helper.js';
 import { generateWriterInfoHtml } from '../common/member/member.js';
 
 export const paintPostForm = (post = {}) => {
