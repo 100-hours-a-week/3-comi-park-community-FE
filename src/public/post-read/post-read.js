@@ -31,7 +31,7 @@ const deleteCommentHandler = async (id) => {
 
     const deletedElement = document.querySelector(`[data-commentid="${id}"]`);
     document.querySelector('.comments-container').removeChild(deletedElement);
-    // document.querySelector('.post-comment-count').textContent = res.data.commentCount;
+    document.querySelector('.post-comment-count').textContent = res.data.commentCount;
 };
 
 const postLikeCountContainerClickHandler = async (target, postId) => {
