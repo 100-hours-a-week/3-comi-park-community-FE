@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const { domain, id } = btn.dataset;
 
             openModal({
-                mainText: '삭제하시겠습니까?',
+                mainText: `${domain === 'post' ? '게시글을' : '댓글을'} 삭제하시겠습니까?`,
                 subText: '삭제한 내용은 복구할 수 없습니다',
                 dataset: btn.dataset,
                 onConfirm: () => deleteHandlerMap[domain](id),
