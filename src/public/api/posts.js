@@ -16,6 +16,19 @@ export const requestReadPost = (postId) => {
     return request({ url: `/posts/${postId}` });
 };
 
+export const requestUpdatePost = (postId, requestBody = { postDeleted: false, imageDeleted: false }) => {
+    // 필수 전달 값 설정
+    if (!requestBody?.postDeleted) {
+        requestBody.postDeleted = false;
+    }
+
+    if (!requestBody.imageDeleted) {
+        requestBody.imageDeleted = false;
+    }
+
+    return request({ method: METHOD.PATCH, url: `/posts/${postId}`, body: requestBody });
+};
+
 export const requestDeletePost = (postId) => {
     return request({ method: METHOD.PATCH, url: `/posts/${postId}`, body: { postDeleted: true, imageDeleted: false } });
 };
