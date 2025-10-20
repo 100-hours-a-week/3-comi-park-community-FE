@@ -1,9 +1,27 @@
 import { formatCount, formatDate } from '../../utils/format-helper.js';
 import { generateWriterInfoHtml } from '../common/member/member.js';
 import { getCookie } from '../../utils/cookie-helper.js';
+import { validateRequiredInput, validatePostTitlePattern, validatePostContentPattern } from '../common/form/form.js';
+import { requestWritePost, requestUpdatePost } from '../../api/posts.js';
 
 export const paintPostForm = (post = {}) => {
     document.querySelector('section').insertAdjacentHTML('beforeend', generatePostFormHtml(post));
+
+    const formTitleInput = document.querySelector('#form-title-input');
+    const formContentInput = document.querySelector('#form-content-input');
+    const formSubmitBtn = document.querySelector('.form-submit-btn');
+
+    formTitleInput.addEventListener('keyup', ({ target }) => {
+        formInputKeyUpHandler('title', target);
+    });
+
+    formContentInput.addEventListener('keyup', ({ target }) => {
+        formInputKeyUpHandler('content', target);
+    });
+
+    formSubmitBtn.addEventListener('click', () => {
+        formSubmitBtnClickHandler(post?.id);
+    });
 };
 
 export const paintPostReadContainer = (post) => {
@@ -93,4 +111,84 @@ const generatePostReadContainerHtml = (post) => {
                 <div>댓글</div>
             </div>
         </div>`;
+};
+
+/* Event */
+const validationRules = {
+    title: {
+        validateFunc: validatePostTitlePattern,
+    },
+    content: {
+        validateFunc: validatePostContentPattern,
+    },
+};
+
+const ChangeFormSubmitBtnStatus = () => {
+    const formTitleInput = document.querySelector('#form-title-input');
+    const formContentInput = document.querySelector('#form-content-input');
+    const formSubmitBtn = document.querySelector('.form-submit-btn');
+
+    if (formTitleInput.dataset.validated === 'true' && formContentInput.dataset.validated === 'true') {
+        formSubmitBtn.classList.remove('inactivated');
+    } else {
+        formSubmitBtn.classList.add('inactivated');
+    }
+};
+
+const formInputKeyUpHandler = (name, target) => {
+    const title = target.value;
+    const helper = target.nextElementSibling;
+
+    const previousIsChanged = target.dataset.ischanged === 'true';
+
+    // 수정 여부 판단
+    if (!previousIsChanged) {
+        target.dataset.ischanged = true;
+    }
+
+    const previousValidated = target.dataset.validated === 'true';
+    const result = validationRules[name].validateFunc(title);
+
+    if (previousValidated == result.isValidated) {
+        return;
+    }
+
+    target.dataset.validated = result.isValidated;
+    helper.textContent = result.message;
+
+    ChangeFormSubmitBtnStatus();
+};
+
+const formSubmitBtnClickHandler = async (postId) => {
+    const form = document.querySelector('.form');
+
+    if (!validateRequiredInput(form)) {
+        return;
+    }
+
+    const title = form.querySelector('#form-title-input');
+    const content = form.querySelector('#form-content-input');
+
+    if (title.dataset.validated !== 'true' || content.dataset.validated !== 'true') {
+        return;
+    }
+
+    const requestBody = {};
+
+    if (title.dataset.ischanged === 'true') {
+        requestBody.title = title.value;
+    }
+
+    if (content.dataset.ischanged === 'true') {
+        requestBody.content = content.value;
+    }
+
+    const res = !!postId ? await requestUpdatePost(postId, requestBody) : await requestWritePost(requestBody);
+
+    if (!res.success) {
+        content.nextElementSibling.textContent = res.data;
+        return;
+    }
+
+    location.href = `/read/${!!postId ? postId : res.data.post.id}`;
 };
