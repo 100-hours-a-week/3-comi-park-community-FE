@@ -1,31 +1,14 @@
 import { validateRequiredInput, fieldValidationRules } from '../component/common/form/form.js';
 import { requestLogin } from '../api/auth.js';
 
-const formEmailInputKeyUpHandler = (target) => {
-    const email = target.value;
+const formInputKeyUpHandler = (name, target) => {
+    const value = target.value;
     const helper = target.nextElementSibling;
 
-    if (fieldValidationRules.email(email)) {
-        helper.textContent = '';
-        target.dataset.validated = true;
-    } else {
-        helper.textContent = '올바른 이메일 주소 형식을 입력하세요. (예: example@example.com)';
-        target.dataset.validated = false;
-    }
-};
+    const result = fieldValidationRules[name](value);
 
-const formPasswordInputKeyUpHandler = (target) => {
-    const password = target.value;
-    const helper = target.nextElementSibling;
-
-    if (fieldValidationRules.password(password)) {
-        helper.textContent = '';
-        target.dataset.validated = 'true';
-    } else {
-        helper.textContent =
-            '비밀번호는 8자 이상, 20자 이하이며, 대문자, 소문자, 숫자, 특수문자를 각각 최소 1개 포함해야 합니다';
-        target.dataset.validated = 'false';
-    }
+    target.dataset.validated = result.isValidated;
+    helper.textContent = result.message;
 };
 
 const formSubmitBtnClickHandler = async () => {
@@ -54,11 +37,11 @@ const formSubmitBtnClickHandler = async () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#form-email-input').addEventListener('keyup', ({ target }) => {
-        formEmailInputKeyUpHandler(target);
+        formInputKeyUpHandler('email', target);
     });
 
     document.querySelector('#form-password-input').addEventListener('keyup', ({ target }) => {
-        formPasswordInputKeyUpHandler(target);
+        formInputKeyUpHandler('password', target);
     });
 
     document.querySelector('.form-submit-btn').addEventListener('click', formSubmitBtnClickHandler);

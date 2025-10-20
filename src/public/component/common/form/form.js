@@ -16,12 +16,22 @@ export const validateRequiredInput = (form) => {
 
 const validateEmailPattern = (email) => {
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return regex.test(email);
+    const isValidated = regex.test(email);
+    return {
+        isValidated,
+        message: isValidated ? '' : '올바른 이메일 주소 형식을 입력하세요. (예: example@example.com)',
+    };
 };
 
 const validatePasswordPattern = (password) => {
     const regex = /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[~.!@#$%^&*()_\-+=\[\]{}|\\;:'",?/]).{8,20}$/;
-    return regex.test(password);
+    const isValidated = regex.test(password);
+    return {
+        isValidated,
+        message: isValidated
+            ? ''
+            : '비밀번호는 8자 이상, 20자 이하이며, 대문자, 소문자, 숫자, 특수문자를 각각 최소 1개 포함해야 합니다',
+    };
 };
 
 const validatePostTitlePattern = (title) => {
