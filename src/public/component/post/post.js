@@ -24,10 +24,11 @@ const generatePostFormHtml = (post) => {
                     class="form-input required"
                     id="form-title-input"
                     placeholder="제목을 입력해주세요. (최대 26글자)"
-                    data-validated="false"
+                    data-validated="${post?.title ? 'true' : 'false'}"
+                    data-ischanged="false"
                     value="${post?.title ?? ''}"
                 />
-                <div class="form-helper-text form-helper-title">제목을 작성해주세요</div>
+                <div class="form-helper-text form-helper-title">${post?.title ? '' : '제목을 작성해주세요'}</div>
             </div>
             <div>
                 <label for="form-content-input" class="form-label">내용*</label>
@@ -36,17 +37,18 @@ const generatePostFormHtml = (post) => {
                     class="form-input required"
                     id="form-content-input"
                     placeholder="내용을 입력해주세요."
-                    data-validated="false"
+                    data-validated="${post?.content ? 'true' : 'false'}"
+                    data-ischanged="false"
                     rows="25"
                 >${post?.content ?? ''}</textarea>
-                <div class="form-helper-text form-helper-content">내용을 작성해주세요</div>
+                <div class="form-helper-text form-helper-content">${post?.title ? '' : '내용을 작성해주세요'}</div>
             </div>
             <div>
                 <label for="form-file-input" class="form-label">이미지</label>
-                <input name="이미지" type="file" class="" id="form-file-input" />
+                <input name="이미지" type="file" class="" id="form-file-input" data-ischanged="false" />
             </div>
             <div>
-                <button class="btn form-submit-btn inactivated" type="button">완료</button>
+                <button class="btn form-submit-btn ${post?.id ? '' : 'inactivated'}" type="button">완료</button>
             </div>
         </form>`;
 };
