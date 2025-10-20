@@ -1,7 +1,7 @@
 import { formatCount, formatDate } from '../../utils/format-helper.js';
 import { generateWriterInfoHtml } from '../common/member/member.js';
 import { getCookie } from '../../utils/cookie-helper.js';
-import { validateRequiredInput, validatePostTitlePattern, validatePostContentPattern } from '../common/form/form.js';
+import { validateRequiredInput, fieldValidationRules } from '../common/form/form.js';
 import { requestWritePost, requestUpdatePost } from '../../api/posts.js';
 
 export const paintPostForm = (post = {}) => {
@@ -114,15 +114,6 @@ const generatePostReadContainerHtml = (post) => {
 };
 
 /* Event */
-const validationRules = {
-    title: {
-        validateFunc: validatePostTitlePattern,
-    },
-    content: {
-        validateFunc: validatePostContentPattern,
-    },
-};
-
 const ChangeFormSubmitBtnStatus = () => {
     const formTitleInput = document.querySelector('#form-title-input');
     const formContentInput = document.querySelector('#form-content-input');
@@ -136,7 +127,7 @@ const ChangeFormSubmitBtnStatus = () => {
 };
 
 const formInputKeyUpHandler = (name, target) => {
-    const title = target.value;
+    const value = target.value;
     const helper = target.nextElementSibling;
 
     const previousIsChanged = target.dataset.ischanged === 'true';
@@ -147,7 +138,7 @@ const formInputKeyUpHandler = (name, target) => {
     }
 
     const previousValidated = target.dataset.validated === 'true';
-    const result = validationRules[name].validateFunc(title);
+    const result = fieldValidationRules[name](value);
 
     if (previousValidated == result.isValidated) {
         return;

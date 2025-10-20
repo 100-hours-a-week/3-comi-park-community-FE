@@ -1,11 +1,11 @@
-import { validateRequiredInput, validateEmailPattern, validatePasswordPattern } from '../component/common/form/form.js';
+import { validateRequiredInput, fieldValidationRules } from '../component/common/form/form.js';
 import { requestLogin } from '../api/auth.js';
 
 const formEmailInputKeyUpHandler = (target) => {
     const email = target.value;
     const helper = target.nextElementSibling;
 
-    if (validateEmailPattern(email)) {
+    if (fieldValidationRules.email(email)) {
         helper.textContent = '';
         target.dataset.validated = true;
     } else {
@@ -18,7 +18,7 @@ const formPasswordInputKeyUpHandler = (target) => {
     const password = target.value;
     const helper = target.nextElementSibling;
 
-    if (validatePasswordPattern(password)) {
+    if (fieldValidationRules.password(password)) {
         helper.textContent = '';
         target.dataset.validated = 'true';
     } else {

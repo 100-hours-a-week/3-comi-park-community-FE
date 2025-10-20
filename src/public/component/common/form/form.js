@@ -14,17 +14,17 @@ export const validateRequiredInput = (form) => {
     return isAllinput;
 };
 
-export const validateEmailPattern = (email) => {
+const validateEmailPattern = (email) => {
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return regex.test(email);
 };
 
-export const validatePasswordPattern = (password) => {
+const validatePasswordPattern = (password) => {
     const regex = /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[~.!@#$%^&*()_\-+=\[\]{}|\\;:'",?/]).{8,20}$/;
     return regex.test(password);
 };
 
-export const validatePostTitlePattern = (title) => {
+const validatePostTitlePattern = (title) => {
     return {
         isValidated: title.length > 0 && title.length < 27,
         message:
@@ -36,9 +36,16 @@ export const validatePostTitlePattern = (title) => {
     };
 };
 
-export const validatePostContentPattern = (content) => {
+const validatePostContentPattern = (content) => {
     return {
         isValidated: content.length > 0,
         message: content.length == 0 ? '내용을 입력해주세요' : '',
     };
+};
+
+export const fieldValidationRules = {
+    title: validatePostTitlePattern,
+    content: validatePostContentPattern,
+    email: validateEmailPattern,
+    password: validatePasswordPattern,
 };
