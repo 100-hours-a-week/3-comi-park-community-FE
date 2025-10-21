@@ -19,7 +19,14 @@
                 <form class="form">
                     <div>
                         <label for="form-email-input" class="form-label">프로필 사진</label>
-                        <input name="이미지" type="file" class="" id="form-file-input" data-ischanged="false" />
+                        <input
+                            name="이미지"
+                            type="file"
+                            class=""
+                            id="form-file-input"
+                            data-ischanged="false"
+                            data-unique="false"
+                        />
                         <div class="form-helper-text form-helper-email"></div>
                     </div>
                     <div>
@@ -33,6 +40,7 @@
                             data-validated="false"
                             data-ischanged="false"
                             data-fieldname="email"
+                            data-unique="true"
                         />
                         <div class="form-helper-text form-helper-email"></div>
                     </div>
@@ -47,6 +55,7 @@
                             data-validated="false"
                             data-ischanged="false"
                             data-fieldname="password"
+                            data-unique="false"
                         />
                         <div class="form-helper-text form-helper-password"></div>
                     </div>
@@ -61,6 +70,7 @@
                             data-validated="false"
                             data-ischanged="false"
                             data-fieldname="confirmedPassword"
+                            data-unique="false"
                         />
                         <div class="form-helper-text form-helper-confirmed-password"></div>
                     </div>
@@ -75,6 +85,7 @@
                             data-validated="false"
                             data-ischanged="false"
                             data-fieldname="nickname"
+                            data-unique="true"
                         />
                         <div class="form-helper-text form-helper-nickname"></div>
                     </div>
