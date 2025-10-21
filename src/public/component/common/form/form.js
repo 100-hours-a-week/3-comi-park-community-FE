@@ -110,12 +110,7 @@ export const validateField = (name, target) => {
         target.dataset.ischanged = true;
     }
 
-    const previousValidated = target.dataset.validated === 'true';
     const result = fieldValidationRules[name](value);
-
-    if (previousValidated == result.isValidated) {
-        return previousValidated;
-    }
 
     target.dataset.validated = result.isValidated;
     helper.textContent = result.message;
