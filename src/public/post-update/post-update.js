@@ -1,5 +1,5 @@
-import { requestReadPost, requestUpdatePost } from '../api/posts.js';
 import { paintPostForm } from '../component/post/post.js';
+import { requestReadPost } from '../api/posts.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     const postId = Number(window.location.pathname.split('/').at(2));
