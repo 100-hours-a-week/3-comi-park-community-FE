@@ -45,7 +45,7 @@ function debouncedRequest(fn, delay = 200) {
     };
 }
 
-const formInputKeyUpHandler = (name, target) => {
+const validateField = (name, target) => {
     const value = target.value;
     const helper = target.nextElementSibling;
 
@@ -57,6 +57,22 @@ const formInputKeyUpHandler = (name, target) => {
     return result.isValidated;
 };
 
+const ChangeFormSubmitBtnStatus = () => {
+    const validatedInputElements = document.querySelectorAll('[data-validated]');
+    const formSubmitBtn = document.querySelector('.form-submit-btn');
+
+    for (const e of validatedInputElements) {
+        if (e.dataset.validated !== 'true') {
+            formSubmitBtn.classList.add('inactivated');
+            formSubmitBtn.disabled = true;
+            return;
+        }
+    }
+
+    formSubmitBtn.classList.remove('inactivated');
+    formSubmitBtn.disabled = false;
+};
+
 const inputFormInputHandlerDebounced = (inputElement) => {
     inputElement.addEventListener(
         'input',
@@ -65,21 +81,17 @@ const inputFormInputHandlerDebounced = (inputElement) => {
             const fieldName = target.dataset.fieldname;
             const fieldValue = target.value;
 
-            if (!formInputKeyUpHandler(fieldName, target)) {
-                // 유효한 값이 아니라면 중복 체크 요청을 보내지 않음
-                return;
+            if (validateField(fieldName, target) && isUnique) {
+                // 유효한 값이면서 중복 체크 요청이 필요한 경우에만 백엔드 서버로 request 요청
+                const res = await requestMap[fieldName](fieldValue);
+
+                if (!res.success) {
+                    target.nextElementSibling.textContent = res.data;
+                    target.dataset.validated = false;
+                }
             }
 
-            if (!isUnique) {
-                // 중복 체크 요청 필요 없음
-                return;
-            }
-
-            const res = await requestMap[fieldName](fieldValue);
-
-            if (!res.success) {
-                target.nextElementSibling.textContent = res.data;
-            }
+            ChangeFormSubmitBtnStatus();
         }, 400)
     );
 };
