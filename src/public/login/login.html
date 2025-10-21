@@ -26,6 +26,7 @@
                             id="form-email-input"
                             placeholder="이메일을 입력하세요"
                             data-validated="false"
+                            data-fieldname="email"
                         />
                         <div class="form-helper-text form-helper-email"></div>
                     </div>
@@ -38,6 +39,7 @@
                             id="form-password-input"
                             placeholder="비밀번호를 입력하세요"
                             data-validated="false"
+                            data-fieldname="password"
                         />
                         <div class="form-helper-text form-helper-password"></div>
                     </div>
@@ -45,7 +47,9 @@
                         <button class="btn form-submit-btn" type="button">로그인</button>
                     </div>
                 </form>
-                <div class="register"><button class="btn" type="button">회원가입</button></div>
+                <div class="register">
+                    <button class="btn" type="button"><a href="/register">회원가입</a></button>
+                </div>
             </section>
         </main>
 
