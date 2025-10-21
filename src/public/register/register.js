@@ -1,50 +1,10 @@
-import { validateRequiredInput, fieldValidationRules } from '../component/common/form/form.js';
-import { requestEmailDuplicationCheck, requestNicknameDuplicationCheck, requestRegister } from '../api/members.js';
+import { requestEmailDuplicationCheck, requestNicknameDuplicationCheck } from '../api/members.js';
+import { validateField, formSubmitBtnClickHandler } from '../component/common/form/form.js';
 import { debouncedRequest } from '../utils/debounce-helper.js';
 
 const requestMap = {
     email: requestEmailDuplicationCheck,
     nickname: requestNicknameDuplicationCheck,
-};
-
-const formSubmitBtnClickHandler = async () => {
-    const form = document.querySelector('.form');
-
-    if (!validateRequiredInput(form)) {
-        return;
-    }
-
-    // 유효성 검사 통과 못하면 return
-    const inputElements = document.querySelectorAll('[data-validated]');
-    for (const e of inputElements) {
-        if (e.dataset.validated !== 'true') return;
-    }
-
-    const requestBody = {};
-    for (const e of inputElements) {
-        requestBody[e.dataset.fieldname] = e.value;
-    }
-
-    const res = await requestRegister(requestBody);
-
-    if (!res.success) {
-        inputElements[0].nextElementSibling.textContent = res.data;
-        return;
-    }
-
-    location.href = '/login';
-};
-
-const validateField = (name, target) => {
-    const value = target.value;
-    const helper = target.nextElementSibling;
-
-    const result = fieldValidationRules[name](value);
-
-    target.dataset.validated = result.isValidated;
-    helper.textContent = result.message;
-
-    return result.isValidated;
 };
 
 const ChangeFormSubmitBtnStatus = () => {
@@ -88,5 +48,5 @@ const inputFormInputHandlerDebounced = (inputElement) => {
 
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.form-input').forEach((e) => inputFormInputHandlerDebounced(e));
-    document.querySelector('.form-submit-btn').addEventListener('click', formSubmitBtnClickHandler);
+    document.querySelector('.form-submit-btn').addEventListener('click', () => formSubmitBtnClickHandler('register'));
 });

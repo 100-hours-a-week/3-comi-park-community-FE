@@ -1,3 +1,7 @@
+import { requestLogin } from '../../../api/auth.js';
+import { requestRegister } from '../../../api/members.js';
+
+/* validation */
 /**
  * form 노드를 매개변수로 받아 form 내 필수 입력 값이 모두 입력됐는지 확인합니다
  */
@@ -81,4 +85,57 @@ export const fieldValidationRules = {
     password: validatePasswordPattern,
     confirmedPassword: validateConfirmedPasswordPattern,
     nickname: valdiateNicknamePattern,
+};
+
+/* form HTML과 상호작용 */
+const formSubmitMap = {
+    login: {
+        request: requestLogin,
+        redirectionPath: '/index',
+    },
+    register: {
+        request: requestRegister,
+        redirectionPath: '/login',
+    },
+};
+
+export const validateField = (name, target) => {
+    const value = target.value;
+    const helper = target.nextElementSibling;
+
+    const result = fieldValidationRules[name](value);
+
+    target.dataset.validated = result.isValidated;
+    helper.textContent = result.message;
+
+    return result.isValidated;
+};
+
+export const formSubmitBtnClickHandler = async (pageName) => {
+    const form = document.querySelector('.form');
+
+    if (!validateRequiredInput(form)) {
+        return;
+    }
+
+    // 유효성 검사 통과 못하면 return
+    const inputElements = document.querySelectorAll('[data-validated]');
+    for (const e of inputElements) {
+        if (e.dataset.validated !== 'true') return;
+    }
+
+    const requestBody = {};
+    for (const e of inputElements) {
+        requestBody[e.dataset.fieldname] = e.value;
+    }
+
+    const res = await formSubmitMap[pageName].request(requestBody);
+
+    if (!res.success) {
+        inputElements[0].nextElementSibling.textContent = res.data;
+        // password.nextElementSibling.textContent = '아이디 또는 비밀번호를 확인해주세요';
+        return;
+    }
+
+    location.href = formSubmitMap[pageName].redirectionPath;
 };

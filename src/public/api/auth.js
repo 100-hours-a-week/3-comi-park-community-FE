@@ -1,7 +1,7 @@
 import { request, METHOD } from './request.js';
 
-export const requestLogin = (email, password) => {
-    return request({ method: METHOD.POST, url: '/auth', body: { email, password } });
+export const requestLogin = (requestBody = { email: '', password: '' }) => {
+    return request({ method: METHOD.POST, url: '/auth', body: requestBody });
 };
 
 export const requestLogout = () => {
