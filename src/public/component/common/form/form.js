@@ -132,12 +132,14 @@ export const formSubmitBtnClickHandler = async (pageName) => {
 
     // 유효성 검사 통과 못하면 return
     const inputElementsWithValidated = document.querySelectorAll('[data-validated]');
+
     for (const e of inputElementsWithValidated) {
         if (e.dataset.validated !== 'true') return;
     }
 
     const inputElements = document.querySelectorAll('.form-input');
     const requestBody = {};
+
     for (const e of inputElements) {
         requestBody[e.dataset.fieldname] = e.value;
     }
