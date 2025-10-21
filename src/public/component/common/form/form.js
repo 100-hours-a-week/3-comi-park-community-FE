@@ -44,7 +44,7 @@ const validateConfirmedPasswordPattern = (password) => {
 
 const valdiateNicknamePattern = (nickname) => {
     return {
-        isValidated: !nickname.includes(' ') && nickname.length < 11,
+        isValidated: !nickname.includes(' ') && nickname.length < 11 && nickname.length > 0,
         message: nickname.includes(' ')
             ? '띄어쓰기를 없애주세요'
             : nickname.length > 10
