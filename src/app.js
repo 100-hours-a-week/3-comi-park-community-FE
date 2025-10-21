@@ -22,6 +22,10 @@ app.get('/login', (req, res) => {
     res.sendFile(path.join(import.meta.dirname, 'public', 'login', 'login.html'));
 });
 
+app.get('/register', (req, res) => {
+    res.sendFile(path.join(import.meta.dirname, 'public', 'register', 'register.html'));
+});
+
 app.get('/write', (req, res) => {
     res.sendFile(path.join(import.meta.dirname, 'public', 'post-write', 'post-write.html'));
 });

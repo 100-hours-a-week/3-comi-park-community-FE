@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>회원가입</title>
+
+        <link rel="stylesheet" href="../style.css" />
+        <link rel="stylesheet" href="../component/common/header/header.css" />
+        <link rel="stylesheet" href="../component/common/form/form.css" />
+        <link rel="stylesheet" href="./register.css" />
+    </head>
+    <body>
+        <header></header>
+
+        <main>
+            <section>
+                <div class="title"><span>회원가입</span></div>
+                <form class="form">
+                    <div>
+                        <label for="form-email-input" class="form-label">프로필 사진</label>
+                        <input name="이미지" type="file" class="" id="form-file-input" data-ischanged="false" />
+                        <div class="form-helper-text form-helper-email"></div>
+                    </div>
+                    <div>
+                        <label for="form-email-input" class="form-label">이메일</label>
+                        <input
+                            name="이메일"
+                            type="email"
+                            class="form-input required"
+                            id="form-email-input"
+                            placeholder="이메일을 입력하세요"
+                            data-validated="false"
+                            data-ischanged="false"
+                            data-fieldname="email"
+                        />
+                        <div class="form-helper-text form-helper-email"></div>
+                    </div>
+                    <div>
+                        <label for="form-password-input" class="form-label">비밀번호</label>
+                        <input
+                            name="비밀번호"
+                            type="password"
+                            class="form-input required"
+                            id="form-password-input"
+                            placeholder="비밀번호를 입력하세요"
+                            data-validated="false"
+                            data-ischanged="false"
+                            data-fieldname="password"
+                        />
+                        <div class="form-helper-text form-helper-password"></div>
+                    </div>
+                    <div>
+                        <label for="form-confirmed-password-input" class="form-label">비밀번호 확인</label>
+                        <input
+                            name="비밀번호 확인"
+                            type="password"
+                            class="form-input required"
+                            id="form-confirmed-password-input"
+                            placeholder="비밀번호를 한 번 더 입력하세요"
+                            data-validated="false"
+                            data-ischanged="false"
+                            data-fieldname="confirmedPassword"
+                        />
+                        <div class="form-helper-text form-helper-confirmed-password"></div>
+                    </div>
+                    <div>
+                        <label for="form-nickname-input" class="form-label">닉네임</label>
+                        <input
+                            name="닉네임"
+                            type="text"
+                            class="form-input required"
+                            id="form-nickname-input"
+                            placeholder="닉네임을 입력하세요"
+                            data-validated="false"
+                            data-ischanged="false"
+                            data-fieldname="nickname"
+                        />
+                        <div class="form-helper-text form-helper-nickname"></div>
+                    </div>
+                    <div>
+                        <button class="btn form-submit-btn" type="button">회원가입</button>
+                    </div>
+                </form>
+                <div class="login">
+                    <button class="btn" type="button"><a href="/login">로그인하러 가기</a></button>
+                </div>
+            </section>
+        </main>
+
+        <script type="module" src="../component/common/header/header.js"></script>
+        <script type="module" src="./register.js"></script>
+    </body>
+</html>
