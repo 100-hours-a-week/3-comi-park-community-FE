@@ -1,5 +1,6 @@
 import { validateRequiredInput, fieldValidationRules } from '../component/common/form/form.js';
 import { requestEmailDuplicationCheck, requestNicknameDuplicationCheck, requestRegister } from '../api/members.js';
+import { debouncedRequest } from '../utils/debounce-helper.js';
 
 const requestMap = {
     email: requestEmailDuplicationCheck,
@@ -33,17 +34,6 @@ const formSubmitBtnClickHandler = async () => {
 
     location.href = '/login';
 };
-
-function debouncedRequest(fn, delay = 200) {
-    let timer;
-    return function () {
-        const args = arguments;
-        clearTimeout(timer);
-        timer = setTimeout(() => {
-            fn.apply(this, args);
-        }, delay);
-    };
-}
 
 const validateField = (name, target) => {
     const value = target.value;
