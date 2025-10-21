@@ -3,7 +3,7 @@ import { requestLogout } from '../../../api/auth.js';
 const generateHeaderHtml = (isLogin = false, existsBackward = false) => {
     return `
         <div class="header-container">
-        <div class="backward ${isLogin && existsBackward ? '' : 'conceal'}">
+        <div class="backward ${existsBackward ? '' : 'conceal'}">
             <div class="backward-image">◀️</div>
         </div>
         <div class="title">
@@ -46,7 +46,7 @@ const backwardImageClickHandler = () => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    const backwardList = ['/read', '/write', '/update'];
+    const backwardList = ['/read', '/write', '/update', '/register'];
     const isLogin = document.cookie.includes('isLogin=true');
     const existsBackward = backwardList.some((url) => window.location.pathname.startsWith(url));
 
