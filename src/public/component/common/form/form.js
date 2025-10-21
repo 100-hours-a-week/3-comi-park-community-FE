@@ -34,11 +34,32 @@ const validatePasswordPattern = (password) => {
     };
 };
 
+const validateConfirmedPasswordPattern = (password) => {
+    const isValidated = document.querySelector('#form-password-input').value === password;
+    return {
+        isValidated,
+        message: isValidated ? '' : password.length === 0 ? '비밀번호를 한 번 더 입력해주세요' : '비밀번호가 다릅니다',
+    };
+};
+
+const valdiateNicknamePattern = (nickname) => {
+    return {
+        isValidated: !nickname.includes(' ') && nickname.length < 11,
+        message: nickname.includes(' ')
+            ? '띄어쓰기를 없애주세요'
+            : nickname.length > 10
+              ? '닉네임은 최대 10자까지 작성 가능합니다'
+              : nickname.length === 0
+                ? '닉네임을 입력해주세요'
+                : '',
+    };
+};
+
 const validatePostTitlePattern = (title) => {
     return {
         isValidated: title.length > 0 && title.length < 27,
         message:
-            title.length == 0
+            title.length === 0
                 ? '제목을 입력해주세요'
                 : title.length > 26
                   ? '제목은 최대 26글자까지 입력할 수 있습니다'
@@ -49,7 +70,7 @@ const validatePostTitlePattern = (title) => {
 const validatePostContentPattern = (content) => {
     return {
         isValidated: content.length > 0,
-        message: content.length == 0 ? '내용을 입력해주세요' : '',
+        message: content.length === 0 ? '내용을 입력해주세요' : '',
     };
 };
 
@@ -58,4 +79,6 @@ export const fieldValidationRules = {
     content: validatePostContentPattern,
     email: validateEmailPattern,
     password: validatePasswordPattern,
+    confirmedPassword: validateConfirmedPasswordPattern,
+    nickname: valdiateNicknamePattern,
 };
