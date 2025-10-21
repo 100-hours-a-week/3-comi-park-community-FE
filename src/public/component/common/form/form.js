@@ -103,7 +103,19 @@ export const validateField = (name, target) => {
     const value = target.value;
     const helper = target.nextElementSibling;
 
+    const previousIsChanged = target.dataset.ischanged === 'true';
+
+    // 수정 여부 판단
+    if (!previousIsChanged) {
+        target.dataset.ischanged = true;
+    }
+
+    const previousValidated = target.dataset.validated === 'true';
     const result = fieldValidationRules[name](value);
+
+    if (previousValidated == result.isValidated) {
+        return previousValidated;
+    }
 
     target.dataset.validated = result.isValidated;
     helper.textContent = result.message;
@@ -119,11 +131,12 @@ export const formSubmitBtnClickHandler = async (pageName) => {
     }
 
     // 유효성 검사 통과 못하면 return
-    const inputElements = document.querySelectorAll('[data-validated]');
-    for (const e of inputElements) {
+    const inputElementsWithValidated = document.querySelectorAll('[data-validated]');
+    for (const e of inputElementsWithValidated) {
         if (e.dataset.validated !== 'true') return;
     }
 
+    const inputElements = document.querySelectorAll('.form-input');
     const requestBody = {};
     for (const e of inputElements) {
         requestBody[e.dataset.fieldname] = e.value;
@@ -133,9 +146,22 @@ export const formSubmitBtnClickHandler = async (pageName) => {
 
     if (!res.success) {
         inputElements[0].nextElementSibling.textContent = res.data;
-        // password.nextElementSibling.textContent = '아이디 또는 비밀번호를 확인해주세요';
         return;
     }
 
     location.href = formSubmitMap[pageName].redirectionPath;
+};
+
+export const ChangeFormSubmitBtnStatus = () => {
+    const validatedInputElements = document.querySelectorAll('[data-validated]');
+    const formSubmitBtn = document.querySelector('.form-submit-btn');
+
+    for (const e of validatedInputElements) {
+        if (e.dataset.validated !== 'true') {
+            formSubmitBtn.classList.add('inactivated');
+            return;
+        }
+    }
+
+    formSubmitBtn.classList.remove('inactivated');
 };

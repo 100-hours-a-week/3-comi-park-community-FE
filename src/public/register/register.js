@@ -1,26 +1,10 @@
+import { validateField, formSubmitBtnClickHandler, ChangeFormSubmitBtnStatus } from '../component/common/form/form.js';
 import { requestEmailDuplicationCheck, requestNicknameDuplicationCheck } from '../api/members.js';
-import { validateField, formSubmitBtnClickHandler } from '../component/common/form/form.js';
 import { debouncedRequest } from '../utils/debounce-helper.js';
 
 const requestMap = {
     email: requestEmailDuplicationCheck,
     nickname: requestNicknameDuplicationCheck,
-};
-
-const ChangeFormSubmitBtnStatus = () => {
-    const validatedInputElements = document.querySelectorAll('[data-validated]');
-    const formSubmitBtn = document.querySelector('.form-submit-btn');
-
-    for (const e of validatedInputElements) {
-        if (e.dataset.validated !== 'true') {
-            formSubmitBtn.classList.add('inactivated');
-            formSubmitBtn.disabled = true;
-            return;
-        }
-    }
-
-    formSubmitBtn.classList.remove('inactivated');
-    formSubmitBtn.disabled = false;
 };
 
 const inputFormInputHandlerDebounced = (inputElement) => {
