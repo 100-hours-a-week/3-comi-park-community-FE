@@ -4,7 +4,9 @@ import { getCookie } from '../../utils/cookie-helper.js';
 import { validateRequiredInput, ChangeFormSubmitBtnStatus, validateField } from '../common/form/form.js';
 import { requestWritePost, requestUpdatePost } from '../../api/posts.js';
 import { debouncedRequest } from '../../utils/debounce-helper.js';
+import { API_SERVER_URI } from '../../utils/constants.js';
 import { generatePostImageHtml } from '../common/image/image.js';
+import { requestPostImageUpload } from '../../api/images.js';
 
 export const paintPostForm = (post = {}) => {
     document.querySelector('section').insertAdjacentHTML('beforeend', generatePostFormHtml(post));
@@ -20,6 +22,31 @@ export const paintPostForm = (post = {}) => {
             }, 400)
         )
     );
+
+    document.querySelector('.form-post-image-input').addEventListener('change', async ({ target }) => {
+        const file = target.files[0];
+
+        if (!file) {
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const res = await requestPostImageUpload(formData);
+
+        if (!res.success) {
+            console.error(res.data);
+        } else {
+            console.log('업로드');
+            target.src = `${API_SERVER_URI}/s3/${res.data.image.objectKey}`;
+            target.dataset.ischanged = true;
+            target.dataset.image = JSON.stringify({
+                id: res.data.image.id,
+                objectKey: res.data.image.objectKey,
+            });
+        }
+    });
 
     formSubmitBtn.addEventListener('click', () => {
         formSubmitBtnClickHandler(post?.id);
@@ -66,8 +93,15 @@ const generatePostFormHtml = (post) => {
                 <div class="form-helper-text form-helper-content">${post?.title ? '' : '내용을 작성해주세요'}</div>
             </div>
             <div>
-                <label for="form-image-input" class="form-label">이미지</label>
-                <input name="이미지" type="file" class="" id="form-image-input" data-ischanged="false" />
+                <label for="form-post-image-input" class="form-label">이미지</label>
+                <input
+                    name="이미지"
+                    type="file"
+                    class="form-post-image-input"
+                    id="form-image-input"
+                    data-ischanged="false"
+                    data-fieldname="image"
+                />
             </div>
             <div>
                 <button class="btn form-submit-btn ${post?.id ? '' : 'inactivated'}" type="button">완료</button>
@@ -86,8 +120,6 @@ const generatePostReadContainerHtml = (post) => {
     };
 
     const loginMember = getCookie('loginMember');
-
-    // TODO: 게시글 이미지 가져오기
 
     return `
         <div class="post-title">${post.title}</div>
@@ -132,7 +164,12 @@ const formSubmitBtnClickHandler = async (postId) => {
     }
 
     const inputElements = document.querySelectorAll('.form-input');
+    const formProfileImageElement = document.querySelector('.form-post-image-input');
     const requestBody = {};
+
+    if (formProfileImageElement.dataset.ischanged === 'true') {
+        requestBody.image = JSON.parse(formProfileImageElement.dataset.image);
+    }
 
     for (const e of inputElements) {
         if (e.dataset.ischanged === 'true') {
