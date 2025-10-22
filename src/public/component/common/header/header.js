@@ -12,7 +12,7 @@ const generateHeaderHtml = (isLogin = false, existsBackward = false) => {
         <div class="profile ${isLogin ? '' : 'conceal'}">
             <div class="profile-image">👤</div>
             <ul class="profile-list hide">
-                <li class="profile-list-item"><a href="#">회원정보수정</a></li>
+                <li class="profile-list-item"><a href="/account">회원정보수정</a></li>
                 <li class="profile-list-item"><a href="#">비밀번호수정</a></li>
                 <li class="profile-list-item logout-btn click">로그아웃</li>
             </ul>
