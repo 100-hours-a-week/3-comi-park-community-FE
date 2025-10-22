@@ -1,4 +1,6 @@
 import { requestLogout } from '../../../api/auth.js';
+import { getCookie } from '../../../utils/cookie-helper.js';
+import { paintProfileImage } from '../image/image.js';
 
 const generateHeaderHtml = (isLogin = false, existsBackward = false) => {
     return `
@@ -10,7 +12,7 @@ const generateHeaderHtml = (isLogin = false, existsBackward = false) => {
             <div class="title-name"><a href="/index">아무 말 대잔치</a></div>
         </div>
         <div class="profile ${isLogin ? '' : 'conceal'}">
-            <div class="profile-image">👤</div>
+            <div class="profile-image"></div>
             <ul class="profile-list hide">
                 <li class="profile-list-item"><a href="/account">회원정보수정</a></li>
                 <li class="profile-list-item"><a href="/account/password">비밀번호수정</a></li>
@@ -45,7 +47,7 @@ const backwardImageClickHandler = () => {
     history.back();
 };
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const backwardList = ['/read', '/write', '/update', '/register'];
     const isLogin = document.cookie.includes('isLogin=true');
     const existsBackward = backwardList.some((url) => window.location.pathname.startsWith(url));
@@ -56,6 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isLogin) {
         document.querySelector('.profile-image').addEventListener('click', profileImageClickListHandler);
         document.querySelector('.logout-btn').addEventListener('click', logoutBtnClickHandler);
+        await paintProfileImage(getCookie('loginMember'));
     }
 
     // 뒤로 가기 버튼이 노출된 상태라면 이전 페이지로 이동하는 클릭 이벤트 등록
