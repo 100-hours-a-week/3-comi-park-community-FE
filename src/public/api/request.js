@@ -14,14 +14,24 @@ export const METHOD = Object.freeze({
  * params: String 타입
  * body: Object 타입
  */
-export const request = async ({ method = METHOD.GET, url = '/', params = '', body = undefined }) => {
+export const request = async ({
+    method = METHOD.GET,
+    url = '/',
+    params = '',
+    body = undefined,
+    isFormData = false,
+}) => {
+    const options = { method, credentials: 'include' };
+
+    if (isFormData) {
+        options.body = body;
+    } else {
+        options.headers = { 'Content-Type': 'application/json' };
+        options.body = JSON.stringify(body);
+    }
+
     try {
-        const res = await fetch(`${API_SERVER_URI}${url}?${params}`, {
-            method: method,
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(body),
-            credentials: 'include',
-        });
+        const res = await fetch(`${API_SERVER_URI}${url}?${params}`, options);
         const json = await res.json();
         return json;
     } catch (error) {
