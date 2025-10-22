@@ -12,7 +12,17 @@ const requestMemberImage = async (memberId) => {
     return res.data.member.image;
 };
 
-const generateProfileImageHtml = (image, size) => {
+export const generatePostImageHtml = (image) => {
+    return !!image
+        ? `<img
+            src="${API_SERVER_URI}/s3/${image.objectKey}"
+            alt="post image"
+            style="width: 100%"
+        />`
+        : '';
+};
+
+export const generateProfileImageHtml = (image, size = { width: 50, height: 50 }) => {
     return `
         <img
             src="${!!image ? `${API_SERVER_URI}/s3/${image.objectKey}` : '/assets/default-profile-image.png'}"

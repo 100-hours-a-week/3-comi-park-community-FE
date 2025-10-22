@@ -4,6 +4,7 @@ import { getCookie } from '../../utils/cookie-helper.js';
 import { validateRequiredInput, ChangeFormSubmitBtnStatus, validateField } from '../common/form/form.js';
 import { requestWritePost, requestUpdatePost } from '../../api/posts.js';
 import { debouncedRequest } from '../../utils/debounce-helper.js';
+import { generatePostImageHtml } from '../common/image/image.js';
 
 export const paintPostForm = (post = {}) => {
     document.querySelector('section').insertAdjacentHTML('beforeend', generatePostFormHtml(post));
@@ -98,7 +99,9 @@ const generatePostReadContainerHtml = (post) => {
             ${loginMember == post.member.id ? updateDeleteBtnHtml() : ''}
         </div>
         <div class="custom-hr"></div>
-        <div class="post-image"></div>
+        <div class="post-image">
+            ${generatePostImageHtml(post.image)} 
+        </div>
         <div class="post-content">${post.content}</div>
         <div class="post-stat-container">
             <div class="post-stat post-like-count-container" data-isLiked="${post.liked}">

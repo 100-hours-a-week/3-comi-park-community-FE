@@ -18,7 +18,6 @@ const generatePostContainerHtml = (post) => {
             <div class="custom-hr"></div>
             ${generateWriterInfoHtml(post.member)}
         </div>`;
-    // TODO: post.member.image.id 있으면 프로필 이미지 가져오기
 };
 
 const generatePostsContainerHtml = (posts) => {
