@@ -65,8 +65,8 @@ const generatePostFormHtml = (post) => {
                 <div class="form-helper-text form-helper-content">${post?.title ? '' : '내용을 작성해주세요'}</div>
             </div>
             <div>
-                <label for="form-file-input" class="form-label">이미지</label>
-                <input name="이미지" type="file" class="" id="form-file-input" data-ischanged="false" />
+                <label for="form-image-input" class="form-label">이미지</label>
+                <input name="이미지" type="file" class="" id="form-image-input" data-ischanged="false" />
             </div>
             <div>
                 <button class="btn form-submit-btn ${post?.id ? '' : 'inactivated'}" type="button">완료</button>
