@@ -1,7 +1,13 @@
 import { validateRequiredInput, validateField, ChangeFormSubmitBtnStatus } from '../component/common/form/form.js';
-import { requestMemberInfo, requestMemberInfoUpdate, requestNicknameDuplicationCheck } from '../api/members.js';
+import {
+    requestMemberInfo,
+    requestMemberInfoUpdate,
+    requestNicknameDuplicationCheck,
+    requestMemberDelete,
+} from '../api/members.js';
 import { debouncedRequest } from '../utils/debounce-helper.js';
 import { getCookie } from '../utils/cookie-helper.js';
+import { openModal } from '../component/common/modal/modal.js';
 
 const requestMap = {
     nickname: requestNicknameDuplicationCheck,
@@ -82,4 +88,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     document
         .querySelector('.form-submit-btn')
         .addEventListener('click', () => formSubmitBtnClickHandler(loginMemberId));
+
+    /* 삭제 모달 */
+    document.querySelectorAll('.withdraw-btn').forEach((btn) =>
+        btn.addEventListener('click', () => {
+            openModal({
+                mainText: `회원 탈퇴하시겠습니까?`,
+                subText: '작성된 게시글과 댓글은 삭제됩니다',
+                dataset: { domain: 'member', id: loginMemberId },
+                onConfirm: async () => {
+                    const res = await requestMemberDelete(loginMemberId);
+
+                    if (!res.success) {
+                        alert(res.data);
+                        return;
+                    }
+
+                    location.href = '/login';
+                },
+            });
+        })
+    );
 });

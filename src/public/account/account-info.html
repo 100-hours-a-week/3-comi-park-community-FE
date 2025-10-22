@@ -7,6 +7,7 @@
 
         <link rel="stylesheet" href="../style.css" />
         <link rel="stylesheet" href="../component/common/header/header.css" />
+        <link rel="stylesheet" href="../component/common/modal/modal.css" />
         <link rel="stylesheet" href="../component/common/form/form.css" />
     </head>
     <body>
@@ -51,13 +52,14 @@
                         <button class="btn form-submit-btn inactivated" type="button">수정하기</button>
                     </div>
                 </form>
-                <div class="register">
-                    <button class="btn withdraw-btn" type="button">회원 탈퇴</button>
+                <div class="">
+                    <button class="btn withdraw-btn" type="button" data-domain="member" data-id="">회원 탈퇴</button>
                 </div>
             </section>
         </main>
 
         <script type="module" src="../component/common/header/header.js"></script>
+        <script type="module" src="../component/common/modal/modal.js"></script>
         <script type="module" src="./account-info.js"></script>
     </body>
 </html>

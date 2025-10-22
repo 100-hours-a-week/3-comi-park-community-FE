@@ -24,3 +24,7 @@ export const requestMemberInfoUpdate = (memberId, requestBody = { imageDeleted: 
 
     return request({ method: METHOD.PATCH, url: `/members/${memberId}`, body: requestBody });
 };
+
+export const requestMemberDelete = (memberId) => {
+    return request({ method: METHOD.DELETE, url: `/members/${memberId}` });
+};
