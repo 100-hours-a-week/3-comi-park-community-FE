@@ -7,6 +7,7 @@ import {
 } from '../api/members.js';
 import { debouncedRequest } from '../utils/debounce-helper.js';
 import { getCookie } from '../utils/cookie-helper.js';
+import { API_SERVER_URI } from '../utils/constants.js';
 import { openModal } from '../component/common/modal/modal.js';
 
 const requestMap = {
@@ -109,4 +110,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         })
     );
+
+    /* 이미지 처리 */
+    const imageSrc = !!res.data.member.image
+        ? `${API_SERVER_URI}/s3/${res.data.member.image.objectKey}`
+        : '/assets/default-profile-image.png';
+    document.querySelector('.form-profile-image').src = imageSrc;
+    document.querySelector('.form-profile-image-container').addEventListener('click', () => {
+        document.querySelector('.form-profile-image-hidden').click();
+    });
 });

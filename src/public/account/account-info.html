@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="../component/common/header/header.css" />
         <link rel="stylesheet" href="../component/common/modal/modal.css" />
         <link rel="stylesheet" href="../component/common/form/form.css" />
+        <link rel="stylesheet" href="../component/common/image/image.css" />
     </head>
     <body>
         <header></header>
@@ -19,13 +20,18 @@
                 <form class="form">
                     <div>
                         <label for="form-image-input" class="form-label">프로필 사진</label>
+                        <div class="form-profile-image-container">
+                            <img class="form-profile-image" src="" width="250" height="250" alt="profile image" />
+                            <button type="button" class="btn purple profile-overlay">변경</button>
+                        </div>
                         <input
                             name="이미지"
                             type="file"
-                            class=""
+                            class="form-profile-image-hidden"
                             id="form-image-input"
                             data-ischanged="false"
                             data-unique="false"
+                            style="display: none"
                         />
                         <div class="form-helper-text form-helper-image"></div>
                     </div>
