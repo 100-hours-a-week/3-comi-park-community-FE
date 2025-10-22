@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>회원정보 수정</title>
+
+        <link rel="stylesheet" href="../style.css" />
+        <link rel="stylesheet" href="../component/common/header/header.css" />
+        <link rel="stylesheet" href="../component/common/modal/modal.css" />
+        <link rel="stylesheet" href="../component/common/form/form.css" />
+    </head>
+    <body>
+        <header></header>
+
+        <main>
+            <section>
+                <div class="title"><span>회원정보 수정</span></div>
+                <form class="form">
+                    <div>
+                        <label for="form-image-input" class="form-label">프로필 사진</label>
+                        <input
+                            name="이미지"
+                            type="file"
+                            class=""
+                            id="form-file-input"
+                            data-ischanged="false"
+                            data-unique="false"
+                        />
+                        <div class="form-helper-text form-helper-image"></div>
+                    </div>
+                    <div>
+                        <label for="form-email-input" class="form-label">이메일</label>
+                        <input name="이메일" type="email" class="" id="form-email-input" disabled />
+                    </div>
+                    <div>
+                        <label for="form-nickname-input" class="form-label">닉네임</label>
+                        <input
+                            name="닉네임"
+                            type="text"
+                            class="form-input required"
+                            id="form-nickname-input"
+                            placeholder="닉네임을 입력하세요"
+                            data-validated="false"
+                            data-ischanged="false"
+                            data-fieldname="nickname"
+                            data-unique="true"
+                        />
+                        <div class="form-helper-text form-helper-nickname"></div>
+                    </div>
+                    <div>
+                        <button class="btn form-submit-btn inactivated" type="button">수정하기</button>
+                    </div>
+                </form>
+                <div class="">
+                    <button class="btn withdraw-btn" type="button" data-domain="member" data-id="">회원 탈퇴</button>
+                </div>
+            </section>
+        </main>
+
+        <script type="module" src="../component/common/header/header.js"></script>
+        <script type="module" src="../component/common/modal/modal.js"></script>
+        <script type="module" src="./account-info.js"></script>
+    </body>
+</html>

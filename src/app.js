@@ -38,6 +38,14 @@ app.get('/update/:postId', (req, res) => {
     res.sendFile(path.join(import.meta.dirname, 'public', 'post-update', 'post-update.html'));
 });
 
+app.get('/account', (req, res) => {
+    res.sendFile(path.join(import.meta.dirname, 'public', 'account', 'account-info.html'));
+});
+
+app.get('/account/password', (req, res) => {
+    res.sendFile(path.join(import.meta.dirname, 'public', 'account', 'account-password.html'));
+});
+
 app.listen(port, () => {
     console.log(`Express runs on port ${port}`);
 });
