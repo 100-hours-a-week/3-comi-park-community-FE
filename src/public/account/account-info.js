@@ -9,6 +9,7 @@ import { debouncedRequest } from '../utils/debounce-helper.js';
 import { getCookie } from '../utils/cookie-helper.js';
 import { API_SERVER_URI } from '../utils/constants.js';
 import { openModal } from '../component/common/modal/modal.js';
+import { requestMemberImageUpload } from '../api/images.js';
 
 const requestMap = {
     nickname: requestNicknameDuplicationCheck,
@@ -44,7 +45,7 @@ const inputFormInputHandlerDebounced = (inputElement, originalValue) => {
     );
 };
 
-export const formSubmitBtnClickHandler = async (memberId) => {
+export const formSubmitBtnClickHandler = async (target, memberId) => {
     const form = document.querySelector('.form');
 
     if (!validateRequiredInput(form)) {
@@ -59,7 +60,13 @@ export const formSubmitBtnClickHandler = async (memberId) => {
     }
 
     const inputElements = document.querySelectorAll('.form-input');
+
+    const formProfileImageElement = document.querySelector('.form-profile-image');
     const requestBody = {};
+
+    if (formProfileImageElement.dataset.ischanged === 'true') {
+        requestBody.image = JSON.parse(formProfileImageElement.dataset.image);
+    }
 
     for (const e of inputElements) {
         requestBody[e.dataset.fieldname] = e.value;
@@ -71,7 +78,12 @@ export const formSubmitBtnClickHandler = async (memberId) => {
         inputElements[0].nextElementSibling.textContent = res.data;
         return;
     }
+
     inputElements[0].nextElementSibling.textContent = '수정 완료';
+
+    // 수정이 완료됐으므로 초기화
+    document.querySelectorAll('[data-ischanged]').forEach((e) => (e.dataset.ischanged = false));
+    target.classList.add('inactivated');
 };
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -88,7 +100,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     inputFormInputHandlerDebounced(nicknameInput, res.data.member.nickname);
     document
         .querySelector('.form-submit-btn')
-        .addEventListener('click', () => formSubmitBtnClickHandler(loginMemberId));
+        .addEventListener('click', ({ target }) => formSubmitBtnClickHandler(target, loginMemberId));
 
     /* 삭제 모달 */
     document.querySelectorAll('.withdraw-btn').forEach((btn) =>
@@ -112,11 +124,39 @@ document.addEventListener('DOMContentLoaded', async () => {
     );
 
     /* 이미지 처리 */
+    const formProfileImageElement = document.querySelector('.form-profile-image');
     const imageSrc = !!res.data.member.image
         ? `${API_SERVER_URI}/s3/${res.data.member.image.objectKey}`
         : '/assets/default-profile-image.png';
-    document.querySelector('.form-profile-image').src = imageSrc;
+    formProfileImageElement.src = imageSrc;
     document.querySelector('.form-profile-image-container').addEventListener('click', () => {
         document.querySelector('.form-profile-image-hidden').click();
+    });
+
+    document.querySelector('.form-profile-image-hidden').addEventListener('change', async ({ target }) => {
+        const file = target.files[0];
+
+        if (!file) {
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const res = await requestMemberImageUpload(formData);
+
+        if (!res.success) {
+            target.nextElementSibling.textContent = res.data;
+        } else {
+            target.nextElementSibling.textContent = '업로드 ';
+            formProfileImageElement.src = `${API_SERVER_URI}/s3/${res.data.image.objectKey}`;
+            formProfileImageElement.dataset.ischanged = true;
+            formProfileImageElement.dataset.image = JSON.stringify({
+                id: res.data.image.id,
+                objectKey: res.data.image.objectKey,
+            });
+
+            ChangeFormSubmitBtnStatus();
+        }
     });
 });
