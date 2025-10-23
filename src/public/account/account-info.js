@@ -6,10 +6,10 @@ import {
     requestMemberDelete,
 } from '../api/members.js';
 import { debouncedRequest } from '../utils/debounce-helper.js';
-import { getCookie } from '../utils/cookie-helper.js';
 import { API_SERVER_URI } from '../utils/constants.js';
 import { openModal } from '../component/common/modal/modal.js';
 import { requestMemberImageUpload } from '../api/images.js';
+import { getAuth } from '../utils/auth-guard.js';
 
 const requestMap = {
     nickname: requestNicknameDuplicationCheck,
@@ -87,8 +87,11 @@ export const formSubmitBtnClickHandler = async (target, memberId) => {
 };
 
 document.addEventListener('DOMContentLoaded', async () => {
+    const { success, loginMemberId } = await getAuth();
+
+    if (!success) return;
+
     const nicknameInput = document.querySelector('#form-nickname-input');
-    const loginMemberId = getCookie('loginMember');
 
     const res = await requestMemberInfo(loginMemberId);
 

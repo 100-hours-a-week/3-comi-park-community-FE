@@ -4,6 +4,7 @@ import { requestComments, requestDeleteComment } from '../api/comments.js';
 import { paintCommentsContainer } from '../component/comments/comments.js';
 import { paintPostReadContainer } from '../component/post/post.js';
 import { openModal } from '../component/common/modal/modal.js';
+import { getAuth } from '../utils/auth-guard.js';
 
 const deleteHandlerMap = {
     post: (id) => deletePostHandler(id),
@@ -50,6 +51,10 @@ const postLikeCountContainerClickHandler = async (target, postId) => {
 };
 
 document.addEventListener('DOMContentLoaded', async () => {
+    const { success, loginMemberId } = await getAuth();
+
+    if (!success) return;
+
     /* 게시글 */
     const postId = Number(window.location.pathname.split('/').at(2));
     const postRes = await requestReadPost(postId);

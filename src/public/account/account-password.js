@@ -1,7 +1,7 @@
 import { validateRequiredInput, validateField, ChangeFormSubmitBtnStatus } from '../component/common/form/form.js';
 import { requestMemberInfoUpdate } from '../api/members.js';
 import { debouncedRequest } from '../utils/debounce-helper.js';
-import { getCookie } from '../utils/cookie-helper.js';
+import { getAuth } from '../utils/auth-guard.js';
 
 const inputFormInputHandlerDebounced = (inputElement) => {
     inputElement.addEventListener(
@@ -45,8 +45,10 @@ export const formSubmitBtnClickHandler = async (memberId) => {
     inputElements[0].nextElementSibling.textContent = '수정 완료';
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-    const loginMemberId = getCookie('loginMember');
+document.addEventListener('DOMContentLoaded', async () => {
+    const { success, loginMemberId } = await getAuth();
+
+    if (!success) return;
 
     document.querySelectorAll('.form-input').forEach((e) => inputFormInputHandlerDebounced(e));
     document
