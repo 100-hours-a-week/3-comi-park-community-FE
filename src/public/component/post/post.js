@@ -23,8 +23,19 @@ export const paintPostForm = (post = {}) => {
         )
     );
 
+    const formPostImageElement = document.querySelector('.form-post-image');
+
     document.querySelector('.form-image-add-btn').addEventListener('click', () => {
         document.querySelector('.form-post-image-hidden').click();
+    });
+
+    document.querySelector('.form-image-delete-btn').addEventListener('click', ({ target }) => {
+        document.querySelector('.form-post-image-hidden').value = '';
+        formPostImageElement.value = '이미지가 없습니다';
+        formPostImageElement.dataset.ischanged = true;
+        formPostImageElement.dataset.image = null;
+
+        ChangeFormSubmitBtnStatus();
     });
 
     document.querySelector('.form-post-image-hidden').addEventListener('change', async ({ target }) => {
@@ -43,7 +54,6 @@ export const paintPostForm = (post = {}) => {
             console.error(res.data);
         } else {
             console.log('업로드');
-            const formPostImageElement = document.querySelector('.form-post-image');
             formPostImageElement.value = res.data.image.filename;
             formPostImageElement.dataset.ischanged = true;
             formPostImageElement.dataset.image = JSON.stringify({
@@ -101,9 +111,7 @@ const generatePostFormHtml = (post) => {
             <div>
                 <label for="form-image-input" class="form-label">이미지</label>
                 <input type="text" class="form-input form-post-image" value="${
-                    post?.image?.objectKey
-                        ? `${API_SERVER_URI}/s3/${post.image.objectKey}`
-                        : '/assets/default-profile-image.png'
+                    post?.image?.objectKey ? `${API_SERVER_URI}/s3/${post.image.objectKey}` : '이미지가 없습니다'
                 }" disabled />
                 <div class="form-post-image-container">
                     <button type="button" class="btn purple form-image-add-btn">변경</button>
