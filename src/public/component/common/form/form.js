@@ -132,8 +132,13 @@ export const formSubmitBtnClickHandler = async (pageName) => {
         if (e.dataset.validated !== 'true') return;
     }
 
+    const formProfileImageElement = document.querySelector('.form-profile-image');
     const inputElements = document.querySelectorAll('.form-input');
     const requestBody = {};
+
+    if (formProfileImageElement?.dataset?.ischanged === 'true') {
+        requestBody.image = JSON.parse(formProfileImageElement.dataset.image);
+    }
 
     for (const e of inputElements) {
         requestBody[e.dataset.fieldname] = e.value;
