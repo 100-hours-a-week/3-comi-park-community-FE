@@ -18,11 +18,11 @@ export const requestMemberInfo = (memberId) => {
 
 export const requestMemberInfoUpdate = (memberId, requestBody = { imageDeleted: false }) => {
     // 필수 전달 값 설정
-    if (!requestBody.imageDeleted) {
+    if (!requestBody?.imageDeleted) {
         requestBody.imageDeleted = false;
     }
 
-    if (requestBody?.image == null) {
+    if (Object.hasOwn(requestBody, 'image') && requestBody.image == null) {
         requestBody.imageDeleted = true;
     }
 
