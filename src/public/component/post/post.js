@@ -75,7 +75,6 @@ export const paintPostReadContainer = (post) => {
 /* HTML */
 // 게시글 작성/수정 HTML
 const generatePostFormHtml = (post) => {
-    // TODO: 처음에 .form-post-image의 value로 이미지 filename 넣도록 수정 (백엔드 응답 값 수정 필요)
     return `
         <div class="title">게시글 ${post?.id ? '수정' : '작성'}</div>
         <form class="form">
@@ -110,9 +109,7 @@ const generatePostFormHtml = (post) => {
             </div>
             <div>
                 <label for="form-image-input" class="form-label">이미지</label>
-                <input type="text" class="form-input form-post-image" value="${
-                    post?.image?.objectKey ? `${API_SERVER_URI}/s3/${post.image.objectKey}` : '이미지가 없습니다'
-                }" disabled />
+                <input type="text" class="form-input form-post-image" value="${post?.image?.filename ?? '이미지가 없습니다'}" disabled />
                 <div class="form-post-image-container">
                     <button type="button" class="btn purple form-image-add-btn">변경</button>
                     <button type="button" class="btn purple form-image-delete-btn">삭제</button>
