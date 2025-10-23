@@ -4,6 +4,9 @@ import { getCookie } from '../../utils/cookie-helper.js';
 import { validateRequiredInput, ChangeFormSubmitBtnStatus, validateField } from '../common/form/form.js';
 import { requestWritePost, requestUpdatePost } from '../../api/posts.js';
 import { debouncedRequest } from '../../utils/debounce-helper.js';
+import { API_SERVER_URI } from '../../utils/constants.js';
+import { generatePostImageHtml } from '../common/image/image.js';
+import { requestPostImageUpload } from '../../api/images.js';
 
 export const paintPostForm = (post = {}) => {
     document.querySelector('section').insertAdjacentHTML('beforeend', generatePostFormHtml(post));
@@ -19,6 +22,46 @@ export const paintPostForm = (post = {}) => {
             }, 400)
         )
     );
+
+    const formPostImageElement = document.querySelector('.form-post-image');
+
+    document.querySelector('.form-image-add-btn').addEventListener('click', () => {
+        document.querySelector('.form-post-image-hidden').click();
+    });
+
+    document.querySelector('.form-image-delete-btn').addEventListener('click', ({ target }) => {
+        document.querySelector('.form-post-image-hidden').value = '';
+        formPostImageElement.value = '이미지가 없습니다';
+        formPostImageElement.dataset.ischanged = true;
+        formPostImageElement.dataset.image = null;
+
+        ChangeFormSubmitBtnStatus();
+    });
+
+    document.querySelector('.form-post-image-hidden').addEventListener('change', async ({ target }) => {
+        const file = target.files[0];
+
+        if (!file) {
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const res = await requestPostImageUpload(formData);
+
+        if (!res.success) {
+            console.error(res.data);
+        } else {
+            console.log('업로드');
+            formPostImageElement.value = res.data.image.filename;
+            formPostImageElement.dataset.ischanged = true;
+            formPostImageElement.dataset.image = JSON.stringify({
+                id: res.data.image.id,
+                objectKey: res.data.image.objectKey,
+            });
+        }
+    });
 
     formSubmitBtn.addEventListener('click', () => {
         formSubmitBtnClickHandler(post?.id);
@@ -65,8 +108,20 @@ const generatePostFormHtml = (post) => {
                 <div class="form-helper-text form-helper-content">${post?.title ? '' : '내용을 작성해주세요'}</div>
             </div>
             <div>
-                <label for="form-file-input" class="form-label">이미지</label>
-                <input name="이미지" type="file" class="" id="form-file-input" data-ischanged="false" />
+                <label for="form-image-input" class="form-label">이미지</label>
+                <input type="text" class="form-input form-post-image" value="${post?.image?.filename ?? '이미지가 없습니다'}" disabled />
+                <div class="form-post-image-container">
+                    <button type="button" class="btn purple form-image-add-btn">변경</button>
+                    <button type="button" class="btn purple form-image-delete-btn">삭제</button>
+                </div>
+                <input
+                    name="이미지"
+                    type="file"
+                    class="form-post-image-hidden"
+                    id="form-image-input"
+                    style="display: none"
+                />
+                <div class="form-helper-text form-helper-image"></div>
             </div>
             <div>
                 <button class="btn form-submit-btn ${post?.id ? '' : 'inactivated'}" type="button">완료</button>
@@ -86,8 +141,6 @@ const generatePostReadContainerHtml = (post) => {
 
     const loginMember = getCookie('loginMember');
 
-    // TODO: 게시글 이미지 가져오기
-
     return `
         <div class="post-title">${post.title}</div>
         <div class="post-info">
@@ -98,7 +151,9 @@ const generatePostReadContainerHtml = (post) => {
             ${loginMember == post.member.id ? updateDeleteBtnHtml() : ''}
         </div>
         <div class="custom-hr"></div>
-        <div class="post-image"></div>
+        <div class="post-image">
+            ${generatePostImageHtml(post.image)} 
+        </div>
         <div class="post-content">${post.content}</div>
         <div class="post-stat-container">
             <div class="post-stat post-like-count-container" data-isLiked="${post.liked}">
@@ -129,7 +184,12 @@ const formSubmitBtnClickHandler = async (postId) => {
     }
 
     const inputElements = document.querySelectorAll('.form-input');
+    const formProfileImageElement = document.querySelector('.form-post-image');
     const requestBody = {};
+
+    if (formProfileImageElement.dataset.ischanged === 'true') {
+        requestBody.image = JSON.parse(formProfileImageElement.dataset.image);
+    }
 
     for (const e of inputElements) {
         if (e.dataset.ischanged === 'true') {

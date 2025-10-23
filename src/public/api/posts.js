@@ -22,8 +22,12 @@ export const requestUpdatePost = (postId, requestBody = { postDeleted: false, im
         requestBody.postDeleted = false;
     }
 
-    if (!requestBody.imageDeleted) {
+    if (!requestBody?.imageDeleted) {
         requestBody.imageDeleted = false;
+    }
+
+    if (Object.hasOwn(requestBody, 'image') && requestBody.image == null) {
+        requestBody.imageDeleted = true;
     }
 
     return request({ method: METHOD.PATCH, url: `/posts/${postId}`, body: requestBody });

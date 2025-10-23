@@ -1,0 +1,24 @@
+.form-profile-image-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.form-profile-image {
+    object-fit: cover;
+    clip-path: circle(50%);
+}
+
+.profile-overlay {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    background-color: transparent;
+}
+
+.form-post-image-container {
+    display: flex;
+    flex-direction: row;
+}
