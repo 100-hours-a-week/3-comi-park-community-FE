@@ -22,6 +22,10 @@ export const requestMemberInfoUpdate = (memberId, requestBody = { imageDeleted: 
         requestBody.imageDeleted = false;
     }
 
+    if (requestBody?.image == null) {
+        requestBody.imageDeleted = true;
+    }
+
     return request({ method: METHOD.PATCH, url: `/members/${memberId}`, body: requestBody });
 };
 

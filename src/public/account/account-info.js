@@ -129,8 +129,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         ? `${API_SERVER_URI}/s3/${res.data.member.image.objectKey}`
         : '/assets/default-profile-image.png';
     formProfileImageElement.src = imageSrc;
-    document.querySelector('.form-profile-image-container').addEventListener('click', () => {
+    document.querySelector('.form-profile-image-container').addEventListener('click', (target) => {
+        if (target.target === document.querySelector('.form-image-delete-btn')) {
+            return;
+        }
         document.querySelector('.form-profile-image-hidden').click();
+    });
+
+    document.querySelector('.form-image-delete-btn').addEventListener('click', ({ target }) => {
+        document.querySelector('.form-profile-image-hidden').value = '';
+        formProfileImageElement.src = '/assets/default-profile-image.png';
+        formProfileImageElement.dataset.ischanged = true;
+        formProfileImageElement.dataset.image = null;
+
+        ChangeFormSubmitBtnStatus();
     });
 
     document.querySelector('.form-profile-image-hidden').addEventListener('change', async ({ target }) => {

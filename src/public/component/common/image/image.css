@@ -13,4 +13,7 @@
 
 .profile-overlay {
     position: absolute;
+    display: flex;
+    flex-direction: row;
+    background-color: transparent;
 }
