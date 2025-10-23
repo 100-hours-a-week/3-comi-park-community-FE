@@ -23,7 +23,11 @@ export const paintPostForm = (post = {}) => {
         )
     );
 
-    document.querySelector('.form-post-image-input').addEventListener('change', async ({ target }) => {
+    document.querySelector('.form-image-add-btn').addEventListener('click', () => {
+        document.querySelector('.form-post-image-hidden').click();
+    });
+
+    document.querySelector('.form-post-image-hidden').addEventListener('change', async ({ target }) => {
         const file = target.files[0];
 
         if (!file) {
@@ -39,9 +43,10 @@ export const paintPostForm = (post = {}) => {
             console.error(res.data);
         } else {
             console.log('업로드');
-            target.src = `${API_SERVER_URI}/s3/${res.data.image.objectKey}`;
-            target.dataset.ischanged = true;
-            target.dataset.image = JSON.stringify({
+            const formPostImageElement = document.querySelector('.form-post-image');
+            formPostImageElement.value = res.data.image.filename;
+            formPostImageElement.dataset.ischanged = true;
+            formPostImageElement.dataset.image = JSON.stringify({
                 id: res.data.image.id,
                 objectKey: res.data.image.objectKey,
             });
@@ -60,6 +65,7 @@ export const paintPostReadContainer = (post) => {
 /* HTML */
 // 게시글 작성/수정 HTML
 const generatePostFormHtml = (post) => {
+    // TODO: 처음에 .form-post-image의 value로 이미지 filename 넣도록 수정 (백엔드 응답 값 수정 필요)
     return `
         <div class="title">게시글 ${post?.id ? '수정' : '작성'}</div>
         <form class="form">
@@ -93,15 +99,24 @@ const generatePostFormHtml = (post) => {
                 <div class="form-helper-text form-helper-content">${post?.title ? '' : '내용을 작성해주세요'}</div>
             </div>
             <div>
-                <label for="form-post-image-input" class="form-label">이미지</label>
+                <label for="form-image-input" class="form-label">이미지</label>
+                <input type="text" class="form-input form-post-image" value="${
+                    post?.image?.objectKey
+                        ? `${API_SERVER_URI}/s3/${post.image.objectKey}`
+                        : '/assets/default-profile-image.png'
+                }" disabled />
+                <div class="form-post-image-container">
+                    <button type="button" class="btn purple form-image-add-btn">변경</button>
+                    <button type="button" class="btn purple form-image-delete-btn">삭제</button>
+                </div>
                 <input
                     name="이미지"
                     type="file"
-                    class="form-post-image-input"
+                    class="form-post-image-hidden"
                     id="form-image-input"
-                    data-ischanged="false"
-                    data-fieldname="image"
+                    style="display: none"
                 />
+                <div class="form-helper-text form-helper-image"></div>
             </div>
             <div>
                 <button class="btn form-submit-btn ${post?.id ? '' : 'inactivated'}" type="button">완료</button>
@@ -164,7 +179,7 @@ const formSubmitBtnClickHandler = async (postId) => {
     }
 
     const inputElements = document.querySelectorAll('.form-input');
-    const formProfileImageElement = document.querySelector('.form-post-image-input');
+    const formProfileImageElement = document.querySelector('.form-post-image');
     const requestBody = {};
 
     if (formProfileImageElement.dataset.ischanged === 'true') {

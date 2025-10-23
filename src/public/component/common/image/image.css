@@ -17,3 +17,8 @@
     flex-direction: row;
     background-color: transparent;
 }
+
+.form-post-image-container {
+    display: flex;
+    flex-direction: row;
+}
