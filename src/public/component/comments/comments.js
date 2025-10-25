@@ -8,6 +8,8 @@ import { generateWriterInfoHtml } from '../common/member/member.js';
 import { debouncedRequest } from '../../utils/debounce-helper.js';
 import { formatDate } from '../../utils/format-helper.js';
 import { requestUpdateComment, requestWriteComment } from '../../api/comments.js';
+import { openModal } from '../common/modal/modal.js';
+import { requestDeleteComment } from '../../api/comments.js';
 
 const generateCommentWriteFormHtml = () => {
     return `
@@ -61,7 +63,7 @@ const generateCommentContainerHtml = (comment, loginMemberId) => {
         return `
             <div>
                 <button class="btn small-btn comment-update-btn" data-id=${comment.id}>수정</button>
-                <button class="btn small-btn delete-btn" data-domain="comment" data-id="${comment.id}">삭제</button>
+                <button class="btn small-btn comment-delete-btn" data-domain="comment" data-id="${comment.id}">삭제</button>
             </div>`;
     };
 
@@ -173,6 +175,21 @@ export const paintCommentsContainer = (comments, loginMemberId) => {
         .querySelector('.comments-container')
         .insertAdjacentHTML('beforeend', generateCommentsContainerHtml(comments, loginMemberId));
 
+    // 댓글 삭제 버튼 클릭 이벤트
+    document.querySelector('.comments-container').addEventListener('click', ({ target }) => {
+        if (!target.classList.contains('comment-delete-btn')) return;
+
+        const { domain, id } = target.dataset;
+
+        openModal({
+            mainText: '댓글을 삭제하시겠습니까?',
+            subText: '삭제한 내용은 복구할 수 없습니다',
+            dataset: target.dataset,
+            onConfirm: () => deleteCommentHandler(id),
+        });
+    });
+
+    // 댓글 수정 버튼 클릭 이벤트
     document.querySelector('.comments-container').addEventListener('click', ({ target }) => {
         if (!target.classList.contains('comment-update-btn')) return;
 
@@ -203,4 +220,17 @@ export const paintCommentsContainer = (comments, loginMemberId) => {
             });
         });
     });
+};
+
+const deleteCommentHandler = async (id) => {
+    const res = await requestDeleteComment(id);
+
+    if (!res.success) {
+        alert(res.data);
+        return;
+    }
+
+    const deletedElement = document.querySelector(`[data-commentid="${id}"]`);
+    document.querySelector('.comments-container').removeChild(deletedElement);
+    document.querySelector('.post-comment-count').textContent = res.data.commentCount;
 };
