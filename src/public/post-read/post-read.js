@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    paintCommentsContainer(commentRes.data.comments);
+    paintCommentsContainer(commentRes.data.comments, loginMemberId);
 
     /* 삭제 모달 */
     document.querySelectorAll('.delete-btn').forEach((btn) =>

@@ -1,8 +1,7 @@
 import { formatDate } from '../../utils/format-helper.js';
 import { generateWriterInfoHtml } from '../common/member/member.js';
-import { getCookie } from '../../utils/cookie-helper.js';
 
-const generateCommentContainerHtml = (comment) => {
+const generateCommentContainerHtml = (comment, loginMemberId) => {
     const updateDeleteBtnHtml = () => {
         return `
             <div>
@@ -11,9 +10,6 @@ const generateCommentContainerHtml = (comment) => {
             </div>`;
     };
 
-    const loginMember = getCookie('loginMember');
-
-    // TODO: 회원 이미지 가져오기
     return `
         <div class="comment-container" data-commentid="${comment.id}">
             <div class="comment-info">
@@ -21,17 +17,18 @@ const generateCommentContainerHtml = (comment) => {
                     ${generateWriterInfoHtml(comment.member)}
                     <div class="comment-created-at">${formatDate(comment.createdAt)}</div>
                 </div>
-                ${loginMember == comment.member.id ? updateDeleteBtnHtml() : ''}
+                ${loginMemberId == comment.member.id ? updateDeleteBtnHtml() : ''}
             </div>
             <div class="comment-content">${comment.content}</div>
         </div>`;
 };
-const generateCommentsContainerHtml = (comments) => {
-    return comments.map((comment) => generateCommentContainerHtml(comment)).join('');
+
+const generateCommentsContainerHtml = (comments, loginMemberId) => {
+    return comments.map((comment) => generateCommentContainerHtml(comment, loginMemberId)).join('');
 };
 
-export const paintCommentsContainer = (comments) => {
+export const paintCommentsContainer = (comments, loginMemberId) => {
     document
         .querySelector('.comments-container')
-        .insertAdjacentHTML('beforeend', generateCommentsContainerHtml(comments));
+        .insertAdjacentHTML('beforeend', generateCommentsContainerHtml(comments, loginMemberId));
 };
