@@ -51,7 +51,7 @@ const generateCommentUpdateFormHtml = (comment) => {
                 <div class="form-helper-text form-helper-content"></div>
             </div>
             <div>
-                <button class="btn form-submit-btn form-update-submit-btn ${comment?.id ? '' : 'inactivated'}" type="button">${!!comment?.id ? '수정' : '등록'}</button>
+                <button class="btn form-submit-btn form-update-submit-btn ${comment?.id ? '' : 'inactivated'}" type="button">수정</button>
             </div>
         </form>`;
 };
@@ -173,32 +173,33 @@ export const paintCommentsContainer = (comments, loginMemberId) => {
         .querySelector('.comments-container')
         .insertAdjacentHTML('beforeend', generateCommentsContainerHtml(comments, loginMemberId));
 
-    document.querySelectorAll('.comment-update-btn').forEach((btn) => {
-        btn.addEventListener('click', () => {
-            const commentContainerElement = btn.closest('.comment-container');
-            const commentContentElement = commentContainerElement.querySelector('.comment-content');
-            const content = commentContentElement.textContent;
-            const id = btn.dataset.id;
+    document.querySelector('.comments-container').addEventListener('click', ({ target }) => {
+        if (!target.classList.contains('comment-update-btn')) return;
 
-            commentContentElement.textContent = '';
-            commentContentElement.insertAdjacentHTML('beforeend', generateCommentUpdateFormHtml({ id, content }));
+        const btn = target;
+        const commentContainerElement = btn.closest('.comment-container');
+        const commentContentElement = commentContainerElement.querySelector('.comment-content');
+        const content = commentContentElement.textContent;
+        const id = btn.dataset.id;
 
-            const formElement = commentContainerElement.querySelector('.form');
+        commentContentElement.textContent = '';
+        commentContentElement.insertAdjacentHTML('beforeend', generateCommentUpdateFormHtml({ id, content }));
 
-            commentContainerElement.querySelectorAll('.form-input').forEach((e) =>
-                e.addEventListener(
-                    'input',
-                    debouncedRequest(function ({ target }) {
-                        validateField(target.dataset.keyname, target);
-                        ChangeFormSubmitBtnStatus2(formElement);
-                    }, 400)
-                )
-            );
+        const formElement = commentContainerElement.querySelector('.form');
 
-            document.querySelector('.form-update-submit-btn').addEventListener('click', () => {
-                updateFormSubmitBtnClickHandler(formElement, id, () => {
-                    commentContentElement.textContent = formElement.querySelector('#form-content-input').value;
-                });
+        commentContainerElement.querySelectorAll('.form-input').forEach((e) =>
+            e.addEventListener(
+                'input',
+                debouncedRequest(function ({ target }) {
+                    validateField(target.dataset.keyname, target);
+                    ChangeFormSubmitBtnStatus2(formElement);
+                }, 400)
+            )
+        );
+
+        document.querySelector('.form-update-submit-btn').addEventListener('click', () => {
+            updateFormSubmitBtnClickHandler(formElement, id, () => {
+                commentContentElement.textContent = formElement.querySelector('#form-content-input').value;
             });
         });
     });
