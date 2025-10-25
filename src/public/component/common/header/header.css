@@ -10,20 +10,20 @@
     font-size: 1.5em;
 }
 
-.backward-image {
+.header-backward-image {
     cursor: pointer;
 }
 
-.profile-image {
+.header-profile-image {
     cursor: pointer;
 }
 
-.profile-list {
+.header-profile-list {
     list-style: none;
     position: absolute;
 }
 
-.profile-list-item {
+.header-profile-list-item {
     background-color: #c5b0cd;
     position: relative;
     padding: 12px 16px;
