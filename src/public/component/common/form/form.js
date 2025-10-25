@@ -78,6 +78,13 @@ const validatePostContentPattern = (content) => {
     };
 };
 
+const validateCommentPattern = (content) => {
+    return {
+        isValidated: content.length > 0 && content.length < 10000,
+        message: content.length > 10000 ? '댓글은 최대 10,000글자까지 입력할 수 있습니다' : '',
+    };
+};
+
 export const fieldValidationRules = {
     title: validatePostTitlePattern,
     content: validatePostContentPattern,
@@ -85,6 +92,7 @@ export const fieldValidationRules = {
     password: validatePasswordPattern,
     confirmedPassword: validateConfirmedPasswordPattern,
     nickname: valdiateNicknamePattern,
+    commentContent: validateCommentPattern,
 };
 
 /* form HTML과 상호작용 */
@@ -157,6 +165,20 @@ export const formSubmitBtnClickHandler = async (pageName) => {
 export const ChangeFormSubmitBtnStatus = () => {
     const validatedInputElements = document.querySelectorAll('[data-validated]');
     const formSubmitBtn = document.querySelector('.form-submit-btn');
+
+    for (const e of validatedInputElements) {
+        if (e.dataset.validated !== 'true') {
+            formSubmitBtn.classList.add('inactivated');
+            return;
+        }
+    }
+
+    formSubmitBtn.classList.remove('inactivated');
+};
+
+export const ChangeFormSubmitBtnStatus2 = (form) => {
+    const validatedInputElements = form.querySelectorAll('[data-validated]');
+    const formSubmitBtn = form.querySelector('.form-submit-btn');
 
     for (const e of validatedInputElements) {
         if (e.dataset.validated !== 'true') {

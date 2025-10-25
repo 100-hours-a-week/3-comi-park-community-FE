@@ -1,16 +1,11 @@
 import { requestCancelLike, requestCreateLike } from '../api/post-like.js';
 import { requestReadPost, requestDeletePost } from '../api/posts.js';
-import { requestComments, requestDeleteComment } from '../api/comments.js';
-import { paintCommentsContainer } from '../component/comments/comments.js';
+import { requestComments } from '../api/comments.js';
+import { paintCommentFormContainer, paintCommentsContainer } from '../component/comments/comments.js';
 import { paintPostReadContainer } from '../component/post/post.js';
 import { paintHeader } from '../component/common/header/header.js';
 import { openModal } from '../component/common/modal/modal.js';
 import { getAuth } from '../utils/auth-guard.js';
-
-const deleteHandlerMap = {
-    post: (id) => deletePostHandler(id),
-    comment: (id) => deleteCommentHandler(id),
-};
 
 const deletePostHandler = async (id) => {
     const res = await requestDeletePost(id);
@@ -21,19 +16,6 @@ const deletePostHandler = async (id) => {
     }
 
     location.href = '/index';
-};
-
-const deleteCommentHandler = async (id) => {
-    const res = await requestDeleteComment(id);
-
-    if (!res.success) {
-        alert(res.data);
-        return;
-    }
-
-    const deletedElement = document.querySelector(`[data-commentid="${id}"]`);
-    document.querySelector('.comments-container').removeChild(deletedElement);
-    document.querySelector('.post-comment-count').textContent = res.data.commentCount;
 };
 
 const postLikeCountContainerClickHandler = async (target, postId) => {
@@ -74,6 +56,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     /* 댓글 */
+    paintCommentFormContainer();
+
     const commentRes = await requestComments(postId);
 
     if (!commentRes.success) {
@@ -83,17 +67,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     paintCommentsContainer(commentRes.data.comments, loginMemberId);
 
-    /* 삭제 모달 */
-    document.querySelectorAll('.delete-btn').forEach((btn) =>
-        btn.addEventListener('click', () => {
-            const { domain, id } = btn.dataset;
+    /* 게시글 삭제 모달 */
+    document.querySelector('.delete-btn').addEventListener('click', ({ target }) => {
+        console.log(target);
+        const { domain, id } = target.dataset;
 
-            openModal({
-                mainText: `${domain === 'post' ? '게시글을' : '댓글을'} 삭제하시겠습니까?`,
-                subText: '삭제한 내용은 복구할 수 없습니다',
-                dataset: btn.dataset,
-                onConfirm: () => deleteHandlerMap[domain](id),
-            });
-        })
-    );
+        openModal({
+            mainText: '게시글을 삭제하시겠습니까?',
+            subText: '삭제한 내용은 복구할 수 없습니다',
+            dataset: target.dataset,
+            onConfirm: () => deletePostHandler(id),
+        });
+    });
 });

@@ -8,6 +8,16 @@ export const requestComments = (postId, params = {}) => {
     return request({ url: `/posts/${postId}/comments`, params: createQueryString(params) });
 };
 
+export const requestWriteComment = (requestBody = {}) => {
+    const postId = Number(window.location.pathname.split('/').at(2));
+    return request({ method: METHOD.POST, url: `/posts/${postId}/comments`, body: requestBody });
+};
+
+export const requestUpdateComment = (commentId, requestBody = {}) => {
+    const postId = Number(window.location.pathname.split('/').at(2));
+    return request({ method: METHOD.PATCH, url: `/posts/${postId}/comments/${commentId}`, body: requestBody });
+};
+
 export const requestDeleteComment = (commentId) => {
     const postId = Number(window.location.pathname.split('/').at(2));
     return request({ method: METHOD.DELETE, url: `/posts/${postId}/comments/${commentId}` });
