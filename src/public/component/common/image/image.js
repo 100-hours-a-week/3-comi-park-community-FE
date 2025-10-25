@@ -12,18 +12,6 @@ export const generatePostImageHtml = (image) => {
         : '';
 };
 
-export const generateProfileImageHtml = async (imageUrl, size = { width: 50, height: 50 }) => {
-    return `
-        <img
-            src="${imageUrl}"
-            width=${size.width}
-            height=${size.height}
-            alt="profile image"
-            style="clip-path: circle(50%); object-fit: cover;"
-        />
-    `;
-};
-
 export const paintProfileImage = async (imageUrl, size = { width: 50, height: 50 }) => {
     document.querySelector('.profile-image').insertAdjacentHTML('beforeend', generateProfileImageHtml(imageUrl, size));
 };
@@ -48,18 +36,16 @@ const getLoginMemberImageUrl = async (memberId) => {
     }
 
     const image = await requestMemberImage(memberId);
-    const savedLoginMemberImageUrl = !!image?.objectKey
-        ? `${API_SERVER_URI}/s3/${image.objectKey}`
-        : '/assets/default-profile-image.png';
+    const savedLoginMemberImageUrl = image?.url ?? '/assets/default-profile-image.png';
     setCookie('loginMemberImageUrl', savedLoginMemberImageUrl);
 
     return savedLoginMemberImageUrl;
 };
 
-const generateProfileImage = (imageUrl, size) => {
+export const generateProfileImageHtml = (imageUrl, size = { width: 50, height: 50 }) => {
     return `
         <img
-            src="${imageUrl}"
+            src="${imageUrl ?? '/assets/default-profile-image.png'}"
             width=${size.width}
             height=${size.height}
             alt="profile image"
@@ -70,5 +56,5 @@ const generateProfileImage = (imageUrl, size) => {
 
 export const generateHeaderProfileImageHtml = async (memberId, size = { width: 50, height: 50 }) => {
     const loginMemberImageUrl = await getLoginMemberImageUrl(memberId);
-    return generateProfileImage(loginMemberImageUrl, size);
+    return generateProfileImageHtml(loginMemberImageUrl, size);
 };
