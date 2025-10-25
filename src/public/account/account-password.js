@@ -1,4 +1,5 @@
 import { validateRequiredInput, validateField, ChangeFormSubmitBtnStatus } from '../component/common/form/form.js';
+import { paintHeader } from '../component/common/header/header.js';
 import { requestMemberInfoUpdate } from '../api/members.js';
 import { debouncedRequest } from '../utils/debounce-helper.js';
 import { getAuth } from '../utils/auth-guard.js';
@@ -49,6 +50,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const { success, loginMemberId } = await getAuth();
 
     if (!success) return;
+
+    paintHeader(success, loginMemberId);
 
     document.querySelectorAll('.form-input').forEach((e) => inputFormInputHandlerDebounced(e));
     document

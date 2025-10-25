@@ -3,6 +3,7 @@ import { requestReadPost, requestDeletePost } from '../api/posts.js';
 import { requestComments, requestDeleteComment } from '../api/comments.js';
 import { paintCommentsContainer } from '../component/comments/comments.js';
 import { paintPostReadContainer } from '../component/post/post.js';
+import { paintHeader } from '../component/common/header/header.js';
 import { openModal } from '../component/common/modal/modal.js';
 import { getAuth } from '../utils/auth-guard.js';
 
@@ -54,6 +55,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const { success, loginMemberId } = await getAuth();
 
     if (!success) return;
+
+    paintHeader(success, loginMemberId);
 
     /* 게시글 */
     const postId = Number(window.location.pathname.split('/').at(2));

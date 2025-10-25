@@ -5,6 +5,7 @@ import {
     requestNicknameDuplicationCheck,
     requestMemberDelete,
 } from '../api/members.js';
+import { paintHeader } from '../component/common/header/header.js';
 import { debouncedRequest } from '../utils/debounce-helper.js';
 import { API_SERVER_URI } from '../utils/constants.js';
 import { openModal } from '../component/common/modal/modal.js';
@@ -90,6 +91,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const { success, loginMemberId } = await getAuth();
 
     if (!success) return;
+
+    paintHeader(success, loginMemberId);
 
     const nicknameInput = document.querySelector('#form-nickname-input');
 
