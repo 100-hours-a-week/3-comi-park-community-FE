@@ -1,3 +1,4 @@
+import { destroyCookie } from './cookie-helper.js';
 import { requestAuth } from '../api/auth.js';
 
 /**
@@ -12,6 +13,7 @@ export const getAuth = async () => {
     const res = await requestAuth();
 
     if (!res.success) {
+        destroyCookie('loginMemberImageUrl');
         location.replace('/login');
     }
 
