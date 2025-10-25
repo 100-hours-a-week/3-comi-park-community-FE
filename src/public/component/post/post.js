@@ -4,7 +4,6 @@ import { getCookie } from '../../utils/cookie-helper.js';
 import { validateRequiredInput, ChangeFormSubmitBtnStatus, validateField } from '../common/form/form.js';
 import { requestWritePost, requestUpdatePost } from '../../api/posts.js';
 import { debouncedRequest } from '../../utils/debounce-helper.js';
-import { API_SERVER_URI } from '../../utils/constants.js';
 import { generatePostImageHtml } from '../common/image/image.js';
 import { requestPostImageUpload } from '../../api/images.js';
 
@@ -152,7 +151,7 @@ const generatePostReadContainerHtml = (post) => {
         </div>
         <div class="custom-hr"></div>
         <div class="post-image">
-            ${generatePostImageHtml(post.image)} 
+            ${generatePostImageHtml(post.image?.url)} 
         </div>
         <div class="post-content">${post.content}</div>
         <div class="post-stat-container">

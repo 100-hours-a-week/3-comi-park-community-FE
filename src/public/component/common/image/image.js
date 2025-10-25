@@ -1,22 +1,6 @@
 import { getCookie, setCookie } from '../../../utils/cookie-helper.js';
 import { requestMemberInfo } from '../../../api/members.js';
-import { API_SERVER_URI } from '../../../utils/constants.js';
 
-export const generatePostImageHtml = (image) => {
-    return !!image
-        ? `<img
-            src="${API_SERVER_URI}/s3/${image.objectKey}"
-            alt="post image"
-            style="width: 100%"
-        />`
-        : '';
-};
-
-export const paintProfileImage = async (imageUrl, size = { width: 50, height: 50 }) => {
-    document.querySelector('.profile-image').insertAdjacentHTML('beforeend', generateProfileImageHtml(imageUrl, size));
-};
-
-// ////////// 리팩토링 중인 코드
 const requestMemberImage = async (memberId) => {
     const res = await requestMemberInfo(memberId);
 
@@ -52,6 +36,16 @@ export const generateProfileImageHtml = (imageUrl, size = { width: 50, height: 5
             style="clip-path: circle(50%); object-fit: cover;"
         />
     `;
+};
+
+export const generatePostImageHtml = (imageUrl) => {
+    return !!imageUrl
+        ? `<img
+            src="${imageUrl}"
+            alt="post image"
+            style="width: 100%"
+        />`
+        : '';
 };
 
 export const generateHeaderProfileImageHtml = async (memberId, size = { width: 50, height: 50 }) => {
