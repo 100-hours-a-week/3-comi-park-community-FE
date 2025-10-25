@@ -1,6 +1,5 @@
 import { formatCount, formatDate } from '../../utils/format-helper.js';
 import { generateWriterInfoHtml } from '../common/member/member.js';
-import { getCookie } from '../../utils/cookie-helper.js';
 import { validateRequiredInput, ChangeFormSubmitBtnStatus, validateField } from '../common/form/form.js';
 import { requestWritePost, requestUpdatePost } from '../../api/posts.js';
 import { debouncedRequest } from '../../utils/debounce-helper.js';
@@ -67,8 +66,10 @@ export const paintPostForm = (post = {}) => {
     });
 };
 
-export const paintPostReadContainer = (post) => {
-    document.querySelector('.post-container').insertAdjacentHTML('beforeend', generatePostReadContainerHtml(post));
+export const paintPostReadContainer = (post, loginMemberId) => {
+    document
+        .querySelector('.post-container')
+        .insertAdjacentHTML('beforeend', generatePostReadContainerHtml(post, loginMemberId));
 };
 
 /* HTML */
@@ -129,7 +130,7 @@ const generatePostFormHtml = (post) => {
 };
 
 // 게시글 상세조회 HTML
-const generatePostReadContainerHtml = (post) => {
+const generatePostReadContainerHtml = (post, loginMemberId) => {
     const updateDeleteBtnHtml = () => {
         return `
             <div>
@@ -138,8 +139,6 @@ const generatePostReadContainerHtml = (post) => {
             </div>`;
     };
 
-    const loginMember = getCookie('loginMember');
-
     return `
         <div class="post-title">${post.title}</div>
         <div class="post-info">
@@ -147,7 +146,7 @@ const generatePostReadContainerHtml = (post) => {
                 ${generateWriterInfoHtml(post.member)}
                 <div class="post-created-at">${formatDate(post.createdAt)}</div>
             </div>
-            ${loginMember == post.member.id ? updateDeleteBtnHtml() : ''}
+            ${loginMemberId === post.member.id ? updateDeleteBtnHtml() : ''}
         </div>
         <div class="custom-hr"></div>
         <div class="post-image">

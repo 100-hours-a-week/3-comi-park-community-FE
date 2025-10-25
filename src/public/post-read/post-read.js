@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    paintPostReadContainer(postRes.data.post);
+    paintPostReadContainer(postRes.data.post, loginMemberId);
 
     document.querySelector('.post-like-count-container').addEventListener('click', ({ currentTarget }) => {
         postLikeCountContainerClickHandler(currentTarget, postId);
