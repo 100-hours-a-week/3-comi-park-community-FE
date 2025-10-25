@@ -14,3 +14,7 @@ export const setCookie = (key, value, options = { path: '/' }) => {
 
     document.cookie = `${key}=${value}${stringifiedOptions}`;
 };
+
+export const destroyCookie = (key, options = { path: '/' }) => {
+    setCookie(key, getCookie(key), { ...options, 'max-age': 0 });
+};
