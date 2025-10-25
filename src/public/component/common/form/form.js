@@ -175,3 +175,17 @@ export const ChangeFormSubmitBtnStatus = () => {
 
     formSubmitBtn.classList.remove('inactivated');
 };
+
+export const ChangeFormSubmitBtnStatus2 = (form) => {
+    const validatedInputElements = form.querySelectorAll('[data-validated]');
+    const formSubmitBtn = form.querySelector('.form-submit-btn');
+
+    for (const e of validatedInputElements) {
+        if (e.dataset.validated !== 'true') {
+            formSubmitBtn.classList.add('inactivated');
+            return;
+        }
+    }
+
+    formSubmitBtn.classList.remove('inactivated');
+};
