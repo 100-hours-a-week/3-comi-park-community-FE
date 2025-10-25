@@ -1,7 +1,7 @@
 import { requestCancelLike, requestCreateLike } from '../api/post-like.js';
 import { requestReadPost, requestDeletePost } from '../api/posts.js';
 import { requestComments, requestDeleteComment } from '../api/comments.js';
-import { paintCommentsContainer } from '../component/comments/comments.js';
+import { paintCommentFormContainer, paintCommentsContainer } from '../component/comments/comments.js';
 import { paintPostReadContainer } from '../component/post/post.js';
 import { paintHeader } from '../component/common/header/header.js';
 import { openModal } from '../component/common/modal/modal.js';
@@ -74,6 +74,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     /* 댓글 */
+    paintCommentFormContainer();
+
     const commentRes = await requestComments(postId);
 
     if (!commentRes.success) {
