@@ -78,6 +78,13 @@ const validatePostContentPattern = (content) => {
     };
 };
 
+const validateCommentPattern = (content) => {
+    return {
+        isValidated: content.length > 0 && content.length < 501,
+        message: content.length > 500 ? '댓글은 최대 500글자까지 입력할 수 있습니다' : '',
+    };
+};
+
 export const fieldValidationRules = {
     title: validatePostTitlePattern,
     content: validatePostContentPattern,
@@ -85,6 +92,7 @@ export const fieldValidationRules = {
     password: validatePasswordPattern,
     confirmedPassword: validateConfirmedPasswordPattern,
     nickname: valdiateNicknamePattern,
+    commentContent: validateCommentPattern,
 };
 
 /* form HTML과 상호작용 */
