@@ -7,3 +7,7 @@ export const requestLogin = (requestBody = { email: '', password: '' }) => {
 export const requestLogout = () => {
     return request({ method: METHOD.DELETE, url: '/auth' });
 };
+
+export const requestAuth = () => {
+    return request({ url: '/auth' });
+};

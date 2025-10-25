@@ -1,35 +1,52 @@
+import { generateHeaderProfileImageHtml } from '../image/image.js';
+import { destroyCookie } from '../../../utils/cookie-helper.js';
 import { requestLogout } from '../../../api/auth.js';
-import { getCookie } from '../../../utils/cookie-helper.js';
-import { paintProfileImage } from '../image/image.js';
 
-const generateHeaderHtml = (isLogin = false, existsBackward = false) => {
+export const paintHeader = async (isLogin = false, loginMemberId = undefined) => {
+    const existsBackward = hasBackward(window.location.pathname);
+
+    // header HTML 동적 생성
+    const headerHtml = await generateHeaderHtml(isLogin, loginMemberId, existsBackward);
+    document.querySelector('header').innerHTML = headerHtml;
+
+    /* 이벤트 처리 */
+    // 로그인한 상태라면 노출된 profile 이미지 클릭 이벤트 등록
+    if (isLogin) {
+        document.querySelector('.header-profile-image').addEventListener('click', headerProfileImageClickListHandler);
+        document.querySelector('.logout-btn').addEventListener('click', logoutBtnClickHandler);
+    }
+
+    // 뒤로 가기 버튼이 노출된 상태라면 이전 페이지로 이동하는 클릭 이벤트 등록
+    if (existsBackward) {
+        document.querySelector('.header-backward-image').addEventListener('click', headerBackwardImageClickHandler);
+    }
+};
+
+const generateHeaderHtml = async (isLogin = false, loginMemberId = undefined, existsBackward = false) => {
+    const headerProfileImageHtml = isLogin ? await generateHeaderProfileImageHtml(loginMemberId) : '';
+
     return `
         <div class="header-container">
-        <div class="backward ${existsBackward ? '' : 'conceal'}">
-            <div class="backward-image">◀️</div>
+            <div class="header-backward-container ${existsBackward ? '' : 'conceal'}">
+                <div class="header-backward-image">◀️</div>
+            </div>
+            <div class="title">
+                <div class="title-name"><a href="/index">아무 말 대잔치</a></div>
+            </div>
+            <div class="header-profile-container ${isLogin ? '' : 'conceal'}">
+                <div class="header-profile-image">${headerProfileImageHtml}</div>
+                <ul class="header-profile-list hide">
+                    <li class="header-profile-list-item"><a href="/account">회원정보수정</a></li>
+                    <li class="header-profile-list-item"><a href="/account/password">비밀번호수정</a></li>
+                    <li class="header-profile-list-item logout-btn click">로그아웃</li>
+                </ul>
+            </div>
         </div>
-        <div class="title">
-            <div class="title-name"><a href="/index">아무 말 대잔치</a></div>
-        </div>
-        <div class="profile ${isLogin ? '' : 'conceal'}">
-            <div class="profile-image"></div>
-            <ul class="profile-list hide">
-                <li class="profile-list-item"><a href="/account">회원정보수정</a></li>
-                <li class="profile-list-item"><a href="/account/password">비밀번호수정</a></li>
-                <li class="profile-list-item logout-btn click">로그아웃</li>
-            </ul>
-        </div>
-    </div>
-    `;
+        `;
 };
 
-const paintHeader = (isLogin, existsBackward) => {
-    const headerHtml = generateHeaderHtml(isLogin, existsBackward);
-    document.querySelector('header').innerHTML = headerHtml;
-};
-
-const profileImageClickListHandler = () => {
-    document.querySelector('.profile-list').classList.toggle('hide');
+const headerProfileImageClickListHandler = () => {
+    document.querySelector('.header-profile-list').classList.toggle('hide');
 };
 
 const logoutBtnClickHandler = async () => {
@@ -40,29 +57,15 @@ const logoutBtnClickHandler = async () => {
         reteurn;
     }
 
-    location.href = '/login';
+    destroyCookie('loginMemberImageUrl');
+    location.replace('/login');
 };
 
-const backwardImageClickHandler = () => {
+const headerBackwardImageClickHandler = () => {
     history.back();
 };
 
-document.addEventListener('DOMContentLoaded', async () => {
+const hasBackward = (currentUrl) => {
     const backwardList = ['/read', '/write', '/update', '/register'];
-    const isLogin = document.cookie.includes('isLogin=true');
-    const existsBackward = backwardList.some((url) => window.location.pathname.startsWith(url));
-
-    paintHeader(isLogin, existsBackward);
-
-    // 로그인한 상태라면 노출된 profile 이미지 클릭 이벤트 등록
-    if (isLogin) {
-        document.querySelector('.profile-image').addEventListener('click', profileImageClickListHandler);
-        document.querySelector('.logout-btn').addEventListener('click', logoutBtnClickHandler);
-        await paintProfileImage(getCookie('loginMember'));
-    }
-
-    // 뒤로 가기 버튼이 노출된 상태라면 이전 페이지로 이동하는 클릭 이벤트 등록
-    if (existsBackward) {
-        document.querySelector('.backward-image').addEventListener('click', backwardImageClickHandler);
-    }
-});
+    return backwardList.some((url) => currentUrl.startsWith(url));
+};

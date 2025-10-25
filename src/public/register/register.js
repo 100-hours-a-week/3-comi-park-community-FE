@@ -1,5 +1,6 @@
 import { validateField, formSubmitBtnClickHandler, ChangeFormSubmitBtnStatus } from '../component/common/form/form.js';
 import { requestEmailDuplicationCheck, requestNicknameDuplicationCheck } from '../api/members.js';
+import { paintHeader } from '../component/common/header/header.js';
 import { debouncedRequest } from '../utils/debounce-helper.js';
 import { requestMemberImageUpload } from '../api/images.js';
 import { API_SERVER_URI } from '../utils/constants.js';
@@ -33,6 +34,8 @@ const inputFormInputHandlerDebounced = (inputElement) => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+    paintHeader();
+
     document.querySelectorAll('.form-input').forEach((e) => inputFormInputHandlerDebounced(e));
     document.querySelector('.form-submit-btn').addEventListener('click', () => formSubmitBtnClickHandler('register'));
 

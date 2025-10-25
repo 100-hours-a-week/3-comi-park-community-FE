@@ -1,7 +1,13 @@
+import { paintHeader } from '../component/common/header/header.js';
 import { paintPostForm } from '../component/post/post.js';
 import { requestReadPost } from '../api/posts.js';
+import { getAuth } from '../utils/auth-guard.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
+    const { success, loginMemberId } = await getAuth();
+
+    if (!success) return;
+
     const postId = Number(window.location.pathname.split('/').at(2));
     const res = await requestReadPost(postId);
 
@@ -10,5 +16,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
+    paintHeader(success, loginMemberId);
     paintPostForm(res.data.post);
 });

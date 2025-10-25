@@ -1,5 +1,5 @@
+import { getCookie, setCookie } from '../../../utils/cookie-helper.js';
 import { requestMemberInfo } from '../../../api/members.js';
-import { API_SERVER_URI } from '../../../utils/constants.js';
 
 const requestMemberImage = async (memberId) => {
     const res = await requestMemberInfo(memberId);
@@ -12,20 +12,24 @@ const requestMemberImage = async (memberId) => {
     return res.data.member.image;
 };
 
-export const generatePostImageHtml = (image) => {
-    return !!image
-        ? `<img
-            src="${API_SERVER_URI}/s3/${image.objectKey}"
-            alt="post image"
-            style="width: 100%"
-        />`
-        : '';
+const getLoginMemberImageUrl = async (memberId) => {
+    const loginMemberImageUrl = getCookie('loginMemberImageUrl');
+
+    if (!!loginMemberImageUrl) {
+        return loginMemberImageUrl;
+    }
+
+    const image = await requestMemberImage(memberId);
+    const savedLoginMemberImageUrl = image?.url ?? '/assets/default-profile-image.png';
+    setCookie('loginMemberImageUrl', savedLoginMemberImageUrl);
+
+    return savedLoginMemberImageUrl;
 };
 
-export const generateProfileImageHtml = (image, size = { width: 50, height: 50 }) => {
+export const generateProfileImageHtml = (imageUrl, size = { width: 50, height: 50 }) => {
     return `
         <img
-            src="${!!image ? `${API_SERVER_URI}/s3/${image.objectKey}` : '/assets/default-profile-image.png'}"
+            src="${imageUrl ?? '/assets/default-profile-image.png'}"
             width=${size.width}
             height=${size.height}
             alt="profile image"
@@ -34,7 +38,17 @@ export const generateProfileImageHtml = (image, size = { width: 50, height: 50 }
     `;
 };
 
-export const paintProfileImage = async (memberId, size = { width: 50, height: 50 }) => {
-    const image = await requestMemberImage(memberId);
-    document.querySelector('.profile-image').insertAdjacentHTML('beforeend', generateProfileImageHtml(image, size));
+export const generatePostImageHtml = (imageUrl) => {
+    return !!imageUrl
+        ? `<img
+            src="${imageUrl}"
+            alt="post image"
+            style="width: 100%"
+        />`
+        : '';
+};
+
+export const generateHeaderProfileImageHtml = async (memberId, size = { width: 50, height: 50 }) => {
+    const loginMemberImageUrl = await getLoginMemberImageUrl(memberId);
+    return generateProfileImageHtml(loginMemberImageUrl, size);
 };
