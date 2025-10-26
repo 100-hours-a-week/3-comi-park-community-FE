@@ -74,7 +74,6 @@ const defaultFieldAttributes = {
 };
 
 const generateInputDivHtml = (attributes, value = '') => {
-    // 수정일 땐 isValidated = true
     return `
         <div>
             <label for="form-${attributes.keyname}-input" class="form-label">${attributes.name}</label>
@@ -120,7 +119,7 @@ const generateImageDivHtml = (attributes, image = {}) => {
             <label for="form-${attributes.keyname}-input" class="form-label">${attributes.name}</label>
             <div class="form-${attributes.keyname}-container">
                 ${attributes.imageHtml(image)}
-                <div class="${attributes.isBtnOverlay}">
+                <div class="${attributes.isBtnOverlay ? 'overlay' : ''}">
                     <button type="button" class="btn form-image-update-btn">변경</button>
                     <button type="button" class="btn form-image-delete-btn">삭제</button>
                 </div>
