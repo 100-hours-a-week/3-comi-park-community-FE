@@ -57,6 +57,7 @@ footer {
     border-radius: 4px;
     padding: 0.5em;
     font-size: 1em;
+    background-color: #c5b0cd;
 }
 
 .small-btn {
@@ -83,4 +84,10 @@ footer {
 
 .click {
     cursor: pointer;
+}
+
+/* refactoring */
+.round-image {
+    object-fit: cover;
+    clip-path: circle(50%);
 }

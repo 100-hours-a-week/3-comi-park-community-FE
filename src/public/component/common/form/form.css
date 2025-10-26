@@ -31,3 +31,37 @@ form div {
     color: #c5b0cd;
     cursor: not-allowed;
 }
+
+/* refactoring */
+.form-post-image-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.form-post-image {
+    flex: 1; /* 남은 공간 전부 차지 */
+    border-radius: 4px;
+    border: 1px solid #415e72;
+    padding: 0.5em;
+}
+
+.form-member-image-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.form-image-btn-container {
+    display: flex;
+    flex-direction: row;
+    flex-shrink: 0; /* 버튼 영역 줄지 않게 함 */
+}
+
+.overlay {
+    position: absolute;
+    background-color: transparent;
+}

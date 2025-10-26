@@ -121,7 +121,7 @@ const generateImageDivHtml = (attributes, image = {}) => {
             <label for="form-${attributes.keyname}-input" class="form-label">${attributes.name}</label>
             <div class="form-${attributes.keyname}-container">
                 ${attributes.imageHtml(image)}
-                <div class="${attributes.isBtnOverlay ? 'overlay' : ''}">
+                <div class="${attributes.isBtnOverlay ? 'overlay' : ''} form-image-btn-container">
                     <button type="button" class="btn form-image-update-btn">변경</button>
                     <button type="button" class="btn form-image-delete-btn">삭제</button>
                 </div>
