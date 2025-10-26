@@ -95,13 +95,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     paintHeader(success, loginMemberId);
 
     const nicknameInput = document.querySelector('#form-nickname-input');
+    const emailInput = document.querySelector('#form-email-input');
 
     const res = await requestMemberInfo(loginMemberId);
 
     if (!res.success) {
         nicknameInput.nextElementSibling.textContent = res.data;
+        emailInput.nextElementSibling.textContent = res.data;
     }
 
+    emailInput.value = res.data.member.email;
     nicknameInput.value = res.data.member.nickname;
     inputFormInputHandlerDebounced(nicknameInput, res.data.member.nickname);
     document
