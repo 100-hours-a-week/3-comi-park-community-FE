@@ -1,3 +1,5 @@
+import { DEFAULT_MEMBER_IMAGE } from '../../../utils/constants.js';
+
 const defaultFieldAttributes = {
     /* members */
     email: {
@@ -61,7 +63,7 @@ const defaultFieldAttributes = {
         keyname: 'member-image',
         name: '프로필 이미지',
         imageHtml: (image) =>
-            `<img class="form-member-image round-image" src="${image?.url ?? '/assets/default-profile-image.png'}" width="250" height="250" alt="member image" />`,
+            `<img class="form-member-image round-image" src="${image?.url ?? DEFAULT_MEMBER_IMAGE}" width="250" height="250" alt="member image" />`,
         isBtnOverlay: true,
     },
     'post-image': {
