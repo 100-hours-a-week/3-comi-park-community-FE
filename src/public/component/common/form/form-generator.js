@@ -158,3 +158,10 @@ export const generateFormFieldDivHtml = (keyname, value = '') => {
     const generator = formFieldDivHtmlGenerator[keyname];
     return !generator ? '' : generator(defaultFieldAttributes[keyname], value);
 };
+
+export const generateSubmitBtnDivHtml = (value) => {
+    return `
+        <div>
+            <button class="btn form-submit-btn" type="button">${value}</button>
+        </div>`;
+};
