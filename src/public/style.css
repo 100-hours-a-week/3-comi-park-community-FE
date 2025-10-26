@@ -19,6 +19,7 @@ a {
 main {
     display: flex;
     justify-content: center;
+    margin-bottom: 5em;
 }
 
 main .title {
@@ -34,6 +35,21 @@ main .title {
 section {
     width: 70%;
     padding: 1.5em 0;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    gap: 5em;
+
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #c2c2c2;
+    text-align: center;
+    padding: 10px 0;
+    z-index: 1000;
 }
 
 .btn {
