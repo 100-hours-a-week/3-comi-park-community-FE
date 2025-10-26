@@ -174,7 +174,9 @@ export const paintCommentsContainer = (comments, loginMemberId) => {
     document
         .querySelector('.comments-container')
         .insertAdjacentHTML('beforeend', generateCommentsContainerHtml(comments, loginMemberId));
+};
 
+export const attachCommentEventHandler = () => {
     // 댓글 삭제 버튼 클릭 이벤트
     document.querySelector('.comments-container').addEventListener('click', ({ target }) => {
         if (!target.classList.contains('comment-delete-btn')) return;
