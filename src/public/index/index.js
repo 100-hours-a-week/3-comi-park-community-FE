@@ -31,4 +31,27 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.querySelector('.posts-container').addEventListener('click', ({ target }) => {
         postsContainerClickHandler(target);
     });
+
+    let isNewPostFetching = false;
+
+    window.addEventListener('scroll', async () => {
+        const hitsBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1;
+
+        if (!hitsBottom || isNewPostFetching) {
+            return;
+        }
+
+        isNewPostFetching = true;
+
+        const lastPostId = Array.from(document.querySelectorAll('[data-postid]')).at(-1).dataset.postid;
+        const res = await requestPosts({ lastPostId });
+
+        if (!res.success) {
+            document.querySelector('.posts-container').textContent = res.data;
+            return;
+        }
+
+        paintPostContainer(res.data.posts);
+        isNewPostFetching = false;
+    });
 });
