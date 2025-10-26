@@ -68,15 +68,42 @@ document.addEventListener('DOMContentLoaded', async () => {
     paintCommentsContainer(commentRes.data.comments, loginMemberId);
 
     /* 게시글 삭제 모달 */
-    document.querySelector('.delete-btn').addEventListener('click', ({ target }) => {
-        console.log(target);
-        const { domain, id } = target.dataset;
+    const postDeleteBtnElement = document.querySelector('.delete-btn');
 
-        openModal({
-            mainText: '게시글을 삭제하시겠습니까?',
-            subText: '삭제한 내용은 복구할 수 없습니다',
-            dataset: target.dataset,
-            onConfirm: () => deletePostHandler(id),
+    if (postDeleteBtnElement) {
+        postDeleteBtnElement.addEventListener('click', ({ target }) => {
+            console.log(target);
+            const { domain, id } = target.dataset;
+
+            openModal({
+                mainText: '게시글을 삭제하시겠습니까?',
+                subText: '삭제한 내용은 복구할 수 없습니다',
+                dataset: target.dataset,
+                onConfirm: () => deletePostHandler(id),
+            });
         });
+    }
+
+    let isNewCommentFetching = false;
+
+    window.addEventListener('scroll', async () => {
+        const hitsBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1;
+
+        if (!hitsBottom || isNewCommentFetching) {
+            return;
+        }
+
+        isNewCommentFetching = true;
+
+        const lastCommentId = Array.from(document.querySelectorAll('[data-commentid]')).at(-1).dataset.commentid;
+        const res = await requestComments(postId, { lastCommentId });
+
+        if (!res.success) {
+            document.querySelector('.comments-container').textContent = res.data;
+            return;
+        }
+
+        paintCommentsContainer(res.data.comments, loginMemberId);
+        isNewCommentFetching = false;
     });
 });
