@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         formParent: sectionElement,
         fields: ['title', 'content', 'post-image'],
         values: res.data.post,
-        submitBtnValue: '등록',
+        submitBtnValue: '수정',
         afterSubmit: async (requestBody) => {
             const res = await requestUpdatePost(postId, requestBody);
 
