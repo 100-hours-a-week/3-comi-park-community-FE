@@ -1,5 +1,5 @@
 // 연속적으로 발생한 이벤트 중 마지막으로 발생한 이벤트만 처리
-export function debouncedRequest(fn, delay = 200) {
+export function debouncedRequest(fn, delay = 400) {
     let timer;
     return function () {
         const args = arguments;
