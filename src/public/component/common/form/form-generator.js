@@ -122,19 +122,20 @@ const generateImageDivHtml = (attributes, image = {}) => {
             <div class="form-${attributes.keyname}-container">
                 ${attributes.imageHtml(image)}
                 <div class="${attributes.isBtnOverlay ? 'overlay' : ''} form-image-btn-container">
-                    <button type="button" class="btn form-image-update-btn">변경</button>
+                    <button type="button" class="btn form-image-update-btn">${!!image?.id ? '변경' : '등록'}</button>
                     <button type="button" class="btn form-image-delete-btn">삭제</button>
                 </div>
             </div>
             <input
                 name="${attributes.name}"
+                class="form-input"
                 type="file"
-                id="form-${attributes.keyname}-input"
+                id="form-image-input"
                 data-ischanged="false"
                 data-fieldname="image"
                 data-keyname="${attributes.keyname}"
                 style="display: none"
-                value="${JSON.stringify({ id: image?.id, objectKey: image?.objectKey })}"
+                data-value="${!!image?.id ? JSON.stringify({ id: image.id, objectKey: image.objectKey }) : 'null'}"
             />
             <div class="form-helper-text form-helper-${attributes.keyname}"></div>
         </div>`;
@@ -162,6 +163,6 @@ export const generateFormFieldDivHtml = (keyname, value = '') => {
 export const generateSubmitBtnDivHtml = (value) => {
     return `
         <div>
-            <button class="btn form-submit-btn" type="button" disabled>${value}</button>
+            <button class="btn form-submit-btn inactivated" type="button" disabled>${value}</button>
         </div>`;
 };
