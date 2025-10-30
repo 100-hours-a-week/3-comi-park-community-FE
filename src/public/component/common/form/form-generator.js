@@ -109,8 +109,8 @@ const generateInputDivHtml = (attributes, value = '') => {
                 data-ischanged="false"
                 data-fieldname="${attributes.fieldname}"
                 data-keyname="${attributes.keyname}"
+                data-unique="${attributes?.isUnique ?? false}"
                 value="${value}"
-
                 ${attributes?.disabled ? 'disabled' : ''}
             />
             <div class="form-helper-text form-helper-${attributes.keyname}"></div>
