@@ -22,7 +22,12 @@ export const paintForm = (args) => {
     args.fields.forEach((keyname) => {
         const formFieldDivElement = document
             .createRange()
-            .createContextualFragment(generateFormFieldDivHtml(keyname)).firstElementChild;
+            .createContextualFragment(
+                generateFormFieldDivHtml(
+                    keyname,
+                    !!args?.values ? (keyname.includes('image') ? args.values?.image : args.values[keyname]) : ''
+                )
+            ).firstElementChild;
         formElement.appendChild(formFieldDivElement);
 
         formFieldElements.push(formFieldDivElement.querySelector('.form-input'));
