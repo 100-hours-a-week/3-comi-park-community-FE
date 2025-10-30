@@ -64,7 +64,7 @@ const validateContentPattern = (content) => {
 
 const validateCommentPattern = (content) => {
     return {
-        isValidated: content.length > 0 && content.length < 10000,
+        isValidated: content.length > 0 && content.length <= 10000,
         message: content.length > 10000 ? '댓글은 최대 10,000글자까지 입력할 수 있습니다' : '',
     };
 };
