@@ -1,21 +1,34 @@
-import { validateField, formSubmitBtnClickHandler } from '../component/common/form/form.js';
-import { debouncedRequest } from '../utils/debounce-helper.js';
+import { paintForm } from '../component/common/form/form-painter.js';
 import { paintHeader } from '../component/common/header/header.js';
+import { requestLogin } from '../api/auth.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     paintHeader();
 
-    document.querySelectorAll('.form-input').forEach((e) => {
-        e.addEventListener(
-            'input',
-            debouncedRequest(function ({ target }) {
-                const fieldName = target.dataset.fieldname;
-                validateField(fieldName, target);
-            }, 400)
-        );
+    const sectionElement = document.querySelector('section');
+    sectionElement.insertAdjacentHTML('beforeend', `<div class="title">로그인</div>`);
+
+    paintForm({
+        formParent: sectionElement,
+        fields: ['email', 'password'],
+        submitBtnValue: '로그인',
+        afterSubmit: async (requestBody) => {
+            const res = await requestLogin(requestBody);
+
+            if (!res.success) {
+                // TODO: 오른쪽 상단에 토스 메시지 띄우기
+                alert(res.data);
+                return;
+            }
+
+            location.replace('/index');
+        },
     });
 
-    debouncedRequest();
-
-    document.querySelector('.form-submit-btn').addEventListener('click', () => formSubmitBtnClickHandler('login'));
+    sectionElement.insertAdjacentHTML(
+        'beforeend',
+        `<div>
+            <button class="btn" type="button"><a href="/register">회원가입</a></button>
+        </div>`
+    );
 });
