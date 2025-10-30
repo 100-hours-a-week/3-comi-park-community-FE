@@ -38,11 +38,11 @@ const defaultFieldAttributes = {
         isRequired: true,
         isUnique: false,
     },
-    confirmedPassword: {
+    'confirmed-password': {
         name: '비밀번호 확인',
         type: 'password',
         fieldname: 'confirmedPassword',
-        keyname: 'password',
+        keyname: 'confirmed-password',
         isRequired: true,
         isUnique: false,
     },
@@ -168,7 +168,7 @@ const formFieldDivHtmlGenerator = {
     'disabled-email': generateInputDivHtml,
     'unique-email': generateInputDivHtml,
     password: generateInputDivHtml,
-    confirmedPassword: generateInputDivHtml,
+    'confirmed-password': generateInputDivHtml,
     nickname: generateInputDivHtml,
     title: generateInputDivHtml,
 

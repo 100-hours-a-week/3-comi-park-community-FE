@@ -18,8 +18,8 @@ const validatePasswordPattern = (password) => {
     };
 };
 
-const validateConfirmedPasswordPattern = (password, confirmedPassword) => {
-    const isValidated = password === confirmedPassword;
+const validateConfirmedPasswordPattern = (confirmedPassword) => {
+    const isValidated = document.querySelector('#form-password-input').value === confirmedPassword;
     return {
         isValidated,
         message: isValidated
@@ -77,7 +77,7 @@ export const fieldValidationRules = {
     content: validateContentPattern,
     email: validateEmailPattern,
     password: validatePasswordPattern,
-    confirmedPassword: validateConfirmedPasswordPattern,
+    'confirmed-password': validateConfirmedPasswordPattern,
     nickname: valdiateNicknamePattern,
     comment: validateCommentPattern,
 };
