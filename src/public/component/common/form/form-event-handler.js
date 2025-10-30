@@ -63,6 +63,7 @@ const formImageElementHandler = (formElement, submitBtnElement, filedElementsWit
                 });
 
                 imageMap[keyname].afterUpload(res, imageMap[keyname].element);
+                changeFormSubmitBtnStatus(submitBtnElement, filedElementsWithValidated);
             }
         });
     };
