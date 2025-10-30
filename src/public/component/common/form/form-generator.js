@@ -162,6 +162,6 @@ export const generateFormFieldDivHtml = (keyname, value = '') => {
 export const generateSubmitBtnDivHtml = (value) => {
     return `
         <div>
-            <button class="btn form-submit-btn" type="button">${value}</button>
+            <button class="btn form-submit-btn" type="button" disabled>${value}</button>
         </div>`;
 };
