@@ -68,11 +68,15 @@ const formImageElementHandler = (formElement, submitBtnElement, filedElementsWit
         });
     };
 
-    const imageUpdateBtnElement = formElement.querySelector('.form-image-update-btn');
-    const imageDeleteBtnElement = formElement.querySelector('.form-image-delete-btn');
     const imageInputElement = formElement.querySelector('#form-image-input');
 
+    if (!imageInputElement) {
+        return; // 이미지 input 없으면 이미지 이벤트 등록 X
+    }
+
     const keyname = imageInputElement.dataset.keyname;
+    const imageUpdateBtnElement = formElement.querySelector('.form-image-update-btn');
+    const imageDeleteBtnElement = formElement.querySelector('.form-image-delete-btn');
 
     const imageMap = {
         'post-image': {
