@@ -23,10 +23,7 @@ export const paintForm = (args) => {
         const formFieldDivElement = document
             .createRange()
             .createContextualFragment(
-                generateFormFieldDivHtml(
-                    keyname,
-                    !!args?.values ? (keyname.includes('image') ? args.values?.image : args.values[keyname]) : ''
-                )
+                generateFormFieldDivHtml(keyname, !!args?.values ? getValueBy(keyname, args.values) : '')
             ).firstElementChild;
         formElement.appendChild(formFieldDivElement);
 
@@ -37,4 +34,16 @@ export const paintForm = (args) => {
 
     // 이벤트 등록
     attachFormEventHandler(formElement, formFieldElements, args.afterSubmit);
+};
+
+const getValueBy = (keyname, values) => {
+    if (keyname.includes('image')) {
+        return values?.image;
+    }
+
+    if (keyname.includes('email')) {
+        return values.email;
+    }
+
+    return values[keyname];
 };
