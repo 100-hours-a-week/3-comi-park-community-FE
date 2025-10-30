@@ -1,7 +1,8 @@
-import { debouncedRequest } from '../../../utils/debounce-helper.js';
+import { requestEmailDuplicationCheck, requestNicknameDuplicationCheck } from '../../../api/members.js';
 import { fieldValidationRules } from '../../../utils/validate-helper.js';
-import { requestImageUpload } from '../../../api/images.js';
+import { debouncedRequest } from '../../../utils/debounce-helper.js';
 import { DEFAULT_MEMBER_IMAGE } from '../../../utils/constants.js';
+import { requestImageUpload } from '../../../api/images.js';
 
 export const attachFormEventHandler = (formElement, fieldElements, afterSubmit) => {
     const submitBtnElement = formElement.querySelector('.form-submit-btn');
@@ -111,7 +112,7 @@ const formFieldInputHandler = (submitBtnElement, filedElementsWithValidated) => 
         fieldElement.addEventListener(
             'input',
             debouncedRequest(async function () {
-                const { ischanged, keyname, isunique } = fieldElement.dataset;
+                const { ischanged, keyname, unique } = fieldElement.dataset;
                 const value = fieldElement.value;
                 const formHelperTextElement = fieldElement.nextElementSibling;
 
@@ -119,12 +120,20 @@ const formFieldInputHandler = (submitBtnElement, filedElementsWithValidated) => 
                     fieldElement.dataset.ischanged = true;
                 }
 
+                // 유효성 검증
                 const { isValidated, message } = fieldValidationRules[keyname](value);
-
-                // TODO: isunique가 true인 필드에 대한 중복 체크 API
-
                 fieldElement.dataset.validated = isValidated;
                 formHelperTextElement.textContent = message;
+
+                // 유니크한 값 중 유효한 값일 때만 중복 체크
+                if (unique === 'true' && isValidated) {
+                    const res = await requestAvailablityMap[keyname](value);
+
+                    if (!res.success) {
+                        fieldElement.dataset.validated = isValidated;
+                        formHelperTextElement.textContent = res.data;
+                    }
+                }
 
                 changeFormSubmitBtnStatus(submitBtnElement, filedElementsWithValidated);
             })
@@ -173,4 +182,9 @@ const createRequestBody = (fieldElements) => {
 
         return requestBody;
     }, {});
+};
+
+const requestAvailablityMap = {
+    email: requestEmailDuplicationCheck,
+    nickname: requestNicknameDuplicationCheck,
 };
