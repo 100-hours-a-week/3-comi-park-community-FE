@@ -3,12 +3,32 @@ import { DEFAULT_MEMBER_IMAGE } from '../../../utils/constants.js';
 const defaultFieldAttributes = {
     /* members */
     email: {
+        // 로그인 시 형식 검증만 진행
+        name: '이메일',
+        type: 'email',
+        fieldname: 'email',
+        keyname: 'email',
+        isRequired: true,
+        isUnique: false,
+    },
+    'unique-email': {
+        // 회원가입 시 형식 검증과 중복 체크 진행
         name: '이메일',
         type: 'email',
         fieldname: 'email',
         keyname: 'email',
         isRequired: true,
         isUnique: true,
+    },
+    'disabled-email': {
+        // 회원정보 수정 시 이메일 표시만 함
+        name: '이메일',
+        type: 'email',
+        fieldname: 'email',
+        keyname: 'email',
+        isRequired: true,
+        isUnique: true,
+        disabled: true,
     },
     password: {
         name: '비밀번호',
@@ -90,6 +110,8 @@ const generateInputDivHtml = (attributes, value = '') => {
                 data-fieldname="${attributes.fieldname}"
                 data-keyname="${attributes.keyname}"
                 value="${value}"
+
+                ${attributes?.disabled ? 'disabled' : ''}
             />
             <div class="form-helper-text form-helper-${attributes.keyname}"></div>
         </div>`;
@@ -143,6 +165,8 @@ const generateImageDivHtml = (attributes, image = {}) => {
 
 const formFieldDivHtmlGenerator = {
     email: generateInputDivHtml,
+    'disabled-email': generateInputDivHtml,
+    'unique-email': generateInputDivHtml,
     password: generateInputDivHtml,
     confirmedPassword: generateInputDivHtml,
     nickname: generateInputDivHtml,
