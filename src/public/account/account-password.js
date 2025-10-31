@@ -1,50 +1,7 @@
-import { validateRequiredInput, validateField, ChangeFormSubmitBtnStatus } from '../component/common/form/form.js';
+import { paintForm } from '../component/common/form/form-painter.js';
 import { paintHeader } from '../component/common/header/header.js';
 import { requestMemberInfoUpdate } from '../api/members.js';
-import { debouncedRequest } from '../utils/debounce-helper.js';
 import { getAuth } from '../utils/auth-guard.js';
-
-const inputFormInputHandlerDebounced = (inputElement) => {
-    inputElement.addEventListener(
-        'input',
-        debouncedRequest(async function ({ target }) {
-            const fieldName = target.dataset.fieldname;
-            validateField(fieldName, target);
-            ChangeFormSubmitBtnStatus();
-        }, 400)
-    );
-};
-
-export const formSubmitBtnClickHandler = async (memberId) => {
-    const form = document.querySelector('.form');
-
-    if (!validateRequiredInput(form)) {
-        return;
-    }
-
-    // 유효성 검사 통과 못하면 return
-    const inputElementsWithValidated = document.querySelectorAll('[data-validated]');
-
-    for (const e of inputElementsWithValidated) {
-        if (e.dataset.validated !== 'true') return;
-    }
-
-    const inputElements = document.querySelectorAll('.form-input');
-    const requestBody = {};
-
-    for (const e of inputElements) {
-        requestBody[e.dataset.fieldname] = e.value;
-    }
-
-    const res = await requestMemberInfoUpdate(memberId, requestBody);
-
-    if (!res.success) {
-        inputElements[0].nextElementSibling.textContent = res.data;
-        return;
-    }
-
-    inputElements[0].nextElementSibling.textContent = '수정 완료';
-};
 
 document.addEventListener('DOMContentLoaded', async () => {
     const { success, loginMemberId } = await getAuth();
@@ -53,8 +10,33 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     paintHeader(success, loginMemberId);
 
-    document.querySelectorAll('.form-input').forEach((e) => inputFormInputHandlerDebounced(e));
-    document
-        .querySelector('.form-submit-btn')
-        .addEventListener('click', () => formSubmitBtnClickHandler(loginMemberId));
+    const sectionElement = document.querySelector('section');
+    sectionElement.insertAdjacentHTML('beforeend', `<div class="title">비밀번호 수정</div>`);
+
+    paintForm({
+        formParent: sectionElement,
+        fields: ['password', 'confirmed-password'],
+        submitBtnValue: '수정',
+        afterSubmit: async (requestBody) => {
+            const res = await requestMemberInfoUpdate(loginMemberId, requestBody);
+
+            if (!res.success) {
+                // TODO: 오른쪽 상단에 토스 메시지 띄우기
+                alert(res.data);
+                return;
+            }
+
+            // TODO: 오른쪽 상단에 토스 메시지 띄우기
+            alert('비밀번호가 수정됐습니다');
+
+            // 수정 완료됐으므로 input 초기화
+            sectionElement.querySelectorAll('[data-ischanged]').forEach((e) => {
+                e.dataset.ischanged = false;
+                e.dataset.value = '';
+            });
+            const submitBtnElement = sectionElement.querySelector('.form-submit-btn');
+            submitBtnElement.classList.add('inactivated');
+            submitBtnElement.disabled = true;
+        },
+    });
 });

@@ -54,7 +54,7 @@ const logoutBtnClickHandler = async () => {
 
     if (!res.success) {
         alert(res.data);
-        reteurn;
+        return;
     }
 
     destroyCookie('loginMemberImageUrl');
