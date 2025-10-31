@@ -120,7 +120,11 @@ const generateInputDivHtml = (attributes, value = '') => {
 const generateTextareaDivHtml = (attributes, value = '') => {
     return `
         <div>
-            <label for="form-${attributes.keyname}-input" class="form-label">${attributes.name}</label>
+        ${
+            attributes.keyname === 'content'
+                ? `<label for="form-${attributes.keyname}-input" class="form-label">${attributes.name}</label>`
+                : ''
+        }
             <textarea
                 name="${attributes.name}"
                 class="form-input ${attributes?.isRequired ? 'required' : ''}"
