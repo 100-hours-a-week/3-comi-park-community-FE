@@ -1,6 +1,7 @@
 import { requestMemberInfo, requestMemberInfoUpdate, requestMemberDelete } from '../api/members.js';
 import { paintForm } from '../component/common/form/form-painter.js';
 import { paintHeader } from '../component/common/header/header.js';
+import { paintFooter } from '../component/common/footer/footer.js';
 import { openModal } from '../component/common/modal/modal.js';
 import { getAuth } from '../utils/auth-guard.js';
 
@@ -52,6 +53,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             <button class="btn withdraw-btn" type="button" data-domain="member" data-id="">회원 탈퇴</button>
         </div>`
     );
+
+    paintFooter(sectionElement);
 
     /* 삭제 모달 */
     sectionElement.querySelector('.withdraw-btn').addEventListener('click', () => {

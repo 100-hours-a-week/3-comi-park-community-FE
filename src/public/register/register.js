@@ -1,5 +1,6 @@
 import { paintForm } from '../component/common/form/form-painter.js';
 import { paintHeader } from '../component/common/header/header.js';
+import { paintFooter } from '../component/common/footer/footer.js';
 import { requestRegister } from '../api/members.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -31,4 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 <button class="btn" type="button"><a href="/login">로그인</a></button>
             </div>`
     );
+
+    paintFooter(sectionElement);
 });

@@ -1,5 +1,6 @@
 import { paintForm } from '../component/common/form/form-painter.js';
 import { paintHeader } from '../component/common/header/header.js';
+import { paintFooter } from '../component/common/footer/footer.js';
 import { requestUpdatePost } from '../api/posts.js';
 import { requestReadPost } from '../api/posts.js';
 import { getAuth } from '../utils/auth-guard.js';
@@ -39,4 +40,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             location.replace(`/read/${postId}`);
         },
     });
+
+    paintFooter(sectionElement);
 });

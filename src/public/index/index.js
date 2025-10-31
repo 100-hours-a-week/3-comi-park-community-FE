@@ -1,4 +1,5 @@
 import { paintHeader } from '../component/common/header/header.js';
+import { paintFooter } from '../component/common/footer/footer.js';
 import { paintPostContainer } from '../component/post/posts.js';
 import { requestPosts } from '../api/posts.js';
 import { getAuth } from '../utils/auth-guard.js';
@@ -31,6 +32,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.querySelector('.posts-container').addEventListener('click', ({ target }) => {
         postsContainerClickHandler(target);
     });
+
+    const sectionElement = document.querySelector('section');
+    paintFooter(sectionElement);
 
     let isNewPostFetching = false;
 
