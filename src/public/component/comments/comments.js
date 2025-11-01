@@ -9,8 +9,8 @@ export const generateCommentContainerHtml = (comment, loginMemberId) => {
     const updateDeleteBtnHtml = () => {
         return `
             <div>
-                <button class="btn small-btn comment-update-btn" data-id=${comment.id}>수정</button>
-                <button class="btn small-btn comment-delete-btn" data-id="${comment.id}">삭제</button>
+                <button class="small-btn comment-update-btn" data-id=${comment.id}>수정</button>
+                <button class="small-btn comment-delete-btn" data-id="${comment.id}">삭제</button>
             </div>`;
     };
 
