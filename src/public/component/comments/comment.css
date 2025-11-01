@@ -1,19 +1,62 @@
+/* === 댓글 === */
 .comments-container {
-    margin-top: 0.5em;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5em;
+    margin-top: 2rem;
+    background: #fffdfd;
+    border: 1.5px solid var(--pink);
+    border-radius: 12px;
+    box-shadow:
+        0 3px 8px rgba(255, 182, 193, 0.25),
+        inset 0 0 6px rgba(255, 255, 255, 0.7);
+}
+
+.comment-container {
+    padding: 1rem;
+    box-shadow:
+        0 3px 8px rgba(255, 182, 193, 0.25),
+        inset 0 0 6px rgba(255, 255, 255, 0.7);
 }
 
 .comment-info {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.5em;
+    margin-bottom: 0.8rem;
+    flex-wrap: wrap;
 }
 
-.comment-info-left {
-    display: inherit;
-    align-items: center;
-    gap: 1em;
+.comment-created-at {
+    font-size: 0.8rem;
+    color: #b66d7c;
+    opacity: 0.85;
+    text-align: right;
+}
+
+/* 댓글 본문 */
+.comment-content {
+    font-size: 0.95rem;
+    color: var(--text);
+    line-height: 1.6;
+    background: #fff9fb;
+    border-radius: 8px;
+    padding: 0.6rem 0.8rem;
+}
+
+/* === 댓글 입력 폼 === */
+.comment-form-container {
+    margin-top: 2rem;
+}
+
+.comment-form-container .form {
+    box-shadow: 0 6px 14px rgba(255, 182, 193, 0.25);
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+}
+
+.comment-form-container textarea {
+    min-height: 100px;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: flex-end;
 }
