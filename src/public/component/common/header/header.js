@@ -18,7 +18,7 @@ export const paintHeader = async (isLogin = false, loginMemberId = undefined) =>
 
     // 뒤로 가기 버튼이 노출된 상태라면 이전 페이지로 이동하는 클릭 이벤트 등록
     if (existsBackward) {
-        document.querySelector('.header-backward-image').addEventListener('click', headerBackwardImageClickHandler);
+        document.querySelector('.header-backward-btn').addEventListener('click', headerBackwardImageClickHandler);
     }
 };
 
@@ -26,27 +26,37 @@ const generateHeaderHtml = async (isLogin = false, loginMemberId = undefined, ex
     const headerProfileImageHtml = isLogin ? await generateHeaderProfileImageHtml(loginMemberId) : '';
 
     return `
-        <div class="header-container">
-            <div class="header-backward-container ${existsBackward ? '' : 'conceal'}">
-                <div class="header-backward-image">◀️</div>
-            </div>
-            <div class="title">
-                <div class="title-name"><a href="/index">아무 말 대잔치</a></div>
-            </div>
-            <div class="header-profile-container ${isLogin ? '' : 'conceal'}">
-                <div class="header-profile-image">${headerProfileImageHtml}</div>
-                <ul class="header-profile-list hide">
-                    <li class="header-profile-list-item"><a href="/account">회원정보수정</a></li>
-                    <li class="header-profile-list-item"><a href="/account/password">비밀번호수정</a></li>
-                    <li class="header-profile-list-item logout-btn click">로그아웃</li>
-                </ul>
-            </div>
+        <!-- 뒤로가기 버튼 -->
+        <div class="header-backward-container ${existsBackward ? '' : 'conceal'}">
+            <button class="header-backward-btn" aria-label="뒤로가기">
+                <svg class="header-backward-icon" viewBox="0 0 24 24">
+                    <path d="M15 18l-6-6 6-6" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
         </div>
-        `;
+
+        <!-- 로고 -->
+        <div class="logo">
+            <a href="/index">♡ Gossip Girl ♡</a>
+        </div>
+
+        <!-- 프로필 -->
+        <div class="header-profile-container ${isLogin ? '' : 'conceal'}">
+            <div class="header-profile-image">
+                <div class="header-profile-border">
+                    ${headerProfileImageHtml}
+                </div>
+            </div>
+            <ul class="header-profile-list">
+                <li class="header-profile-list-item"><a href="/account">회원정보수정</a></li>
+                <li class="header-profile-list-item"><a href="/account/password">비밀번호수정</a></li>
+                <li class="header-profile-list-item logout-btn click">로그아웃</li>
+            </ul>
+        </div>`;
 };
 
 const headerProfileImageClickListHandler = () => {
-    document.querySelector('.header-profile-list').classList.toggle('hide');
+    document.querySelector('.header-profile-list').classList.toggle('active');
 };
 
 const logoutBtnClickHandler = async () => {
