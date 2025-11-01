@@ -1,5 +1,5 @@
+import { requestAuth, requestRefresh } from '../api/auth.js';
 import { destroyCookie } from './cookie-helper.js';
-import { requestAuth } from '../api/auth.js';
 
 /**
  * 인증 정보가 있는지, 있다면 유효한지 여부를 서버에 확인한 후
@@ -10,11 +10,19 @@ import { requestAuth } from '../api/auth.js';
  *  if (!success) return;
  */
 export const getAuth = async () => {
-    const res = await requestAuth();
+    let res = await requestAuth();
 
     if (!res.success) {
-        destroyCookie('loginMemberImageUrl');
-        location.replace('/login');
+        const refreshRes = await requestRefresh();
+
+        if (refreshRes.success) {
+            res = await requestAuth();
+        }
+
+        if (!res.success) {
+            destroyCookie('loginMemberImageUrl');
+            location.replace('/login');
+        }
     }
 
     return { success: res.success, loginMemberId: res.data?.auth?.id };

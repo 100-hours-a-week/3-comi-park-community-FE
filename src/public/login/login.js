@@ -1,11 +1,14 @@
 import { paintForm } from '../component/common/form/form-painter.js';
 import { paintHeader } from '../component/common/header/header.js';
+import { paintFooter } from '../component/common/footer/footer.js';
 import { requestLogin } from '../api/auth.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     paintHeader();
 
-    const sectionElement = document.querySelector('section');
+    const bodyElement = document.querySelector('body');
+    const mainElement = bodyElement.querySelector('main');
+    const sectionElement = mainElement.querySelector('section');
     sectionElement.insertAdjacentHTML('beforeend', `<div class="title">로그인</div>`);
 
     paintForm({
@@ -25,10 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
         },
     });
 
-    sectionElement.insertAdjacentHTML(
+    sectionElement.querySelector('.form').insertAdjacentHTML(
         'beforeend',
         `<div>
-            <button class="btn" type="button"><a href="/register">회원가입</a></button>
+            <button class="btn form-sub-btn" type="button" onclick="location.href='/register'">회원가입</button>
         </div>`
     );
+
+    paintFooter(bodyElement, mainElement);
 });

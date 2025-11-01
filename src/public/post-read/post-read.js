@@ -4,6 +4,7 @@ import { requestReadPost, requestDeletePost } from '../api/posts.js';
 import { paintForm } from '../component/common/form/form-painter.js';
 import { paintPostReadContainer } from '../component/post/post.js';
 import { paintHeader } from '../component/common/header/header.js';
+import { paintFooter } from '../component/common/footer/footer.js';
 import { openModal } from '../component/common/modal/modal.js';
 import { getAuth } from '../utils/auth-guard.js';
 import {
@@ -159,4 +160,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         paintCommentsContainer(res.data.comments, loginMemberId);
         isNewCommentFetching = false;
     });
+
+    const bodyElement = document.querySelector('body');
+    const mainElement = bodyElement.querySelector('main');
+    paintFooter(bodyElement, mainElement);
 });

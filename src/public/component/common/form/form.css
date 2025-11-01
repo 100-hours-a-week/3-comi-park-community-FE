@@ -1,8 +1,12 @@
 form {
     display: flex;
     flex-direction: column;
-    gap: 1em;
-    width: 100%;
+    gap: 1.5rem;
+    background: #fffdfd;
+    border: 2px solid var(--pink);
+    border-radius: 25px;
+    box-shadow: 0 8px 20px var(--shadow);
+    padding: 2rem 3rem;
 }
 
 form div {
@@ -11,42 +15,95 @@ form div {
     gap: 0.5em;
 }
 
+.form-label {
+    display: block;
+    font-weight: bold;
+    color: var(--deep-pink);
+    margin-bottom: 0.5rem;
+}
+
 .form-input {
-    border: 1px solid #415e72;
-    border-radius: 4px;
-    padding: 0.5em;
+    padding: 0.8rem 1rem;
+    border: 2px solid var(--pink);
+    border-radius: 10px;
+    background-color: #fff9fb;
+    color: var(--text);
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+/* textarea 높이 */
+textarea.form-input {
+    resize: vertical;
+    min-height: 180px;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--deep-pink);
+    box-shadow: 0 0 8px rgba(217, 79, 112, 0.3);
+}
+
+.form-input.invalid {
+    border-color: var(--error);
+    box-shadow: 0 0 10px rgba(255, 100, 100, 0.3);
 }
 
 .form-helper-text {
-    color: #dc143c;
-    font-size: 0.8em;
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+    min-height: 1em;
+    text-align: left;
+    color: var(--deep-pink);
+    opacity: 0.85;
+    line-height: 1.5;
+}
+
+.form-helper-text.error {
+    color: var(--error);
+    animation: shake 0.25s ease-in-out;
 }
 
 .form-submit-btn {
     background-color: #c5b0cd;
 }
 
-.inactivated {
-    background-color: #c5b0cd70;
-    color: #c5b0cd;
-    cursor: not-allowed;
+.form-sub-btn {
+    display: inline-block;
+    background: rgba(255, 240, 245, 0.8);
+    border: 2px solid var(--pink);
+    color: var(--deep-pink);
+    padding: 0.65rem 1.2rem;
+    border-radius: 25px;
+    box-shadow:
+        inset 0 1px 6px rgba(255, 255, 255, 0.8),
+        0 3px 8px var(--shadow);
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease,
+        color 0.25s ease;
+    cursor: pointer;
 }
 
-/* refactoring */
-.form-post-image-container {
+/* hover: 반짝이 + 젤리빛 리본 효과 */
+.form-sub-btn:hover {
+    color: var(--hotpink);
+    transform: translateY(-3px) scale(1.03);
+    box-shadow:
+        0 6px 12px rgba(255, 182, 193, 0.5),
+        inset 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+/* === IMAGE === */
+.form-image-btn-container {
     display: flex;
-    align-items: center;
-    gap: 8px;
-    width: 100%;
+    flex-direction: row;
+    flex-shrink: 0; /* 버튼 영역 줄지 않게 함 */
 }
 
-.form-post-image {
-    flex: 1; /* 남은 공간 전부 차지 */
-    border-radius: 4px;
-    border: 1px solid #415e72;
-    padding: 0.5em;
-}
-
+/* 프로필 이미지 */
 .form-member-image-container {
     position: relative;
     display: flex;
@@ -55,13 +112,140 @@ form div {
     cursor: pointer;
 }
 
-.form-image-btn-container {
+.overlay.form-image-btn-container {
+    position: absolute;
+    inset: 0;
     display: flex;
-    flex-direction: row;
-    flex-shrink: 0; /* 버튼 영역 줄지 않게 함 */
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
-.overlay {
-    position: absolute;
-    background-color: transparent;
+.form-member-image-container:hover .overlay {
+    opacity: 1;
+}
+
+/* 게시글 이미지 */
+.form-post-image-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-post-image {
+    flex: 1; /* 남은 공간 전부 차지 */
+    padding: 0.8rem 1rem;
+    border: 2px solid var(--pink);
+    border-radius: 10px;
+    background-color: #fff9fb;
+    color: var(--text);
+}
+
+/* === BUTTON === */
+/* 비활성화 버튼 */
+.btn.inactivated,
+.btn:disabled {
+    background: var(--cream-pink);
+    color: #c8a7a7;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.form-sub-btn:not(:disabled):hover {
+    background: linear-gradient(145deg, #f7a8bb, var(--hotpink));
+}
+
+/* small-btn (게시글 수정/삭제, 댓글 수정/삭제용) */
+.small-btn {
+    display: inline-block;
+    padding: 0.35rem 0.9rem;
+    margin: 0 0.25rem;
+    font-size: 0.8rem;
+    color: var(--deep-pink);
+    background: rgba(255, 245, 247, 0.92);
+    border: 1.5px solid var(--pink);
+    border-radius: 4px;
+    box-shadow:
+        0 2px 6px rgba(255, 182, 193, 0.35),
+        inset 0 1px 3px rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    transition:
+        all 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+/* hover: 부드럽게 빛나는 반짝임 */
+.small-btn:hover {
+    background: linear-gradient(145deg, #ffe8ef, #ffd8e3);
+    color: var(--hotpink);
+    transform: translateY(-2px);
+    box-shadow:
+        0 4px 10px rgba(255, 182, 193, 0.45),
+        inset 0 0 6px rgba(255, 255, 255, 0.7);
+}
+
+/* 클릭 시: 작게 눌리는 효과 */
+.small-btn:active {
+    transform: translateY(0);
+    box-shadow:
+        0 2px 5px rgba(255, 182, 193, 0.2),
+        inset 0 0 6px rgba(255, 255, 255, 0.9);
+}
+
+/* 삭제 버튼 전용 */
+.small-btn.delete-btn,
+.small-btn.comment-delete-btn {
+    color: #fff;
+    background: linear-gradient(145deg, #ff8ba0, #ff5e7a);
+    border: 1.5px solid #ff6f91;
+    box-shadow: 0 3px 8px rgba(255, 105, 135, 0.35);
+}
+
+/* 삭제 hover: 체리빛 강조 */
+.small-btn.delete-btn:hover,
+.small-btn.comment-delete-btn:hover {
+    background: linear-gradient(145deg, #ffb2c1, #ff6f91);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(255, 105, 135, 0.45);
+}
+
+/* 댓글용 버튼은 살짝 작게 */
+.comment .small-btn,
+.comment-update-btn,
+.comment-delete-btn {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.7rem;
+    border-radius: 4px;
+}
+
+@keyframes shake {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-4px);
+    }
+    75% {
+        transform: translateX(4px);
+    }
+}
+
+/* 🪞 반응형 */
+@media (max-width: 600px) {
+    .form {
+        padding: 1.5rem 1.8rem;
+        border-radius: 18px;
+    }
+}
+
+@media (max-width: 430px) {
+    .form-image-btn-container {
+        display: flex;
+        flex-direction: column;
+    }
 }

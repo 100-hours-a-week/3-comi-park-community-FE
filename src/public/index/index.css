@@ -1,42 +1,111 @@
 .post-write-btn {
     display: flex;
     justify-content: right;
-}
-
-.posts-container {
-    padding: 1em 0;
-    display: flex;
-    flex-direction: column;
-    gap: 1em;
+    margin-bottom: 1rem;
 }
 
 .post-container {
-    padding: 1em;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5em;
-    border-radius: 8px;
-    box-shadow: 5px 5px 14px 0.5px #9c9c9c;
-    background-color: #ffffff;
-    cursor: pointer;
+    background: #fffdfd;
+    border: 2px solid var(--pink);
+    border-radius: 18px;
+    padding: 1rem 1.4rem;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 4px 10px rgba(255, 182, 193, 0.25);
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
 }
 
 .post-container:hover {
-    background-color: #dbd7dd;
+    transform: translateY(-4px);
+    box-shadow: 0 6px 14px rgba(255, 182, 193, 0.4);
+}
+
+/* 제목 + 작성일 분리 */
+.post-header {
+    display: flex;
+    flex-direction: column; /* 세로 정렬 */
+    align-items: flex-start;
+    gap: 0.2rem;
+    margin-bottom: 0.5rem;
 }
 
 .post-title {
-    font-size: 1.5em;
-    margin-bottom: 0.5em;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--deep-pink);
+    letter-spacing: 0.3px;
+    line-height: 1.4;
+    word-break: break-word;
 }
 
-.post-info {
+.post-created-at {
+    align-self: flex-end; /* 제목 오른쪽 아래 정렬 */
+    font-size: 0.85rem;
+    color: #b66d7c;
+    opacity: 0.85;
+    margin-top: 0.1rem;
+}
+
+/* 작성자 */
+.writer-info {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.6rem;
+}
+
+.writer-member-image img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--pink);
+    box-shadow: 0 2px 5px rgba(255, 182, 193, 0.35);
+}
+
+.writer-member-nickname {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 0.2px;
+}
+
+/* 좋아요/댓글/조회수 + 작성자 */
+.post-footer {
     display: flex;
     justify-content: space-between;
-    color: #415e72;
+    align-items: center;
+    gap: 1rem;
 }
 
+/* post-stat 박스 */
 .post-stat {
     display: flex;
-    gap: 0.5em;
+    gap: 0.7rem;
+    background: rgba(255, 240, 245, 0.5);
+    border: 1.5px solid var(--pink);
+    border-radius: 14px;
+    padding: 0.5rem 0.8rem;
+    box-shadow:
+        0 2px 5px rgba(255, 182, 193, 0.25),
+        inset 0 0 6px rgba(255, 255, 255, 0.7);
+}
+
+.post-stat div {
+    font-size: 0.9rem;
+    color: var(--text);
+}
+
+.post-stat span {
+    color: var(--deep-pink);
+    font-weight: 600;
+    margin-left: 0.2rem;
+}
+
+@media (max-width: 400px) {
+    .post-stat {
+        flex-direction: column;
+    }
 }

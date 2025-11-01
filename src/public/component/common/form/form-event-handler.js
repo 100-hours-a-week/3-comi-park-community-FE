@@ -125,6 +125,14 @@ const formFieldInputHandler = (submitBtnElement, filedElementsWithValidated) => 
                 fieldElement.dataset.validated = isValidated;
                 formHelperTextElement.textContent = message;
 
+                if (!isValidated) {
+                    fieldElement.classList.add('invalid');
+                    formHelperTextElement.classList.add('error');
+                } else {
+                    fieldElement.classList.remove('invalid');
+                    formHelperTextElement.classList.remove('error');
+                }
+
                 // 유니크한 값 중 유효한 값일 때만 중복 체크
                 if (unique === 'true' && isValidated) {
                     const res = await requestAvailablityMap[keyname](value);

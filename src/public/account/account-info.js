@@ -1,7 +1,10 @@
 import { requestMemberInfo, requestMemberInfoUpdate, requestMemberDelete } from '../api/members.js';
 import { paintForm } from '../component/common/form/form-painter.js';
+import { destroyCookie, setCookie } from '../utils/cookie-helper.js';
 import { paintHeader } from '../component/common/header/header.js';
+import { paintFooter } from '../component/common/footer/footer.js';
 import { openModal } from '../component/common/modal/modal.js';
+import { DEFAULT_MEMBER_IMAGE } from '../utils/constants.js';
 import { getAuth } from '../utils/auth-guard.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -18,7 +21,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     paintHeader(success, loginMemberId);
 
-    const sectionElement = document.querySelector('section');
+    const bodyElement = document.querySelector('body');
+    const mainElement = bodyElement.querySelector('main');
+    const sectionElement = mainElement.querySelector('section');
     sectionElement.insertAdjacentHTML('beforeend', `<div class="title">회원정보수정</div>`);
 
     paintForm({
@@ -38,6 +43,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             // TODO: 오른쪽 상단에 토스 메시지 띄우기
             alert('회원 정보가 수정됐습니다');
 
+            if (Object.hasOwn(res.data, 'image')) {
+                setCookie('loginMemberImageUrl', res.data.image?.url ?? DEFAULT_MEMBER_IMAGE);
+            }
+
             // 수정 완료됐으므로 input 초기화
             sectionElement.querySelectorAll('[data-ischanged]').forEach((e) => (e.dataset.ischanged = false));
             const submitBtnElement = sectionElement.querySelector('.form-submit-btn');
@@ -46,28 +55,31 @@ document.addEventListener('DOMContentLoaded', async () => {
         },
     });
 
-    sectionElement.insertAdjacentHTML(
+    const formElement = sectionElement.querySelector('.form');
+    formElement.insertAdjacentHTML(
         'beforeend',
         `<div class="">
-            <button class="btn withdraw-btn" type="button" data-domain="member" data-id="">회원 탈퇴</button>
+            <button class="btn form-sub-btn withdraw-btn" type="button" data-domain="member" data-id="">회원 탈퇴</button>
         </div>`
     );
 
+    paintFooter(bodyElement, mainElement);
+
     /* 삭제 모달 */
-    sectionElement.querySelector('.withdraw-btn').addEventListener('click', () => {
+    formElement.querySelector('.withdraw-btn').addEventListener('click', () => {
         openModal({
             mainText: `회원 탈퇴하시겠습니까?`,
             subText: '작성된 게시글과 댓글은 삭제됩니다',
             dataset: { domain: 'member', id: loginMemberId },
             onConfirm: async () => {
                 const res = await requestMemberDelete(loginMemberId);
-                console.log(res);
 
                 if (!res.success) {
                     alert(res.data);
                     return;
                 }
 
+                destroyCookie('loginMemberImageUrl');
                 location.replace('/login');
             },
         });

@@ -1,5 +1,6 @@
 import { paintForm } from '../component/common/form/form-painter.js';
 import { paintHeader } from '../component/common/header/header.js';
+import { paintFooter } from '../component/common/footer/footer.js';
 import { requestMemberInfoUpdate } from '../api/members.js';
 import { getAuth } from '../utils/auth-guard.js';
 
@@ -39,4 +40,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             submitBtnElement.disabled = true;
         },
     });
+
+    const bodyElement = document.querySelector('body');
+    const mainElement = bodyElement.querySelector('main');
+    paintFooter(bodyElement, mainElement);
 });

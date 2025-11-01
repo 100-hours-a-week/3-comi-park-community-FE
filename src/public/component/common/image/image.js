@@ -1,4 +1,5 @@
 import { getCookie, setCookie } from '../../../utils/cookie-helper.js';
+import { DEFAULT_MEMBER_IMAGE } from '../../../utils/constants.js';
 import { requestMemberInfo } from '../../../api/members.js';
 
 const requestMemberImage = async (memberId) => {
@@ -20,7 +21,7 @@ const getLoginMemberImageUrl = async (memberId) => {
     }
 
     const image = await requestMemberImage(memberId);
-    const savedLoginMemberImageUrl = image?.url ?? '/assets/default-profile-image.png';
+    const savedLoginMemberImageUrl = image?.url ?? DEFAULT_MEMBER_IMAGE;
     setCookie('loginMemberImageUrl', savedLoginMemberImageUrl);
 
     return savedLoginMemberImageUrl;
@@ -29,7 +30,8 @@ const getLoginMemberImageUrl = async (memberId) => {
 export const generateProfileImageHtml = (imageUrl, size = { width: 50, height: 50 }) => {
     return `
         <img
-            src="${imageUrl ?? '/assets/default-profile-image.png'}"
+            src="${imageUrl ?? DEFAULT_MEMBER_IMAGE}"
+            class="round-image"
             width=${size.width}
             height=${size.height}
             alt="profile image"

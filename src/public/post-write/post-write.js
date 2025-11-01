@@ -1,4 +1,5 @@
 import { paintHeader } from '../component/common/header/header.js';
+import { paintFooter } from '../component/common/footer/footer.js';
 import { paintForm } from '../component/common/form/form-painter.js';
 import { getAuth } from '../utils/auth-guard.js';
 import { requestWritePost } from '../api/posts.js';
@@ -29,4 +30,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             location.replace(`/read/${res.data.post.id}`);
         },
     });
+
+    const bodyElement = document.querySelector('body');
+    const mainElement = bodyElement.querySelector('main');
+    paintFooter(bodyElement, mainElement);
 });
