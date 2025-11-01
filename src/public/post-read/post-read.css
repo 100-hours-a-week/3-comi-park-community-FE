@@ -1,47 +1,189 @@
+/* === 게시글 전체 카드 === */
 .post-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1em;
-    margin-bottom: 1em;
+    background: #fffdfd;
+    border: 2px solid var(--pink);
+    border-radius: 18px;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 6px 14px rgba(255, 182, 193, 0.25);
+    margin-bottom: 1.5rem;
+    font-family: 'Galmuri9', serif;
 }
 
+/* === 제목 + 작성자 + 작성일 === */
 .post-title {
-    font-size: 2em;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--deep-pink);
+    letter-spacing: 0.3px;
+    margin-bottom: 0.5rem;
+    word-break: keep-all;
 }
 
 .post-info {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
 }
 
 .post-info-left {
-    display: inherit;
-    align-items: center;
-    gap: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
 }
 
+/* 작성자 정보 */
+.writer-member-image img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--pink);
+    box-shadow: 0 2px 5px rgba(255, 182, 193, 0.4);
+}
+
+/* 작성일시 */
+.post-created-at {
+    font-size: 0.85rem;
+    color: #b66d7c;
+    opacity: 0.85;
+    text-align: right;
+}
+
+/* === 본문 === */
+.post-content {
+    line-height: 1.7;
+    color: var(--text);
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+    white-space: pre-line;
+}
+
+/* === 이미지 === */
+.post-image img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+/* === 좋아요 / 조회수 / 댓글수 === */
 .post-stat-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1em;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1rem;
 }
 
 .post-stat {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    flex: 1;
+    min-width: 100px;
+    background: rgba(255, 240, 245, 0.7);
+    border: 1.5px solid var(--pink);
+    border-radius: 12px;
+    padding: 0.6rem 0.8rem;
     text-align: center;
-    border-radius: 4px;
-    background-color: #bab5bc;
-    width: 6em;
-    height: 4em;
-    padding: 0.5em;
-    font-weight: bold;
+    box-shadow:
+        0 2px 5px rgba(255, 182, 193, 0.25),
+        inset 0 0 6px rgba(255, 255, 255, 0.6);
+    transition: all 0.25s ease;
 }
 
-.post-like-count-container {
-    cursor: pointer;
+.post-stat:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        0 6px 12px rgba(255, 182, 193, 0.4),
+        inset 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+.post-stat div:first-child {
+    font-weight: 700;
+    color: var(--deep-pink);
+    font-size: 1rem;
+}
+
+.post-stat div:last-child {
+    font-size: 0.8rem;
+    color: var(--text);
+}
+
+/* 좋아요만 반짝이는 효과 */
+.post-like-count-container[data-isliked='true'] {
+    background: linear-gradient(145deg, #ffb6c1, #f48fb1);
+    color: #fff;
+    box-shadow:
+        0 4px 10px rgba(255, 105, 135, 0.4),
+        inset 0 0 6px rgba(255, 255, 255, 0.6);
+}
+
+/* === 댓글 === */
+.comments-container {
+    margin-top: 2rem;
+    background: #fffdfd;
+    border: 1.5px solid var(--pink);
+    border-radius: 12px;
+    box-shadow:
+        0 3px 8px rgba(255, 182, 193, 0.25),
+        inset 0 0 6px rgba(255, 255, 255, 0.7);
+}
+
+.comment-container {
+    padding: 1rem;
+    box-shadow:
+        0 3px 8px rgba(255, 182, 193, 0.25),
+        inset 0 0 6px rgba(255, 255, 255, 0.7);
+}
+
+.comment-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+    flex-wrap: wrap;
+}
+
+.comment-created-at {
+    font-size: 0.8rem;
+    color: #b66d7c;
+    opacity: 0.85;
+    text-align: right;
+}
+
+/* 댓글 본문 */
+.comment-content {
+    font-size: 0.95rem;
+    color: var(--text);
+    line-height: 1.6;
+    background: #fff9fb;
+    border-radius: 8px;
+    padding: 0.6rem 0.8rem;
+}
+
+/* === 댓글 입력 폼 === */
+.comment-form-container {
+    margin-top: 2rem;
+}
+
+.comment-form-container .form {
+    box-shadow: 0 6px 14px rgba(255, 182, 193, 0.25);
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+}
+
+.comment-form-container textarea {
+    min-height: 100px;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: flex-end;
+}
+/* === 반응형 === */
+@media (max-width: 550px) {
+    .post-stat-container {
+        flex-direction: column;
+    }
 }
