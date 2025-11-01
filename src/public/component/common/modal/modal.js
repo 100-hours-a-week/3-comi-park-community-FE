@@ -6,8 +6,8 @@ const generateModalHtml = (mainText, subText, domain, id) => {
                 <div class="modal-main-text">${mainText}</div>
                 <div class="modal-sub-text">${subText}</div>
                 <div class="modal-buttons">
-                    <button type="button" class="btn modal-cancel-btn">취소</button>
-                    <button type="button" class="btn modal-confirm-btn">확인</button>
+                    <button type="button" class="small-btn modal-cancel-btn">취소</button>
+                    <button type="button" class="small-btn modal-confirm-btn">확인</button>
                 </div>
             </div>
         </dialog>`;
