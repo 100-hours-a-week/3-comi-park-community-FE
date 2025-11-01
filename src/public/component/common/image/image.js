@@ -30,6 +30,7 @@ export const generateProfileImageHtml = (imageUrl, size = { width: 50, height: 5
     return `
         <img
             src="${imageUrl ?? '/assets/default-profile-image.png'}"
+            class="round-image"
             width=${size.width}
             height=${size.height}
             alt="profile image"
