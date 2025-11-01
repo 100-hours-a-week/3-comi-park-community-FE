@@ -3,31 +3,38 @@ import { destroyCookie } from '../../../utils/cookie-helper.js';
 import { requestLogout } from '../../../api/auth.js';
 
 export const paintHeader = async (isLogin = false, loginMemberId = undefined) => {
-    const existsBackward = hasBackward(window.location.pathname);
+    const headerElement = document.querySelector('header');
+    const { hasBackward, redirectUrl } = getBackwardInfo(window.location.pathname);
 
     // header HTML 동적 생성
-    const headerHtml = await generateHeaderHtml(isLogin, loginMemberId, existsBackward);
-    document.querySelector('header').innerHTML = headerHtml;
+    const headerHtml = await generateHeaderHtml(isLogin, loginMemberId, hasBackward);
+    headerElement.insertAdjacentHTML('beforeend', headerHtml);
 
     /* 이벤트 처리 */
     // 로그인한 상태라면 노출된 profile 이미지 클릭 이벤트 등록
     if (isLogin) {
-        document.querySelector('.header-profile-image').addEventListener('click', headerProfileImageClickListHandler);
-        document.querySelector('.logout-btn').addEventListener('click', logoutBtnClickHandler);
+        const profileListElement = headerElement.querySelector('.header-profile-list');
+
+        headerElement
+            .querySelector('.header-profile-image')
+            .addEventListener('click', () => headerProfileImageClickListHandler(profileListElement));
+        headerElement.querySelector('.logout-btn').addEventListener('click', logoutBtnClickHandler);
     }
 
     // 뒤로 가기 버튼이 노출된 상태라면 이전 페이지로 이동하는 클릭 이벤트 등록
-    if (existsBackward) {
-        document.querySelector('.header-backward-btn').addEventListener('click', headerBackwardImageClickHandler);
+    if (hasBackward) {
+        headerElement
+            .querySelector('.header-backward-btn')
+            .addEventListener('click', () => headerBackwardImageClickHandler(redirectUrl));
     }
 };
 
-const generateHeaderHtml = async (isLogin = false, loginMemberId = undefined, existsBackward = false) => {
+const generateHeaderHtml = async (isLogin = false, loginMemberId = undefined, hasBackward = false) => {
     const headerProfileImageHtml = isLogin ? await generateHeaderProfileImageHtml(loginMemberId) : '';
 
     return `
         <!-- 뒤로가기 버튼 -->
-        <div class="header-backward-container ${existsBackward ? '' : 'conceal'}">
+        <div class="header-backward-container ${hasBackward ? '' : 'conceal'}">
             <button class="header-backward-btn" aria-label="뒤로가기">
                 <svg class="header-backward-icon" viewBox="0 0 24 24">
                     <path d="M15 18l-6-6 6-6" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
@@ -55,8 +62,8 @@ const generateHeaderHtml = async (isLogin = false, loginMemberId = undefined, ex
         </div>`;
 };
 
-const headerProfileImageClickListHandler = () => {
-    document.querySelector('.header-profile-list').classList.toggle('active');
+const headerProfileImageClickListHandler = (profileListElement) => {
+    profileListElement.classList.toggle('active');
 };
 
 const logoutBtnClickHandler = async () => {
@@ -71,11 +78,23 @@ const logoutBtnClickHandler = async () => {
     location.replace('/login');
 };
 
-const headerBackwardImageClickHandler = () => {
-    history.back();
+const headerBackwardImageClickHandler = (redirectUrl) => {
+    location.href = redirectUrl;
 };
 
-const hasBackward = (currentUrl) => {
-    const backwardList = ['/read', '/write', '/update', '/register'];
-    return backwardList.some((url) => currentUrl.startsWith(url));
+const getBackwardInfo = (currentUrl) => {
+    const backwardMap = {
+        '/read': () => '/index',
+        '/write': () => '/index',
+        '/update': () => currentUrl.replace('/update', '/read'),
+        '/register': () => '/login',
+    };
+
+    const matchedPrefix = Object.keys(backwardMap).find((prefix) => currentUrl.startsWith(prefix));
+
+    if (!matchedPrefix) {
+        return { hasBackward: false, redirectUrl: null };
+    }
+
+    return { hasBackward: true, redirectUrl: backwardMap[matchedPrefix]() };
 };
