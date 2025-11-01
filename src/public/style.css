@@ -1,6 +1,14 @@
+/* -----------------------------------------
+    Anton Font (SIL Open Font License 1.1)
+    Copyright 2020 The Anton Project Authors
+    https://github.com/googlefonts/AntonFont
+----------------------------------------- */
+
 @font-face {
-    font-family: 'Galmuri9';
-    src: url('/assets/fonts/Galmuri9.woff2') format('woff');
+    font-family: 'Anton';
+    src: url('/assets/fonts/Anton-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
 
 @font-face {

@@ -50,7 +50,7 @@ header {
 
 /* === HEADER LOGO === */
 .logo {
-    font-family: 'Galmuri9', cursive;
+    font-family: 'Anton', 'Galmuri9', cursive;
     font-size: 2.6rem;
     color: var(--deep-pink);
     text-shadow: 1px 1px 2px #fff;
