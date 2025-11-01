@@ -14,7 +14,7 @@ const generatePostReadContainerHtml = (post, loginMemberId) => {
     const updateDeleteBtnHtml = () => {
         return `
             <div>
-                <button class="btn small-btn"><a href="/update/${post.id}">수정</a></button>
+                <button class="btn small-btn" onclick="location.href='/update/${post.id}'">수정</button>
                 <button class="btn small-btn delete-btn" data-domain='post' data-id="${post.id}">삭제</button>
             </div>`;
     };

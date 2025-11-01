@@ -55,8 +55,8 @@ const generateHeaderHtml = async (isLogin = false, loginMemberId = undefined, ha
                 </div>
             </div>
             <ul class="header-profile-list">
-                <li class="header-profile-list-item"><a href="/account">회원정보수정</a></li>
-                <li class="header-profile-list-item"><a href="/account/password">비밀번호수정</a></li>
+                <li class="header-profile-list-item" onclick="location.href='/account'">회원정보수정</li>
+                <li class="header-profile-list-item" onclick="location.href='/account/password'">비밀번호수정</li>
                 <li class="header-profile-list-item logout-btn click">로그아웃</li>
             </ul>
         </div>`;
