@@ -1,8 +1,14 @@
 dialog {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    inset: 0; /* top, right, bottom, left 모두 0으로 설정 */
+    margin: auto; /* 중앙 배치 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: fit-content;
+    max-width: 90%;
+    height: fit-content;
 
     background: #fffdfd;
     border: 2px solid var(--pink);
