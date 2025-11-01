@@ -8,7 +8,7 @@ import { openModal } from '../common/modal/modal.js';
 export const generateCommentContainerHtml = (comment, loginMemberId) => {
     const updateDeleteBtnHtml = () => {
         return `
-            <div>
+            <div class="btn-container">
                 <button class="small-btn comment-update-btn" data-id=${comment.id}>수정</button>
                 <button class="small-btn comment-delete-btn" data-id="${comment.id}">삭제</button>
             </div>`;
@@ -17,12 +17,10 @@ export const generateCommentContainerHtml = (comment, loginMemberId) => {
     return `
         <div class="comment-container" data-commentid="${comment.id}">
             <div class="comment-info">
-                <div class="comment-info-left">
-                    ${generateWriterInfoHtml(comment.member)}
-                    <div class="comment-created-at">${formatDate(comment.createdAt)}</div>
-                </div>
-                ${loginMemberId == comment.member.id ? updateDeleteBtnHtml() : ''}
+                ${generateWriterInfoHtml(comment.member)}
+                <div class="comment-created-at">${formatDate(comment.createdAt)}</div>
             </div>
+            ${loginMemberId == comment.member.id ? updateDeleteBtnHtml() : ''}
             <div class="comment-content">${comment.content}</div>
         </div>`;
 };
