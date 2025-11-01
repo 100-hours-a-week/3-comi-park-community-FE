@@ -54,7 +54,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         </div>`
     );
 
-    paintFooter(sectionElement);
+    const bodyElement = document.querySelector('body');
+    const mainElement = bodyElement.querySelector('main');
+    paintFooter(bodyElement, mainElement);
 
     /* 삭제 모달 */
     sectionElement.querySelector('.withdraw-btn').addEventListener('click', () => {

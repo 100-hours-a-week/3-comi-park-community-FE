@@ -33,5 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>`
     );
 
-    paintFooter(sectionElement);
+    const bodyElement = document.querySelector('body');
+    const mainElement = bodyElement.querySelector('main');
+    paintFooter(bodyElement, mainElement);
 });
