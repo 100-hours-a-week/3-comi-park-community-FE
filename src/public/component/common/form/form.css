@@ -27,7 +27,6 @@ form div {
     border: 2px solid var(--pink);
     border-radius: 10px;
     background-color: #fff9fb;
-    font-family: 'Galmuri11', sans-serif;
     color: var(--text);
     transition:
         border-color 0.3s ease,
@@ -86,7 +85,6 @@ textarea.form-input {
         background 0.25s ease,
         color 0.25s ease;
     cursor: pointer;
-    font-family: 'Galmuri11', sans-serif;
 }
 
 /* hover: 반짝이 + 젤리빛 리본 효과 */
@@ -144,7 +142,6 @@ textarea.form-input {
     border: 2px solid var(--pink);
     border-radius: 10px;
     background-color: #fff9fb;
-    font-family: 'Galmuri11', sans-serif;
     color: var(--text);
 }
 
@@ -168,7 +165,6 @@ textarea.form-input {
     padding: 0.35rem 0.9rem;
     margin: 0 0.25rem;
     font-size: 0.8rem;
-    font-family: 'Galmuri11', sans-serif;
     color: var(--deep-pink);
     background: rgba(255, 245, 247, 0.92);
     border: 1.5px solid var(--pink);

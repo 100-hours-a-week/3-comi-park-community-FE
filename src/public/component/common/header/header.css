@@ -13,13 +13,6 @@ header {
     z-index: 10;
 }
 
-.logo {
-    font-family: 'Great Vibes', cursive;
-    font-size: 2.5rem;
-    color: var(--deep-pink);
-    text-shadow: 1px 1px 2px #fff;
-}
-
 /* === HEADER BACKWARD (뒤로가기) === */
 .header-backward-container {
     display: flex;
@@ -57,7 +50,7 @@ header {
 
 /* === HEADER LOGO === */
 .logo {
-    font-family: 'Great Vibes', cursive;
+    font-family: 'Galmuri9', cursive;
     font-size: 2.6rem;
     color: var(--deep-pink);
     text-shadow: 1px 1px 2px #fff;
