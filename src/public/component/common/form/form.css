@@ -152,10 +152,78 @@ textarea.form-input {
 /* 비활성화 버튼 */
 .btn.inactivated,
 .btn:disabled {
-    background: #ffeaf0;
+    background: var(--cream-pink);
     color: #c8a7a7;
     cursor: not-allowed;
     box-shadow: none;
+}
+
+.form-sub-btn:not(:disabled):hover {
+    background: linear-gradient(145deg, #f7a8bb, var(--hotpink));
+}
+
+/* small-btn (게시글 수정/삭제, 댓글 수정/삭제용) */
+.small-btn {
+    display: inline-block;
+    padding: 0.35rem 0.9rem;
+    margin: 0 0.25rem;
+    font-size: 0.8rem;
+    font-family: 'Galmuri11', sans-serif;
+    color: var(--deep-pink);
+    background: rgba(255, 245, 247, 0.92);
+    border: 1.5px solid var(--pink);
+    border-radius: 4px;
+    box-shadow:
+        0 2px 6px rgba(255, 182, 193, 0.35),
+        inset 0 1px 3px rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    transition:
+        all 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+/* hover: 부드럽게 빛나는 반짝임 */
+.small-btn:hover {
+    background: linear-gradient(145deg, #ffe8ef, #ffd8e3);
+    color: var(--hotpink);
+    transform: translateY(-2px);
+    box-shadow:
+        0 4px 10px rgba(255, 182, 193, 0.45),
+        inset 0 0 6px rgba(255, 255, 255, 0.7);
+}
+
+/* 클릭 시: 작게 눌리는 효과 */
+.small-btn:active {
+    transform: translateY(0);
+    box-shadow:
+        0 2px 5px rgba(255, 182, 193, 0.2),
+        inset 0 0 6px rgba(255, 255, 255, 0.9);
+}
+
+/* 삭제 버튼 전용 */
+.small-btn.delete-btn,
+.small-btn.comment-delete-btn {
+    color: #fff;
+    background: linear-gradient(145deg, #ff8ba0, #ff5e7a);
+    border: 1.5px solid #ff6f91;
+    box-shadow: 0 3px 8px rgba(255, 105, 135, 0.35);
+}
+
+/* 삭제 hover: 체리빛 강조 */
+.small-btn.delete-btn:hover,
+.small-btn.comment-delete-btn:hover {
+    background: linear-gradient(145deg, #ffb2c1, #ff6f91);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(255, 105, 135, 0.45);
+}
+
+/* 댓글용 버튼은 살짝 작게 */
+.comment .small-btn,
+.comment-update-btn,
+.comment-delete-btn {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.7rem;
+    border-radius: 4px;
 }
 
 @keyframes shake {
