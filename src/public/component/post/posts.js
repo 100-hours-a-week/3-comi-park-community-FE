@@ -1,5 +1,5 @@
 import { formatDate, formatCount } from '../../utils/format-helper.js';
-import { generateProfileImageHtml } from '../common/image/image.js';
+import { generateWriterInfoHtml } from '../common/member/member.js';
 
 const generatePostContainerHtml = (post) => {
     return `
@@ -13,12 +13,7 @@ const generatePostContainerHtml = (post) => {
                 <div class="custom-hr"></div>
 
                 <div class="post-footer">
-                    <div class="writer-info">
-                        <div class="writer-member-image">
-                        ${generateProfileImageHtml(post.member.image?.url)}
-                        </div>
-                        <div class="writer-member-nickname">${post.member.nickname}</div>
-                    </div>
+                    ${generateWriterInfoHtml(post.member)}
 
                     <div class="post-stat">
                         <div>💖 <span class="post-like-count">${formatCount(post.likeCount)}</span></div>
