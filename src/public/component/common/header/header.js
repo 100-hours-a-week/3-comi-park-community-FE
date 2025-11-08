@@ -1,6 +1,6 @@
 import { generateHeaderProfileImageHtml } from '../image/image.js';
 import { destroyCookie } from '../../../utils/cookie-helper.js';
-import { requestLogout } from '../../../api/auth.js';
+import { requestLogout } from '../../../apis/auth.js';
 
 export const paintHeader = async (isLogin = false, loginMemberId = undefined) => {
     const headerElement = document.querySelector('header');

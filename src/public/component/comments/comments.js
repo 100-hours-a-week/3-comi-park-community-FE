@@ -1,6 +1,6 @@
 import { generateWriterInfoHtml } from '../common/member/member.js';
-import { requestUpdateComment } from '../../api/comments.js';
-import { requestDeleteComment } from '../../api/comments.js';
+import { requestUpdateComment } from '../../apis/comments.js';
+import { requestDeleteComment } from '../../apis/comments.js';
 import { paintForm } from '../common/form/form-painter.js';
 import { formatDate } from '../../utils/format-helper.js';
 import { openModal } from '../common/modal/modal.js';

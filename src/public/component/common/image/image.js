@@ -1,6 +1,6 @@
 import { getCookie, setCookie } from '../../../utils/cookie-helper.js';
 import { DEFAULT_MEMBER_IMAGE } from '../../../utils/constants.js';
-import { requestMemberInfo } from '../../../api/members.js';
+import { requestMemberInfo } from '../../../apis/members.js';
 
 const requestMemberImage = async (memberId) => {
     const res = await requestMemberInfo(memberId);

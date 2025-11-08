@@ -1,4 +1,4 @@
-import { requestAuth, requestRefresh } from '../api/auth.js';
+import { requestAuth, requestRefresh } from '../apis/auth.js';
 import { destroyCookie } from './cookie-helper.js';
 
 /**
