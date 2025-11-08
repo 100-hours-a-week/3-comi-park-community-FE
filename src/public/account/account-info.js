@@ -1,4 +1,4 @@
-import { requestMemberInfo, requestMemberInfoUpdate, requestMemberDelete } from '../api/members.js';
+import { requestMemberInfo, requestMemberInfoUpdate, requestMemberDelete } from '../apis/members.js';
 import { paintForm } from '../component/common/form/form-painter.js';
 import { destroyCookie, setCookie } from '../utils/cookie-helper.js';
 import { paintHeader } from '../component/common/header/header.js';
