@@ -43,8 +43,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             // TODO: 오른쪽 상단에 토스 메시지 띄우기
             alert('회원 정보가 수정됐습니다');
 
-            if (Object.hasOwn(res.data, 'image')) {
-                setCookie('loginMemberImageUrl', res.data.image?.url ?? DEFAULT_MEMBER_IMAGE);
+            if (Object.hasOwn(res.data.changes, 'image')) {
+                setCookie('loginMemberImageUrl', res.data.changes?.image?.url ?? DEFAULT_MEMBER_IMAGE);
             }
 
             // 수정 완료됐으므로 input 초기화

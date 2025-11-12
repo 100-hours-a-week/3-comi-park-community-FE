@@ -36,7 +36,7 @@ const postLikeCountContainerClickHandler = async (target, postId) => {
     }
 
     target.dataset.isliked = !previoustIsLiked;
-    target.firstElementChild.textContent = res.data.likeCount;
+    target.firstElementChild.textContent = res.data.count;
 };
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // 게시글 표시
-    paintPostReadContainer(postRes.data.post, loginMemberId);
+    paintPostReadContainer(postRes.data, loginMemberId);
 
     document.querySelector('.post-like-count-container').addEventListener('click', ({ currentTarget }) => {
         postLikeCountContainerClickHandler(currentTarget, postId);
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             submitBtnElement.disabled = true;
 
             // 댓글 표시
-            postCommentCountElement.textContent = res.data.commentCount;
+            postCommentCountElement.textContent = res.data.count;
             commentsContainerElement.insertAdjacentHTML(
                 'afterbegin',
                 generateCommentContainerHtml(res.data.comment, res.data.comment.member.id)
