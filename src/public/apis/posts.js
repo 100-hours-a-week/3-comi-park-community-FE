@@ -12,8 +12,8 @@ export const requestWritePost = (requestBody = {}) => {
     return request({ method: METHOD.POST, url: '/posts', body: requestBody });
 };
 
-export const requestReadPost = (postId) => {
-    return request({ url: `/posts/${postId}` });
+export const requestReadPost = (postId, params = {}) => {
+    return request({ url: `/posts/${postId}`, params: createQueryString(params) });
 };
 
 export const requestUpdatePost = (postId, requestBody = { postDeleted: false, imageDeleted: false }) => {
@@ -50,6 +50,10 @@ const createQueryString = (params) => {
 
     if (!!params?.limit && !isNaN(params.limit)) {
         validatedParams.limit = params.limit;
+    }
+
+    if (!!params?.editMode) {
+        validatedParams.editMode = params.editMode;
     }
 
     return new URLSearchParams(validatedParams).toString();

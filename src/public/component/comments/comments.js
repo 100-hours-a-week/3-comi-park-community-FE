@@ -84,7 +84,7 @@ export const attachCommentUpdateFormEventHandler = (commentsContainerElement, po
                     return;
                 }
 
-                commentContentElement.textContent = res.data.content;
+                commentContentElement.textContent = res.data.changes.content;
             },
         });
     });
@@ -100,5 +100,5 @@ const commentDeleteHandler = async (id, commentContainerElement, commentsContain
     }
 
     commentsContainerElement.removeChild(commentContainerElement);
-    postCommentCountElement.textContent = res.data.commentCount;
+    postCommentCountElement.textContent = res.data.count;
 };

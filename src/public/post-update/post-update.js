@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!success) return;
 
     const postId = Number(window.location.pathname.split('/').at(2));
-    const res = await requestReadPost(postId);
+    const res = await requestReadPost(postId, { editMode: true });
 
     if (!res.success) {
         document.querySelector('section').textContent = res.data;

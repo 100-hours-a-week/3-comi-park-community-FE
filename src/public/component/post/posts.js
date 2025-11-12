@@ -1,24 +1,24 @@
 import { formatDate, formatCount } from '../../utils/format-helper.js';
 import { generateWriterInfoHtml } from '../common/member/member.js';
 
-const generatePostContainerHtml = (post) => {
+const generatePostContainerHtml = (data) => {
     return `
-        <div class="post-container" data-postid="${post.id}" onclick="location.href='/read/${post.id}'">
+        <div class="post-container" data-postid="${data.post.id}" onclick="location.href='/read/${data.post.id}'">
             <div class="post">
                 <div class="post-header">
-                <div class="post-title">${post.title}</div>
-                <div class="post-created-at">${formatDate(post.createdAt)}</div>
+                <div class="post-title">${data.post.title}</div>
+                <div class="post-created-at">${formatDate(data.post.createdAt)}</div>
                 </div>
 
                 <div class="custom-hr"></div>
 
                 <div class="post-footer">
-                    ${generateWriterInfoHtml(post.member)}
+                    ${generateWriterInfoHtml(data.post.member)}
 
                     <div class="post-stat">
-                        <div>💖 <span class="post-like-count">${formatCount(post.likeCount)}</span></div>
-                        <div>💬 <span class="post-comment-count">${formatCount(post.commentCount)}</span></div>
-                        <div>🔎 <span class="post-view-count">${formatCount(post.viewCount)}</span></div>
+                        <div>💖 <span class="post-like-count">${formatCount(data.likeCount)}</span></div>
+                        <div>💬 <span class="post-comment-count">${formatCount(data.commentCount)}</span></div>
+                        <div>🔎 <span class="post-view-count">${formatCount(data.viewCount)}</span></div>
                     </div>
                 </div>
             </div>

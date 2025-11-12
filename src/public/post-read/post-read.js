@@ -36,7 +36,7 @@ const postLikeCountContainerClickHandler = async (target, postId) => {
     }
 
     target.dataset.isliked = !previoustIsLiked;
-    target.firstElementChild.textContent = res.data.likeCount;
+    target.firstElementChild.textContent = res.data.count;
 };
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // 게시글 표시
-    paintPostReadContainer(postRes.data.post, loginMemberId);
+    paintPostReadContainer(postRes.data, loginMemberId);
 
     document.querySelector('.post-like-count-container').addEventListener('click', ({ currentTarget }) => {
         postLikeCountContainerClickHandler(currentTarget, postId);
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             submitBtnElement.disabled = true;
 
             // 댓글 표시
-            postCommentCountElement.textContent = res.data.commentCount;
+            postCommentCountElement.textContent = res.data.count;
             commentsContainerElement.insertAdjacentHTML(
                 'afterbegin',
                 generateCommentContainerHtml(res.data.comment, res.data.comment.member.id)
@@ -129,21 +129,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     attachCommentUpdateFormEventHandler(commentsContainerElement, postCommentCountElement);
 
     // 댓글 무한 스크롤링
-    let isNewCommentFetching = false;
+    let isFetching = false;
+    let hasNext = commentRes.data.hasNext;
     const commentElements = Array.from(commentsContainerElement.querySelectorAll('[data-commentid]'));
     let lastCommentId = commentElements.length > 0 ? commentElements.at(-1).dataset.commentid : -1;
+    console.log(hasNext, lastCommentId);
 
     window.addEventListener('scroll', async () => {
-        if (lastCommentId === -1) return;
+        if (!hasNext) return;
 
         const hitsBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1;
 
-        if (!hitsBottom || isNewCommentFetching) {
+        if (!hitsBottom || isFetching) {
             return;
         }
-
-        isNewCommentFetching = true;
-
+        isFetching = true;
         const res = await requestComments(postId, { lastCommentId });
 
         if (!res.success) {
@@ -151,17 +151,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
 
-        if (res.data.comments.length === 0 || res.data.comments.at(-1).id === lastCommentId) {
-            lastCommentId = -1;
-            return;
-        }
-
+        hasNext = res.data.hasNext;
         lastCommentId = res.data.comments.at(-1).id;
+
         paintCommentsContainer(res.data.comments, loginMemberId);
-        isNewCommentFetching = false;
+        isFetching = false;
     });
 
     const bodyElement = document.querySelector('body');
     const mainElement = bodyElement.querySelector('main');
     paintFooter(bodyElement, mainElement);
+    isFetching = false;
 });
