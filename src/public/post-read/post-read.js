@@ -129,21 +129,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     attachCommentUpdateFormEventHandler(commentsContainerElement, postCommentCountElement);
 
     // 댓글 무한 스크롤링
-    let isNewCommentFetching = false;
+    let isFetching = false;
+    let hasNext = commentRes.data.hasNext;
     const commentElements = Array.from(commentsContainerElement.querySelectorAll('[data-commentid]'));
     let lastCommentId = commentElements.length > 0 ? commentElements.at(-1).dataset.commentid : -1;
+    console.log(hasNext, lastCommentId);
 
     window.addEventListener('scroll', async () => {
-        if (lastCommentId === -1) return;
+        if (!hasNext) return;
 
         const hitsBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1;
 
-        if (!hitsBottom || isNewCommentFetching) {
+        if (!hitsBottom || isFetching) {
             return;
         }
-
-        isNewCommentFetching = true;
-
+        isFetching = true;
         const res = await requestComments(postId, { lastCommentId });
 
         if (!res.success) {
@@ -151,17 +151,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
 
-        if (res.data.comments.length === 0 || res.data.comments.at(-1).id === lastCommentId) {
-            lastCommentId = -1;
-            return;
-        }
-
+        hasNext = res.data.hasNext;
         lastCommentId = res.data.comments.at(-1).id;
+
         paintCommentsContainer(res.data.comments, loginMemberId);
-        isNewCommentFetching = false;
+        isFetching = false;
     });
 
     const bodyElement = document.querySelector('body');
     const mainElement = bodyElement.querySelector('main');
     paintFooter(bodyElement, mainElement);
+    isFetching = false;
 });

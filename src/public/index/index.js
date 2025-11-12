@@ -26,21 +26,21 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     paintFooter(bodyElement, mainElement);
 
-    let isNewPostFetching = false;
+    let isFetching = false;
+    let hasNext = res.data.hasNext;
     const postElements = Array.from(postsContainerElement.querySelectorAll('[data-postid]'));
     let lastPostId = postElements.length > 0 ? postElements.at(-1).dataset.postid : -1;
 
     window.addEventListener('scroll', async () => {
-        if (lastPostId === -1) return;
+        if (!hasNext) return;
 
         const hitsBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1;
 
-        if (!hitsBottom || isNewPostFetching) {
+        if (!hitsBottom || isFetching) {
             return;
         }
 
-        isNewPostFetching = true;
-
+        isFetching = true;
         const res = await requestPosts({ lastPostId });
 
         if (!res.success) {
@@ -49,13 +49,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
 
-        if (res.data.posts.length === 0 || res.data.posts.at(-1).id === lastPostId) {
-            lastPostId = -1;
-            return;
-        }
+        hasNext = res.data.hasNext;
+        lastPostId = res.data.posts.at(-1).post.id;
 
-        lastPostId = res.data.posts.at(-1).id;
         paintPostContainer(res.data.posts);
-        isNewPostFetching = false;
+        isFetching = false;
     });
 });
