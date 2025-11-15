@@ -3,7 +3,7 @@ import { generateWriterInfoHtml } from '/component/common/member/member.js';
 
 const generatePostContainerHtml = (data) => {
     return `
-        <div class="post-container" data-postid="${data.post.id}" onclick="location.href='/read?id=${data.post.id}'">
+        <div class="post-container" data-postid="${data.post.id}" onclick="location.href='/read/index.html?id=${data.post.id}'">
             <div class="post">
                 <div class="post-header">
                 <div class="post-title">${data.post.title}</div>

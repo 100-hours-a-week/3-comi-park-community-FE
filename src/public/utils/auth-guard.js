@@ -21,7 +21,7 @@ export const getAuth = async () => {
 
         if (!res.success) {
             destroyCookie('loginMemberImageUrl');
-            location.replace('/login');
+            location.replace('/login/index.html');
         }
     }
 

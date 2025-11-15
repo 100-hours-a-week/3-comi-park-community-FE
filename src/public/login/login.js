@@ -24,14 +24,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            location.replace('/');
+            location.replace('/index.html');
         },
     });
 
     sectionElement.querySelector('.form').insertAdjacentHTML(
         'beforeend',
         `<div>
-            <button class="btn form-sub-btn" type="button" onclick="location.href='/register'">회원가입</button>
+            <button class="btn form-sub-btn" type="button" onclick="location.href='/register/index.html'">회원가입</button>
         </div>`
     );
 

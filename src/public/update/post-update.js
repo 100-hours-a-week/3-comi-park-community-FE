@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return;
             }
 
-            location.replace(`/read?id=${postId}`);
+            location.replace(`/read/index.html?id=${postId}`);
         },
     });
 
