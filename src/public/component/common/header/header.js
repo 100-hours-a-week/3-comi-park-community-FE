@@ -4,7 +4,7 @@ import { requestLogout } from '/apis/auth.js';
 
 export const paintHeader = async (isLogin = false, loginMemberId = undefined) => {
     const headerElement = document.querySelector('header');
-    const { hasBackward, redirectUrl } = getBackwardInfo(window.location.pathname);
+    const hasBackward = getBackwardInfo(window.location.pathname);
 
     // header HTML 동적 생성
     const headerHtml = await generateHeaderHtml(isLogin, loginMemberId, hasBackward);
@@ -25,7 +25,7 @@ export const paintHeader = async (isLogin = false, loginMemberId = undefined) =>
     if (hasBackward) {
         headerElement
             .querySelector('.header-backward-btn')
-            .addEventListener('click', () => headerBackwardImageClickHandler(redirectUrl));
+            .addEventListener('click', () => headerBackwardImageClickHandler());
     }
 };
 
@@ -78,23 +78,11 @@ const logoutBtnClickHandler = async () => {
     location.replace('/login');
 };
 
-const headerBackwardImageClickHandler = (redirectUrl) => {
-    location.href = redirectUrl;
+const headerBackwardImageClickHandler = () => {
+    document.referrer.startsWith(document.location.origin) ? history.back() : (location.href = '/');
 };
 
 const getBackwardInfo = (currentUrl) => {
-    const backwardMap = {
-        '/read': () => '/',
-        '/write': () => '/',
-        '/update': () => currentUrl.replace('/update', '/read'),
-        '/register': () => '/login',
-    };
-
-    const matchedPrefix = Object.keys(backwardMap).find((prefix) => currentUrl.startsWith(prefix));
-
-    if (!matchedPrefix) {
-        return { hasBackward: false, redirectUrl: null };
-    }
-
-    return { hasBackward: true, redirectUrl: backwardMap[matchedPrefix]() };
+    const baskwards = ['/read', '/write', '/update', '/register', '/terms', '/privacy'];
+    return baskwards.find((prefix) => currentUrl.startsWith(prefix));
 };
