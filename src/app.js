@@ -1,11 +1,9 @@
-import cookieParser from 'cookie-parser';
 import express from 'express';
 import path from 'path';
 
 const app = express();
 const port = process.env.PORT;
 
-app.use(cookieParser());
 app.use(express.static(path.join(import.meta.dirname, 'public')));
 
 app.get('/index', (req, res) => {

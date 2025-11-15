@@ -20,7 +20,6 @@
     },
     "homepage": "https://github.com/kmi0817/kbt3-comi-community-fe#readme",
     "dependencies": {
-        "cookie-parser": "^1.4.7",
         "express": "^5.1.0"
     },
     "devDependencies": {
