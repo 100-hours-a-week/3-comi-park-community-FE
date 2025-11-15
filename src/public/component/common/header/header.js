@@ -44,7 +44,7 @@ const generateHeaderHtml = async (isLogin = false, loginMemberId = undefined, ha
 
         <!-- 로고 -->
         <div class="logo">
-            <a href="/index">♡ Gossip Girl ♡</a>
+            <a href="/">♡ Gossip Girl ♡</a>
         </div>
 
         <!-- 프로필 -->
@@ -84,8 +84,8 @@ const headerBackwardImageClickHandler = (redirectUrl) => {
 
 const getBackwardInfo = (currentUrl) => {
     const backwardMap = {
-        '/read': () => '/index',
-        '/write': () => '/index',
+        '/read': () => '/',
+        '/write': () => '/',
         '/update': () => currentUrl.replace('/update', '/read'),
         '/register': () => '/login',
     };

@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            location.replace('/index');
+            location.replace('/');
         },
     });
 

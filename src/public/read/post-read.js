@@ -22,7 +22,7 @@ const deletePostHandler = async (id) => {
         return;
     }
 
-    location.href = '/index';
+    location.href = '/';
 };
 
 const postLikeCountContainerClickHandler = async (target, postId) => {

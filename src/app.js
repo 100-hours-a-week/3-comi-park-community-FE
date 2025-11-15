@@ -6,8 +6,8 @@ const port = process.env.PORT;
 
 app.use(express.static(path.join(import.meta.dirname, 'public')));
 
-app.get('/index', (req, res) => {
-    res.sendFile(path.join(import.meta.dirname, 'public', 'index', 'index.html'));
+app.get('/', (req, res) => {
+    res.sendFile(path.join(import.meta.dirname, 'public', 'index.html'));
 });
 
 app.get('/login', (req, res) => {
