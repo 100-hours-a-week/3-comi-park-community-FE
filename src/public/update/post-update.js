@@ -1,6 +1,7 @@
 import { paintForm } from '../component/common/form/form-painter.js';
 import { paintHeader } from '../component/common/header/header.js';
 import { paintFooter } from '../component/common/footer/footer.js';
+import { getQueryParams } from '../utils/query-helper.js';
 import { requestUpdatePost } from '../apis/posts.js';
 import { requestReadPost } from '../apis/posts.js';
 import { getAuth } from '../utils/auth-guard.js';
@@ -10,7 +11,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (!success) return;
 
-    const postId = Number(window.location.pathname.split('/').at(2));
+    const params = getQueryParams();
+    const postId = Number(params.id);
     const res = await requestReadPost(postId, { editMode: true });
 
     if (!res.success) {
@@ -37,7 +39,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return;
             }
 
-            location.replace(`/read/${postId}`);
+            location.replace(`/read?id=${postId}`);
         },
     });
 

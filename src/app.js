@@ -7,9 +7,6 @@ const port = process.env.PORT;
 
 app.use(cookieParser());
 app.use(express.static(path.join(import.meta.dirname, 'public')));
-app.use('/write', express.static(path.join(import.meta.dirname, 'public', 'post-write')));
-app.use('/read', express.static(path.join(import.meta.dirname, 'public', 'post-read')));
-app.use('/update', express.static(path.join(import.meta.dirname, 'public', 'post-update')));
 
 app.get('/index', (req, res) => {
     res.sendFile(path.join(import.meta.dirname, 'public', 'index', 'index.html'));
@@ -27,11 +24,11 @@ app.get('/write', (req, res) => {
     res.sendFile(path.join(import.meta.dirname, 'public', 'write', 'index.html'));
 });
 
-app.get('/read/:postId', (req, res) => {
+app.get('/read', (req, res) => {
     res.sendFile(path.join(import.meta.dirname, 'public', 'read', 'index.html'));
 });
 
-app.get('/update/:postId', (req, res) => {
+app.get('/update', (req, res) => {
     res.sendFile(path.join(import.meta.dirname, 'public', 'update', 'index.html'));
 });
 
