@@ -16,31 +16,31 @@ app.get('/index', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-    res.sendFile(path.join(import.meta.dirname, 'public', 'login', 'login.html'));
+    res.sendFile(path.join(import.meta.dirname, 'public', 'login', 'index.html'));
 });
 
 app.get('/register', (req, res) => {
-    res.sendFile(path.join(import.meta.dirname, 'public', 'register', 'register.html'));
+    res.sendFile(path.join(import.meta.dirname, 'public', 'register', 'index.html'));
 });
 
 app.get('/write', (req, res) => {
-    res.sendFile(path.join(import.meta.dirname, 'public', 'post-write', 'post-write.html'));
+    res.sendFile(path.join(import.meta.dirname, 'public', 'write', 'index.html'));
 });
 
 app.get('/read/:postId', (req, res) => {
-    res.sendFile(path.join(import.meta.dirname, 'public', 'post-read', 'post-read.html'));
+    res.sendFile(path.join(import.meta.dirname, 'public', 'read', 'index.html'));
 });
 
 app.get('/update/:postId', (req, res) => {
-    res.sendFile(path.join(import.meta.dirname, 'public', 'post-update', 'post-update.html'));
+    res.sendFile(path.join(import.meta.dirname, 'public', 'update', 'index.html'));
 });
 
 app.get('/account', (req, res) => {
-    res.sendFile(path.join(import.meta.dirname, 'public', 'account', 'account-info.html'));
+    res.sendFile(path.join(import.meta.dirname, 'public', 'account', 'index.html'));
 });
 
-app.get('/account/password', (req, res) => {
-    res.sendFile(path.join(import.meta.dirname, 'public', 'account', 'account-password.html'));
+app.get('/account-password', (req, res) => {
+    res.sendFile(path.join(import.meta.dirname, 'public', 'account', 'index.html'));
 });
 
 app.listen(port, () => {
