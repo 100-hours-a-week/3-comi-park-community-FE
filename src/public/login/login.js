@@ -1,7 +1,7 @@
-import { paintForm } from '../component/common/form/form-painter.js';
-import { paintHeader } from '../component/common/header/header.js';
-import { paintFooter } from '../component/common/footer/footer.js';
-import { requestLogin } from '../apis/auth.js';
+import { paintForm } from '/component/common/form/form-painter.js';
+import { paintHeader } from '/component/common/header/header.js';
+import { paintFooter } from '/component/common/footer/footer.js';
+import { requestLogin } from '/apis/auth.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     paintHeader();
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            location.replace('/index');
+            location.replace('/');
         },
     });
 

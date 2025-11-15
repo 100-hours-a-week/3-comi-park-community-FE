@@ -1,4 +1,4 @@
-import { API_SERVER_URI, FOOTER_HEIGHT } from '../../../utils/constants.js';
+import { API_SERVER_URI, FOOTER_HEIGHT } from '/utils/constants.js';
 
 const createAnchorElement = (href, content) => {
     const anchorElement = document.createElement('a');
@@ -11,8 +11,8 @@ const createAnchorElement = (href, content) => {
 export const paintFooter = (parentElement, mainElement) => {
     const footerElement = document.createElement('footer');
 
-    footerElement.appendChild(createAnchorElement(`${API_SERVER_URI}/terms`, '이용약관'));
-    footerElement.appendChild(createAnchorElement(`${API_SERVER_URI}/privacy`, '개인정보처리방침'));
+    footerElement.appendChild(createAnchorElement('/terms', '이용약관'));
+    footerElement.appendChild(createAnchorElement('/privacy', '개인정보처리방침'));
 
     parentElement.appendChild(footerElement);
 

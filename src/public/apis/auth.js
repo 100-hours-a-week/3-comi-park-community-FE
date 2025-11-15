@@ -1,4 +1,4 @@
-import { request, METHOD } from './request.js';
+import { request, METHOD } from '/apis/request.js';
 
 const url = '/auth/jwt';
 

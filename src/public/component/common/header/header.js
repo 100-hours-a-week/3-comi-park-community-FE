@@ -1,10 +1,10 @@
-import { generateHeaderProfileImageHtml } from '../image/image.js';
-import { destroyCookie } from '../../../utils/cookie-helper.js';
-import { requestLogout } from '../../../apis/auth.js';
+import { generateHeaderProfileImageHtml } from '/component/common/image/image.js';
+import { destroyCookie } from '/utils/cookie-helper.js';
+import { requestLogout } from '/apis/auth.js';
 
 export const paintHeader = async (isLogin = false, loginMemberId = undefined) => {
     const headerElement = document.querySelector('header');
-    const { hasBackward, redirectUrl } = getBackwardInfo(window.location.pathname);
+    const hasBackward = getBackwardInfo(window.location.pathname);
 
     // header HTML 동적 생성
     const headerHtml = await generateHeaderHtml(isLogin, loginMemberId, hasBackward);
@@ -25,7 +25,7 @@ export const paintHeader = async (isLogin = false, loginMemberId = undefined) =>
     if (hasBackward) {
         headerElement
             .querySelector('.header-backward-btn')
-            .addEventListener('click', () => headerBackwardImageClickHandler(redirectUrl));
+            .addEventListener('click', () => headerBackwardImageClickHandler());
     }
 };
 
@@ -44,7 +44,7 @@ const generateHeaderHtml = async (isLogin = false, loginMemberId = undefined, ha
 
         <!-- 로고 -->
         <div class="logo">
-            <a href="/index">♡ Gossip Girl ♡</a>
+            <a href="/">♡ Gossip Girl ♡</a>
         </div>
 
         <!-- 프로필 -->
@@ -56,7 +56,7 @@ const generateHeaderHtml = async (isLogin = false, loginMemberId = undefined, ha
             </div>
             <ul class="header-profile-list">
                 <li class="header-profile-list-item" onclick="location.href='/account'">회원정보수정</li>
-                <li class="header-profile-list-item" onclick="location.href='/account/password'">비밀번호수정</li>
+                <li class="header-profile-list-item" onclick="location.href='/account-password'">비밀번호수정</li>
                 <li class="header-profile-list-item logout-btn click">로그아웃</li>
             </ul>
         </div>`;
@@ -78,23 +78,11 @@ const logoutBtnClickHandler = async () => {
     location.replace('/login');
 };
 
-const headerBackwardImageClickHandler = (redirectUrl) => {
-    location.href = redirectUrl;
+const headerBackwardImageClickHandler = () => {
+    document.referrer.startsWith(document.location.origin) ? history.back() : (location.href = '/');
 };
 
 const getBackwardInfo = (currentUrl) => {
-    const backwardMap = {
-        '/read': () => '/index',
-        '/write': () => '/index',
-        '/update': () => currentUrl.replace('/update', '/read'),
-        '/register': () => '/login',
-    };
-
-    const matchedPrefix = Object.keys(backwardMap).find((prefix) => currentUrl.startsWith(prefix));
-
-    if (!matchedPrefix) {
-        return { hasBackward: false, redirectUrl: null };
-    }
-
-    return { hasBackward: true, redirectUrl: backwardMap[matchedPrefix]() };
+    const baskwards = ['/read', '/write', '/update', '/register', '/terms', '/privacy'];
+    return baskwards.find((prefix) => currentUrl.startsWith(prefix));
 };

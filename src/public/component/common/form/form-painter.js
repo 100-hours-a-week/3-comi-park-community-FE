@@ -1,5 +1,5 @@
-import { generateFormFieldDivHtml, generateSubmitBtnDivHtml } from './form-generator.js';
-import { attachFormEventHandler } from './form-event-handler.js';
+import { generateFormFieldDivHtml, generateSubmitBtnDivHtml } from '/component/common/form/form-generator.js';
+import { attachFormEventHandler } from '/component/common/form/form-event-handler.js';
 
 /**
  * fields를 포함한 form 태그를 생성해 formParent의 자식으로 추가합니다

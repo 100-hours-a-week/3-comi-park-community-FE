@@ -1,47 +1,10 @@
-import cookieParser from 'cookie-parser';
 import express from 'express';
 import path from 'path';
 
 const app = express();
 const port = process.env.PORT;
 
-app.use(cookieParser());
 app.use(express.static(path.join(import.meta.dirname, 'public')));
-app.use('/write', express.static(path.join(import.meta.dirname, 'public', 'post-write')));
-app.use('/read', express.static(path.join(import.meta.dirname, 'public', 'post-read')));
-app.use('/update', express.static(path.join(import.meta.dirname, 'public', 'post-update')));
-
-app.get('/index', (req, res) => {
-    res.sendFile(path.join(import.meta.dirname, 'public', 'index', 'index.html'));
-});
-
-app.get('/login', (req, res) => {
-    res.sendFile(path.join(import.meta.dirname, 'public', 'login', 'login.html'));
-});
-
-app.get('/register', (req, res) => {
-    res.sendFile(path.join(import.meta.dirname, 'public', 'register', 'register.html'));
-});
-
-app.get('/write', (req, res) => {
-    res.sendFile(path.join(import.meta.dirname, 'public', 'post-write', 'post-write.html'));
-});
-
-app.get('/read/:postId', (req, res) => {
-    res.sendFile(path.join(import.meta.dirname, 'public', 'post-read', 'post-read.html'));
-});
-
-app.get('/update/:postId', (req, res) => {
-    res.sendFile(path.join(import.meta.dirname, 'public', 'post-update', 'post-update.html'));
-});
-
-app.get('/account', (req, res) => {
-    res.sendFile(path.join(import.meta.dirname, 'public', 'account', 'account-info.html'));
-});
-
-app.get('/account/password', (req, res) => {
-    res.sendFile(path.join(import.meta.dirname, 'public', 'account', 'account-password.html'));
-});
 
 app.listen(port, () => {
     console.log(`Express runs on port ${port}`);

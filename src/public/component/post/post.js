@@ -1,6 +1,6 @@
-import { formatCount, formatDate } from '../../utils/format-helper.js';
-import { generateWriterInfoHtml } from '../common/member/member.js';
-import { generatePostImageHtml } from '../common/image/image.js';
+import { formatCount, formatDate } from '/utils/format-helper.js';
+import { generateWriterInfoHtml } from '/component/common/member/member.js';
+import { generatePostImageHtml } from '/component/common/image/image.js';
 
 export const paintPostReadContainer = (post, loginMemberId) => {
     document
@@ -14,7 +14,7 @@ const generatePostReadContainerHtml = (data, loginMemberId) => {
     const updateDeleteBtnHtml = () => {
         return `
             <div class="btn-container">
-                <button class="small-btn" onclick="location.href='/update/${data.post.id}'">수정</button>
+                <button class="small-btn" onclick="location.href='/update?id=${data.post.id}'">수정</button>
                 <button class="small-btn delete-btn" data-domain='post' data-id="${data.post.id}">삭제</button>
             </div>`;
     };

@@ -1,5 +1,5 @@
-import { requestAuth, requestRefresh } from '../apis/auth.js';
-import { destroyCookie } from './cookie-helper.js';
+import { requestAuth, requestRefresh } from '/apis/auth.js';
+import { destroyCookie } from '/utils/cookie-helper.js';
 
 /**
  * 인증 정보가 있는지, 있다면 유효한지 여부를 서버에 확인한 후

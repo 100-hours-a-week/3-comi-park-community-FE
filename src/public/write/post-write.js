@@ -1,8 +1,8 @@
-import { paintHeader } from '../component/common/header/header.js';
-import { paintFooter } from '../component/common/footer/footer.js';
-import { paintForm } from '../component/common/form/form-painter.js';
-import { getAuth } from '../utils/auth-guard.js';
-import { requestWritePost } from '../apis/posts.js';
+import { paintHeader } from '/component/common/header/header.js';
+import { paintFooter } from '/component/common/footer/footer.js';
+import { paintForm } from '/component/common/form/form-painter.js';
+import { getAuth } from '/utils/auth-guard.js';
+import { requestWritePost } from '/apis/posts.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     const { success, loginMemberId } = await getAuth();
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return;
             }
 
-            location.replace(`/read/${res.data.post.id}`);
+            location.replace(`/read?id=${res.data.post.id}`);
         },
     });
 

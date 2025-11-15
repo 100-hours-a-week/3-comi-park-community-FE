@@ -1,4 +1,4 @@
-import { generateProfileImageHtml } from '../image/image.js';
+import { generateProfileImageHtml } from '/component/common/image/image.js';
 
 export const generateWriterInfoHtml = (member) => {
     return `

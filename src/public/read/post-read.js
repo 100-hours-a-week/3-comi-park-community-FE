@@ -1,17 +1,18 @@
-import { requestCancelLike, requestCreateLike } from '../apis/post-like.js';
-import { requestComments, requestWriteComment } from '../apis/comments.js';
-import { requestReadPost, requestDeletePost } from '../apis/posts.js';
-import { paintForm } from '../component/common/form/form-painter.js';
-import { paintPostReadContainer } from '../component/post/post.js';
-import { paintHeader } from '../component/common/header/header.js';
-import { paintFooter } from '../component/common/footer/footer.js';
-import { openModal } from '../component/common/modal/modal.js';
-import { getAuth } from '../utils/auth-guard.js';
+import { requestCancelLike, requestCreateLike } from '/apis/post-like.js';
+import { requestComments, requestWriteComment } from '/apis/comments.js';
+import { requestReadPost, requestDeletePost } from '/apis/posts.js';
+import { paintForm } from '/component/common/form/form-painter.js';
+import { paintPostReadContainer } from '/component/post/post.js';
+import { paintHeader } from '/component/common/header/header.js';
+import { paintFooter } from '/component/common/footer/footer.js';
+import { openModal } from '/component/common/modal/modal.js';
+import { getQueryParams } from '/utils/query-helper.js';
+import { getAuth } from '/utils/auth-guard.js';
 import {
     paintCommentsContainer,
     generateCommentContainerHtml,
     attachCommentUpdateFormEventHandler,
-} from '../component/comments/comments.js';
+} from '/component/comments/comments.js';
 
 const deletePostHandler = async (id) => {
     const res = await requestDeletePost(id);
@@ -21,7 +22,7 @@ const deletePostHandler = async (id) => {
         return;
     }
 
-    location.href = '/index';
+    location.replace('/');
 };
 
 const postLikeCountContainerClickHandler = async (target, postId) => {
@@ -47,7 +48,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     paintHeader(success, loginMemberId);
 
     /* 게시글 */
-    const postId = Number(window.location.pathname.split('/').at(2));
+    const params = getQueryParams();
+    const postId = Number(params.id);
     const postRes = await requestReadPost(postId);
 
     if (!postRes.success) {
@@ -67,7 +69,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (postDeleteBtnElement) {
         postDeleteBtnElement.addEventListener('click', ({ target }) => {
-            console.log(target);
             const { domain, id } = target.dataset;
 
             openModal({
@@ -133,7 +134,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     let hasNext = commentRes.data.hasNext;
     const commentElements = Array.from(commentsContainerElement.querySelectorAll('[data-commentid]'));
     let lastCommentId = commentElements.length > 0 ? commentElements.at(-1).dataset.commentid : -1;
-    console.log(hasNext, lastCommentId);
 
     window.addEventListener('scroll', async () => {
         if (!hasNext) return;
