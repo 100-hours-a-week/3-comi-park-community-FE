@@ -59,8 +59,9 @@ const formImageElementHandler = (formElement, submitBtnElement, filedElementsWit
             } else {
                 imageInputElement.dataset.ischanged = true;
                 imageInputElement.dataset.value = JSON.stringify({
-                    id: res.data.image.id,
+                    filename: res.data.image.filename,
                     objectKey: res.data.image.objectKey,
+                    url: res.data.image.url,
                 });
 
                 imageMap[keyname].afterUpload(res, imageMap[keyname].element);
