@@ -1,9 +1,9 @@
-import { generateWriterInfoHtml } from '../common/member/member.js';
-import { requestUpdateComment } from '../../apis/comments.js';
-import { requestDeleteComment } from '../../apis/comments.js';
-import { paintForm } from '../common/form/form-painter.js';
-import { formatDate } from '../../utils/format-helper.js';
-import { openModal } from '../common/modal/modal.js';
+import { generateWriterInfoHtml } from '/component/common/member/member.js';
+import { requestUpdateComment } from '/apis/comments.js';
+import { requestDeleteComment } from '/apis/comments.js';
+import { paintForm } from '/component/common/form/form-painter.js';
+import { formatDate } from '/utils/format-helper.js';
+import { openModal } from '/component/common/modal/modal.js';
 
 export const generateCommentContainerHtml = (comment, loginMemberId) => {
     const updateDeleteBtnHtml = () => {

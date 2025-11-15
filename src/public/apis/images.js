@@ -1,4 +1,4 @@
-import { request, METHOD } from './request.js';
+import { request, METHOD } from '/apis/request.js';
 
 export const requestMemberImageUpload = async (requestBody) => {
     return request({ method: METHOD.POST, url: '/images/members', body: requestBody, isFormData: true });

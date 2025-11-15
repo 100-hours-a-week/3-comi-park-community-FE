@@ -1,8 +1,8 @@
-import { requestEmailDuplicationCheck, requestNicknameDuplicationCheck } from '../../../apis/members.js';
-import { fieldValidationRules } from '../../../utils/validate-helper.js';
-import { debouncedRequest } from '../../../utils/debounce-helper.js';
-import { DEFAULT_MEMBER_IMAGE } from '../../../utils/constants.js';
-import { requestImageUpload } from '../../../apis/images.js';
+import { requestEmailDuplicationCheck, requestNicknameDuplicationCheck } from '/apis/members.js';
+import { fieldValidationRules } from '/utils/validate-helper.js';
+import { debouncedRequest } from '/utils/debounce-helper.js';
+import { DEFAULT_MEMBER_IMAGE } from '/utils/constants.js';
+import { requestImageUpload } from '/apis/images.js';
 
 export const attachFormEventHandler = (formElement, fieldElements, afterSubmit) => {
     const submitBtnElement = formElement.querySelector('.form-submit-btn');

@@ -1,6 +1,6 @@
-import { formatCount, formatDate } from '../../utils/format-helper.js';
-import { generateWriterInfoHtml } from '../common/member/member.js';
-import { generatePostImageHtml } from '../common/image/image.js';
+import { formatCount, formatDate } from '/utils/format-helper.js';
+import { generateWriterInfoHtml } from '/component/common/member/member.js';
+import { generatePostImageHtml } from '/component/common/image/image.js';
 
 export const paintPostReadContainer = (post, loginMemberId) => {
     document

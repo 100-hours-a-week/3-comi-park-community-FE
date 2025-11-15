@@ -1,4 +1,4 @@
-import { API_SERVER_URI } from '../utils/constants.js';
+import { API_SERVER_URI } from '/utils/constants.js';
 
 export const METHOD = Object.freeze({
     GET: 'GET',

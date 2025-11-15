@@ -1,4 +1,4 @@
-import { request, METHOD } from './request.js';
+import { request, METHOD } from '/apis/request.js';
 
 export const requestEmailDuplicationCheck = (email) => {
     return request({ method: METHOD.POST, url: '/members/availability/email', body: { email } });

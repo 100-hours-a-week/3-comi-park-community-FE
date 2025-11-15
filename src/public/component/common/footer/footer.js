@@ -1,4 +1,4 @@
-import { API_SERVER_URI, FOOTER_HEIGHT } from '../../../utils/constants.js';
+import { API_SERVER_URI, FOOTER_HEIGHT } from '/utils/constants.js';
 
 const createAnchorElement = (href, content) => {
     const anchorElement = document.createElement('a');

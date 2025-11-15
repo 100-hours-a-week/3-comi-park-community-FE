@@ -1,5 +1,5 @@
-import { createPostQueryParams } from '../utils/query-helper.js';
-import { request, METHOD } from './request.js';
+import { createPostQueryParams } from '/utils/query-helper.js';
+import { request, METHOD } from '/apis/request.js';
 
 /**
  * 매개변수 params = { lastPostId: number, limit: number }

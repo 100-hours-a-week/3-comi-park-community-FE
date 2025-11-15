@@ -1,8 +1,8 @@
-import { paintHeader } from '../component/common/header/header.js';
-import { paintFooter } from '../component/common/footer/footer.js';
-import { paintPostContainer } from '../component/post/posts.js';
-import { requestPosts } from '../apis/posts.js';
-import { getAuth } from '../utils/auth-guard.js';
+import { paintHeader } from '/component/common/header/header.js';
+import { paintFooter } from '/component/common/footer/footer.js';
+import { paintPostContainer } from '/component/post/posts.js';
+import { requestPosts } from '/apis/posts.js';
+import { getAuth } from '/utils/auth-guard.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     const { success, loginMemberId } = await getAuth();

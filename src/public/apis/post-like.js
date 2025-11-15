@@ -1,4 +1,4 @@
-import { request, METHOD } from './request.js';
+import { request, METHOD } from '/apis/request.js';
 
 export const requestCreateLike = (postId) => {
     return request({ method: METHOD.POST, url: `/posts/${postId}/likes` });

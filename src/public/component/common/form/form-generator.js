@@ -1,4 +1,4 @@
-import { DEFAULT_MEMBER_IMAGE } from '../../../utils/constants.js';
+import { DEFAULT_MEMBER_IMAGE } from '/utils/constants.js';
 
 const defaultFieldAttributes = {
     /* members */

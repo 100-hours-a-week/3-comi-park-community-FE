@@ -1,5 +1,5 @@
-import { createCommentQueryParams, getQueryParams } from '../utils/query-helper.js';
-import { request, METHOD } from './request.js';
+import { createCommentQueryParams, getQueryParams } from '/utils/query-helper.js';
+import { request, METHOD } from '/apis/request.js';
 
 /**
  * 매개변수 params = { lastCommentId: number, limit: number }
