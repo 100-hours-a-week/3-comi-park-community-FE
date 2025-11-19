@@ -13,7 +13,7 @@
 
 ## 실행 방법
 
-```
+```bash
 git clone https://github.com/100-hours-a-week/kbt3-comi-community-fe.git
 
 cd kbt3-comi-community-fe
@@ -24,7 +24,7 @@ npm run start
 
 ### 구조
 
-<img width="8420" height="6096" alt="image" src="https://github.com/user-attachments/assets/241f7eca-6fc4-4dfe-a5cb-775bd1066298" />
+<img width="9672" height="7144" alt="image" src="https://github.com/user-attachments/assets/5ffa6aa3-49c8-4cde-9ca4-065ced7bdcd2" />
 
 ### 디렉터리 구조
 
@@ -38,24 +38,8 @@ npm run start
 - `utils/`
     - 유틸리티 자바스크립트 파일 존재
 
-## 실행 화면
+## 데모 영상
 
-- 로그인 페이지
+> 미국 드라마 'Gossip Girl'에 영감받은 디자인
 
-    <img width="531" height="684" alt="image" src="https://github.com/user-attachments/assets/0468835e-01ba-46e0-9904-65a6ba30d3d2" />
-
-- 인덱스 페이지
-
-    <img width="450" height="643" alt="image" src="https://github.com/user-attachments/assets/e30c530b-6336-47e0-b915-e5807f6d6f79" />
-
-- 게시글 작성 페이지
-
-    <img width="443" height="634" alt="image" src="https://github.com/user-attachments/assets/c9d9ceac-9d09-4282-902b-7282ed380e28" />
-
-- 게시글 상세 조회 페이지
-
-    <img width="529" height="762" alt="image" src="https://github.com/user-attachments/assets/97cf2cc4-828c-463a-8696-8d7807bfc3a6" />
-
-- 삭제 확인 모달
-
-    <img width="529" height="767" alt="image" src="https://github.com/user-attachments/assets/80d0879e-6c3c-40d1-a7d1-4be941537725" />
+[![Video Label](http://img.youtube.com/vi/w6H266SsnuA/sddefault.jpg)](https://www.youtube.com/watch?v=w6H266SsnuA)
