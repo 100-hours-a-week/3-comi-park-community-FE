@@ -39,3 +39,29 @@ export const request = async ({
         return { success: false, data: '문제가 발생했습니다' };
     }
 };
+
+export const imageUploadRequest = async ({
+    method = METHOD.GET,
+    url = '/',
+    params = '',
+    body = undefined,
+    isFormData = false,
+}) => {
+    const options = { method, credentials: 'include' };
+
+    if (isFormData) {
+        options.body = body;
+    } else {
+        options.headers = { 'Content-Type': 'application/json' };
+        options.body = JSON.stringify(body);
+    }
+
+    try {
+        const res = await fetch(url, options);
+        const json = await res.json();
+        return json;
+    } catch (error) {
+        console.error(error);
+        return { success: false, data: '문제가 발생했습니다' };
+    }
+};
