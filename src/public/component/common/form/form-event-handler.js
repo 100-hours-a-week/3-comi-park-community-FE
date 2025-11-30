@@ -82,7 +82,7 @@ const formImageElementHandler = (formElement, submitBtnElement, filedElementsWit
 
     const imageMap = {
         'post-image': {
-            domain: 'posts',
+            domain: 'POST',
             element: formElement.querySelector('.form-post-image'),
             onDeleteBtnClick: (element) => {
                 element.value = '등록된 이미지가 없습니다';
@@ -92,7 +92,7 @@ const formImageElementHandler = (formElement, submitBtnElement, filedElementsWit
             },
         },
         'member-image': {
-            domain: 'members',
+            domain: 'MEMBER',
             element: formElement.querySelector('.form-member-image'),
             onDeleteBtnClick: (element) => {
                 element.src = DEFAULT_MEMBER_IMAGE;
