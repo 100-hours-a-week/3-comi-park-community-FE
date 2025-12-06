@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
 
                 destroyCookie('loginMemberImageUrl');
-                location.replace('/login');
+                location.replace('/login/index.html');
             },
         });
     });

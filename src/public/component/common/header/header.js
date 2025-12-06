@@ -44,7 +44,7 @@ const generateHeaderHtml = async (isLogin = false, loginMemberId = undefined, ha
 
         <!-- 로고 -->
         <div class="logo">
-            <a href="/">♡ Gossip Girl ♡</a>
+            <a href="/index.html">♡ Gossip Girl ♡</a>
         </div>
 
         <!-- 프로필 -->
@@ -55,8 +55,8 @@ const generateHeaderHtml = async (isLogin = false, loginMemberId = undefined, ha
                 </div>
             </div>
             <ul class="header-profile-list">
-                <li class="header-profile-list-item" onclick="location.href='/account'">회원정보수정</li>
-                <li class="header-profile-list-item" onclick="location.href='/account-password'">비밀번호수정</li>
+                <li class="header-profile-list-item" onclick="location.href='/account/index.html'">회원정보수정</li>
+                <li class="header-profile-list-item" onclick="location.href='/account-password/index.html'">비밀번호수정</li>
                 <li class="header-profile-list-item logout-btn click">로그아웃</li>
             </ul>
         </div>`;
@@ -75,11 +75,11 @@ const logoutBtnClickHandler = async () => {
     }
 
     destroyCookie('loginMemberImageUrl');
-    location.replace('/login');
+    location.replace('/login/index.html');
 };
 
 const headerBackwardImageClickHandler = () => {
-    document.referrer.startsWith(document.location.origin) ? history.back() : (location.href = '/');
+    document.referrer.startsWith(document.location.origin) ? history.back() : (location.href = '/index.html');
 };
 
 const getBackwardInfo = (currentUrl) => {

@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return;
             }
 
-            location.replace(`/read?id=${res.data.post.id}`);
+            location.replace(`/read/index.html?id=${res.data.post.id}`);
         },
     });
 

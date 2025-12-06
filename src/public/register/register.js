@@ -25,14 +25,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            location.replace('/login');
+            location.replace('/login/index.html');
         },
     });
 
     sectionElement.querySelector('.form').insertAdjacentHTML(
         'beforeend',
         `<div>
-            <button class="btn form-sub-btn" type="button" onclick="location.href='/login'">로그인</button>
+            <button class="btn form-sub-btn" type="button" onclick="location.href='/login/index.html'">로그인</button>
         </div>`
     );
 
