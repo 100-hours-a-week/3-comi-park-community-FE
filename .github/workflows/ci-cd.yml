@@ -1,9 +1,11 @@
+# ❗ Deprecated Workflow
+# This CI pipeline is disabled and kept only for historic reference.
+# Do not remove for now, but it will NOT trigger on push or PR.
+
 name: Express CI/CD
 
 on:
-    push:
-        branches:
-            - develop
+    workflow_dispatch:
 
 jobs:
     push:
