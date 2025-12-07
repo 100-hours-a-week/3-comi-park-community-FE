@@ -30,7 +30,7 @@ jobs:
               # a) sync : 변경된 파일만 업로드
               # b) --delete : 삭제된 파일은 S3 버킷에서도 삭제
               run: |
-                  aws s3 sync ./src/public s3://${{ secrets.AWS_S3_FRONTEND_BUCKET }} \
+                  aws s3 sync ./src/public s3://${{ secrets.AWS_S3_BUCKET }} \
                     --delete
 
             # 3) 기존 캐시 무효화
