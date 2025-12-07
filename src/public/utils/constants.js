@@ -1,10 +1,10 @@
 export const API_SERVER_URI = window.location.hostname.includes('localhost')
     ? 'http://localhost:8080/api'
-    : 'https://api.kbt-comi.store/api';
+    : 'https://api.co-mi.store/api';
 
 export const IMAGE_UPLOAD_URI = window.location.hostname.includes('localhost')
     ? 'http://localhost:8080/api'
-    : 'https://upload.kbt-comi.store';
+    : 'https://upload.co-mi.store';
 
 export const DEFAULT_MEMBER_IMAGE = '/assets/default-profile-image.png';
 
